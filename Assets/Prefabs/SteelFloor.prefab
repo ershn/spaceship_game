@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &72901617766461770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5680633180854098372}
+  - component: {fileID: 5209878187157717699}
+  - component: {fileID: 2360495379068193615}
+  - component: {fileID: -1909066321609176523}
+  - component: {fileID: 5355182027032121478}
+  - component: {fileID: 7354273520412553579}
+  - component: {fileID: 1492980114683187179}
+  - component: {fileID: -9037717301101027011}
+  m_Layer: 0
+  m_Name: SteelFloor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5680633180854098372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5209878187157717699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e724852220210e4c8088628193a4147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GridPositioner: {fileID: 11400000, guid: dac4e01ef9447934ab45979516b10539, type: 2}
+  GridIndexer: {fileID: 11400000, guid: b0f842f899bffb947836b0f8491d5d92, type: 2}
+--- !u!114 &2360495379068193615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f91f7c16039784e91d83e4c05c884d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingDef: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
+--- !u!114 &-1909066321609176523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55aca26532fb8ad4d8a3e1747f153439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5355182027032121478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1335d2413e194c9428cc6d31b5c2e39f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnComponentMaxAmount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1909066321609176523}
+        m_TargetAssemblyTypeName: BuildingRequester, Assembly-CSharp
+        m_MethodName: FulfillComponentRequest
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7354273520412553579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e05d40c488de140865d22a0e15bc0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnConstructionProgressPercentage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1492980114683187179}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+        m_MethodName: SetHealthPercentage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1492980114683187179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e7cebaefa96a54dba5bfdd5b60067f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnZeroHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMaxHealth:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1909066321609176523}
+        m_TargetAssemblyTypeName: ConstructionRequester, Assembly-CSharp
+        m_MethodName: FulfillConstructionRequest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -9037717301101027011}
+        m_TargetAssemblyTypeName: TileGraphics, Assembly-CSharp
+        m_MethodName: ToNormalTile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-9037717301101027011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375b1ee6b5d0e0a4aa51dd0278460512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTileChanged: {fileID: 11400000, guid: 1995b6c47ad995541a6cdebf1cddc4be, type: 2}
