@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class WorkTask : ITask
+public class WorkTask : Task
 {
     IWork _work;
     Worker _worker;
@@ -11,13 +11,18 @@ public class WorkTask : ITask
         _work = work;
     }
 
-    public void Setup(GameObject executor)
+    public override void Prepare(GameObject executor)
     {
         _worker = executor.GetComponent<Worker>();
     }
 
-    public void Start(Action<bool> onEnd)
+    protected override void OnStart(Action<bool> onEnd)
     {
         _worker.WorkOn(_work, onEnd);
+    }
+
+    protected override void OnCancel()
+    {
+        _worker.Cancel();
     }
 }

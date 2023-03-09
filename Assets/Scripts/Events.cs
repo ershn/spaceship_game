@@ -21,4 +21,4 @@ public class GameObjectEvent : UnityEvent<GameObject> {}
 public class ItemDefEvent : UnityEvent<ItemDef> {}
 
 [Serializable]
-public class TaskRequestEvent : UnityEvent<ITask, Action<bool>> {}
+public class TaskEvent : UnityEvent<ITask> {}

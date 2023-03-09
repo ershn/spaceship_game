@@ -1,23 +1,28 @@
 using System;
 using UnityEngine;
 
-public class MoveTask : ITask
+public class MoveTask : Task
 {
-    PathFinder _pathFinder;
     Vector2 _dest;
+    PathFinder _pathFinder;
 
     public MoveTask(Vector2 dest)
     {
         _dest = dest;
     }
 
-    public void Setup(GameObject executor)
+    public override void Prepare(GameObject executor)
     {
         _pathFinder = executor.GetComponent<PathFinder>();
     }
 
-    public void Start(Action<bool> onEnd)
+    protected override void OnStart(Action<bool> onEnd)
     {
         _pathFinder.MoveTo(_dest, onEnd);
+    }
+
+    protected override void OnCancel()
+    {
+        _pathFinder.Cancel();
     }
 }

@@ -22,6 +22,7 @@ public class PathFinder : MonoBehaviour
 
     bool _executing = false;
     Action<bool> _onEnd;
+    bool _pathCalculationCanceled;
 
     bool IsExecuting() => _executing;
 
@@ -41,16 +42,22 @@ public class PathFinder : MonoBehaviour
 
     void CalculatePath(Vector2 dest)
     {
+        _pathCalculationCanceled = false;
         _seeker.StartPath(transform.position, dest, OnPathCalculated);
     }
 
     void CancelPathCalculation()
     {
+        _pathCalculationCanceled = true;
         _seeker.CancelCurrentPathRequest();
+        StopExecuting(success: false);
     }
 
     void OnPathCalculated(Path path)
     {
+        if (_pathCalculationCanceled)
+            return;
+
         if (path.error)
             StopExecuting(success: false);
         else

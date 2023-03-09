@@ -1,27 +1,41 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ConstructionRequestManager : MonoBehaviour
 {
-    public TaskRequestEvent OnTaskCreation;
+    public static ConstructionRequestManager Instance { get; private set; }
 
-    void OnEnable()
-    {
-        ConstructionRequester.OnConstructionRequest += RequestConstruction;
-    }
+    public TaskEvent OnTaskCreation;
 
-    void OnDisable()
+    Dictionary<IWork, ITask> _requestToTask = new();
+
+    void Awake()
     {
-        ConstructionRequester.OnConstructionRequest -= RequestConstruction;
+        if (Instance != null)
+            throw new InvalidOperationException("A singleton instance already exists.");
+
+        Instance = this;
     }
 
     // TODO: handle canceled tasks
-    void RequestConstruction(IWork work)
+    public void RequestConstruction(IWork work)
     {
-        var task = new CompositeTask(new ITask[]
+        var task = new TaskSequence(new ITask[]
         {
             new MoveTask(work.transform.position),
             new WorkTask(work)
         });
-        OnTaskCreation.Invoke(task, success => {});
+
+        _requestToTask[work] = task;
+        task.Then(_ => _requestToTask.Remove(work));
+
+        OnTaskCreation.Invoke(task);
+    }
+
+    public void CancelConstruction(IWork work)
+    {
+        if (_requestToTask.TryGetValue(work, out var task))
+            task.Cancel();
     }
 }

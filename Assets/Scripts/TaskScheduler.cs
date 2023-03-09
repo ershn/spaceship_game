@@ -8,7 +8,7 @@ public class TaskScheduler : MonoBehaviour
 {
     HashSet<TaskExecutor> _idleExecutors = new();
     HashSet<TaskExecutor> _workingExecutors = new();
-    Queue<Tuple<ITask, Action<bool>>> _tasks = new();
+    Queue<ITask> _tasks = new();
 
     void OnEnable()
     {
@@ -32,10 +32,10 @@ public class TaskScheduler : MonoBehaviour
         _idleExecutors.Remove(executor);
     }
 
-    public void QueueTask(ITask task, Action<bool> onEnd)
+    public void QueueTask(ITask task)
     {
         Debug.Log($"QueueTask: {task}");
-        _tasks.Enqueue(new(task, onEnd));
+        _tasks.Enqueue(task);
     }
 
     void Update()
@@ -47,14 +47,14 @@ public class TaskScheduler : MonoBehaviour
     {
         while (_tasks.TryPeek(out var task))
         {
-            if (AssignTask(task.Item1, task.Item2))
+            if (AssignTask(task))
                 _tasks.Dequeue();
             else
                 break;
         }
     }
 
-    bool AssignTask(ITask task, Action<bool> onEnd)
+    bool AssignTask(ITask task)
     {
         var executor = _idleExecutors.FirstOrDefault();
         if (executor == null)
@@ -63,12 +63,13 @@ public class TaskScheduler : MonoBehaviour
         _idleExecutors.Remove(executor);
         _workingExecutors.Add(executor);
 
-        executor.ExecuteTask(task, success =>
+        task.Then(_ =>
         {
             _workingExecutors.Remove(executor);
             _idleExecutors.Add(executor);
-            onEnd(success);
         });
+
+        executor.ExecuteTask(task);
 
         return true;
     }

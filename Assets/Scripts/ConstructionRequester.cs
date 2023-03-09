@@ -1,18 +1,22 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BuildingComponents))]
+[RequireComponent(typeof(ConstructionWork))]
 public class ConstructionRequester : MonoBehaviour
 {
-    public static event Action<ItemDef, ulong, IItemAmountAdd> OnItemRequest;
-    public static event Action<IWork> OnConstructionRequest;
+    enum Phase
+    {
+        RequestingComponents,
+        RequestingConstruction,
+        Done,
+        Canceled
+    }
 
     BuildingComponents _buildingComponents;
     ConstructionWork _constructionWork;
 
-    HashSet<ItemDef> _requestedComponents;
+    Phase _phase;
 
     void Awake()
     {
@@ -22,20 +26,38 @@ public class ConstructionRequester : MonoBehaviour
 
     void Start()
     {
-        RequestComponents();
+        StartConstruction();
     }
 
-    void RequestComponents()
+    void StartConstruction()
     {
+        if (!RequestComponents())
+            return;
+        RequestConstruction();
+    }
+
+#region component requesting
+
+    Dictionary<ItemDef, ItemRequest> _requestedComponents;
+
+    bool RequestComponents()
+    {
+        _phase = Phase.RequestingComponents;
         _requestedComponents = new();
+
         foreach (var component in _buildingComponents.GetRequiredAmounts())
         {
-            var itemDef = component.Item1;
-            var amount = component.Item2;
-            _requestedComponents.Add(itemDef);
-            Debug.Log($"Request item: {itemDef}, {amount}");
-            OnItemRequest?.Invoke(itemDef, amount, _buildingComponents);
+            var request = new ItemRequest(
+                component.ItemDef, component.Amount, _buildingComponents
+                );
+
+            Debug.Log($"Request item: {request.ItemDef}, {request.Amount}");
+
+            _requestedComponents[request.ItemDef] = request;
+            ItemRequestManager.Instance.RequestItemDelivery(request);
         }
+
+        return _requestedComponents.Count == 0;
     }
 
     public void FulfillComponentRequest(ItemDef itemDef)
@@ -46,14 +68,45 @@ public class ConstructionRequester : MonoBehaviour
             RequestConstruction();
     }
 
+    void CancelComponentRequests()
+    {
+        _phase = Phase.Canceled;
+        foreach (var request in _requestedComponents.Values)
+            ItemRequestManager.Instance.CancelItemDelivery(request);
+    }
+
+#endregion
+#region construction requesting
+
     void RequestConstruction()
     {
-        Debug.Log($"RequestConstruction");
-        OnConstructionRequest?.Invoke(_constructionWork);
+        _phase = Phase.RequestingConstruction;
+        ConstructionRequestManager.Instance.RequestConstruction(_constructionWork);
     }
 
     public void FulfillConstructionRequest()
     {
-        Debug.Log($"Construction finished");
+        CompleteConstruction();
+    }
+
+    void CancelConstructionRequest()
+    {
+        _phase = Phase.Canceled;
+        ConstructionRequestManager.Instance.CancelConstruction(_constructionWork);
+    }
+
+#endregion
+
+    void CompleteConstruction()
+    {
+        _phase = Phase.Done;
+    }
+
+    public void CancelConstruction()
+    {
+        if (_phase == Phase.RequestingComponents)
+            CancelComponentRequests();
+        else if (_phase == Phase.RequestingConstruction)
+            CancelConstructionRequest();
     }
 }

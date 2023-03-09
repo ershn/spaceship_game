@@ -19,27 +19,22 @@ public class TaskExecutor : MonoBehaviour
         OnDestruction?.Invoke(this);
     }
 
-    public void ExecuteTask(ITask task, Action<bool> onEnd)
+    public void ExecuteTask(ITask task)
     {
         if (IsTaskExecuting())
             throw new ArgumentException("A task is already executing.");
 
         Debug.Log($"ExecuteTask: {task}");
-        StartTask(task, onEnd);
+        StartTask(task);
     }
 
     bool IsTaskExecuting() => _task != null;
 
-    void StartTask(ITask task, Action<bool> onEnd)
+    void StartTask(ITask task)
     {
         _task = task;
-        _task.Setup(gameObject);
-        _task.Start(success => CompleteTask(success, onEnd));
-    }
-
-    void CompleteTask(bool success, Action<bool> onEnd)
-    {
-        _task = null;
-        onEnd(success);
+        _task.Prepare(gameObject);
+        _task.Then(_ => _task = null);
+        _task.Start();
     }
 }

@@ -1,10 +1,8 @@
 TODO
 - create DropInventoryTask
-- add the ability to cancel tasks
 - add a rollback feature to tasks
   - drop the Inventory when a ItemToInventoryTask is rolled back / cancelled
 - add an event function that is executed before Start in tasks
   - execute the ItemAmount.Reserve method inside
 - pass a TaskResult object to onEnd callbacks
   - Success property
-- return a cancel callback from MoveTo and WorkOn

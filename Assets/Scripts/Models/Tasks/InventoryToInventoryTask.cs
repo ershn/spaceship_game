@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-public class InventoryToInventoryTask : ITask
+public class InventoryToInventoryTask : Task
 {
-    IItemAmountRemove _sourceInventory;
     IItemAmountAdd _targetInventory;
     ItemDef _itemDef;
     ulong _amount;
+    IItemAmountRemove _sourceInventory;
 
     public InventoryToInventoryTask(
         IItemAmountAdd targetInventory, ItemDef itemDef, ulong amount
@@ -17,12 +17,13 @@ public class InventoryToInventoryTask : ITask
         _amount = amount;
     }
 
-    public void Setup(GameObject executor)
+    public override void Prepare(GameObject executor)
     {
         _sourceInventory = executor.GetComponent<IItemAmountRemove>();
     }
 
-    public void Start(Action<bool> onEnd)
+    // TODO: handle distance between item and executor
+    protected override void OnStart(Action<bool> onEnd)
     {
         _sourceInventory.Remove(_itemDef, _amount);
         _targetInventory.Add(_itemDef, _amount);

@@ -1,31 +1,40 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ItemRequestManager : MonoBehaviour
 {
-    public TaskRequestEvent OnTaskCreation;
+    public static ItemRequestManager Instance { get; private set; }
+
+    public TaskEvent OnTaskCreation;
 
     public ItemGridIndexer ItemGrid;
 
-    void OnEnable()
-    {
-        // ItemGrid.OnItemAdded.AddListener();
-        // ItemGrid.OnItemRemoved.AddListener();
-        ConstructionRequester.OnItemRequest += RequestItemDelivery;
-    }
+    Dictionary<ItemRequest, HashSet<ITask>> _requestToTasks = new();
 
-    void OnDisable()
+    void Awake()
     {
-        ConstructionRequester.OnItemRequest -= RequestItemDelivery;
+        if (Instance != null)
+            throw new InvalidOperationException("A singleton instance already exists.");
+
+        Instance = this;
     }
 
     // TODO: handle canceled tasks
     // TODO: select the closest items
-    void RequestItemDelivery(
-        ItemDef itemDef, ulong requestedAmount, IItemAmountAdd inventory
-        )
+    public void RequestItemDelivery(ItemRequest request)
     {
-        var items = ItemGrid.GetAllItems(itemDef).Select(item => item.GetComponent<IAmount>());
+        var itemDef = request.ItemDef;
+        var requestedAmount = request.Amount;
+        var inventory = request.Inventory;
+
+        var tasks = new HashSet<ITask>();
+        _requestToTasks[request] = tasks;
+
+        var items = ItemGrid
+            .GetAllItems(itemDef)
+            .Select(item => item.GetComponent<IAmount>());
 
         foreach (var item in items)
         {
@@ -38,25 +47,42 @@ public class ItemRequestManager : MonoBehaviour
             item.Reserve(markedAmount);
             requestedAmount -= markedAmount;
 
-            DispatchItemDeliveryTask(itemDef, markedAmount, item, inventory);
+            var task = CreateItemDeliveryTask(itemDef, markedAmount, item, inventory);
+
+            tasks.Add(task);
+            task.Then(_ =>
+            {
+                tasks.Remove(task);
+                if (tasks.Count() == 0)
+                    _requestToTasks.Remove(request);
+            });
+
+            OnTaskCreation.Invoke(task);
 
             if (requestedAmount == 0)
                 break;
         }
     }
 
-    void DispatchItemDeliveryTask(
+    public void CancelItemDelivery(ItemRequest request)
+    {
+        if (!_requestToTasks.TryGetValue(request, out var tasks))
+            return;
+        foreach (var task in tasks.ToArray())
+            task.Cancel();
+    }
+
+    ITask CreateItemDeliveryTask(
         ItemDef itemDef, ulong amount, IAmountRemove item, IItemAmountAdd inventory
         )
     {
         Debug.Log($"Request item delivery: {itemDef}, {amount}");
-        var task = new CompositeTask(new ITask[]
+        return new TaskSequence(new ITask[]
         {
             new MoveTask(item.transform.position),
             new ItemToInventoryTask(item, itemDef, amount),
             new MoveTask(inventory.transform.position),
             new InventoryToInventoryTask(inventory, itemDef, amount)
         });
-        OnTaskCreation.Invoke(task, success => {});
     }
 }

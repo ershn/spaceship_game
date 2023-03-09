@@ -39,10 +39,10 @@ public class BuildingComponents : MonoBehaviour, IItemAmountAdd
         }
     }
 
-    public IEnumerable<Tuple<ItemDef, ulong>> GetRequiredAmounts()
+    public IEnumerable<ItemDefAmount> GetRequiredAmounts()
     {
         return _inventory.Select(kv =>
-            Tuple.Create(kv.Key, kv.Value.MaxAmount - kv.Value.Amount)
+            new ItemDefAmount(kv.Key, kv.Value.MaxAmount - kv.Value.Amount)
         );
     }
 

@@ -2,31 +2,37 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class CompositeTask : ITask
+public class TaskSequence : Task
 {
     ITask[] _tasks;
-    int _taskIndex;
+    int _nextTaskIndex;
+    ITask _task;
     Action<bool> _onEnd;
 
-    public CompositeTask(ITask[] tasks)
+    public TaskSequence(ITask[] tasks)
     {
         _tasks = tasks;
-        _taskIndex = 0;
+        _nextTaskIndex = 0;
     }
 
-    public void Setup(GameObject executor)
+    public override void Prepare(GameObject executor)
     {
         foreach (var task in _tasks)
-        {
-            task.Setup(executor);
-        }
+            task.Prepare(executor);
     }
 
-    public void Start(Action<bool> onEnd)
+    protected override void OnStart(Action<bool> onEnd)
     {
         _onEnd = onEnd;
         ExecuteNextTask();
     }
+
+    protected override void OnCancel()
+    {
+        _task.Cancel();
+    }
+
+    bool IsDone() => _nextTaskIndex == _tasks.Length;
 
     void ExecuteNextTask(bool carryOn = true)
     {
@@ -36,15 +42,15 @@ public class CompositeTask : ITask
             return;
         }
 
-        if (_taskIndex == _tasks.Length)
+        if (IsDone())
         {
             _onEnd(true);
             return;
         }
 
-        var task = _tasks[_taskIndex];
-        _taskIndex++;
-        task.Start(ExecuteNextTask);
+        _task = _tasks[_nextTaskIndex++];
+        _task.Then(ExecuteNextTask);
+        _task.Start();
     }
 
     public override string ToString()
