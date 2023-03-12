@@ -11,7 +11,7 @@ public class WorkTask : Task
         _work = work;
     }
 
-    public override void Prepare(GameObject executor)
+    public override void Attach(GameObject executor)
     {
         _worker = executor.GetComponent<Worker>();
     }

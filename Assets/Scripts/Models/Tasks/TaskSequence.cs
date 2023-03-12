@@ -15,10 +15,10 @@ public class TaskSequence : Task
         _nextTaskIndex = 0;
     }
 
-    public override void Prepare(GameObject executor)
+    public override void Attach(GameObject executor)
     {
         foreach (var task in _tasks)
-            task.Prepare(executor);
+            task.Attach(executor);
     }
 
     protected override void OnStart(Action<bool> onEnd)
@@ -51,6 +51,12 @@ public class TaskSequence : Task
         _task = _tasks[_nextTaskIndex++];
         _task.Then(ExecuteNextTask);
         _task.Start();
+    }
+
+    protected override void OnFailure(bool executed)
+    {
+        for (var index = _nextTaskIndex; index < _tasks.Length; index++)
+            _tasks[index].Cancel();
     }
 
     public override string ToString()

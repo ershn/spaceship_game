@@ -47,7 +47,7 @@ public class TaskScheduler : MonoBehaviour
     {
         while (_tasks.TryPeek(out var task))
         {
-            if (AssignTask(task))
+            if (task.Canceled || AssignTask(task))
                 _tasks.Dequeue();
             else
                 break;

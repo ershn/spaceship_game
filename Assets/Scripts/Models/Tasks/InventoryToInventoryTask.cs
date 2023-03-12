@@ -17,7 +17,7 @@ public class InventoryToInventoryTask : Task
         _amount = amount;
     }
 
-    public override void Prepare(GameObject executor)
+    public override void Attach(GameObject executor)
     {
         _sourceInventory = executor.GetComponent<IItemAmountRemove>();
     }

@@ -15,9 +15,16 @@ public class ItemToInventoryTask : Task
         _item = item;
         _itemDef = itemDef;
         _amount = amount;
+
+        Init();
     }
 
-    public override void Prepare(GameObject executor)
+    void Init()
+    {
+        _item.Reserve(_amount);
+    }
+
+    public override void Attach(GameObject executor)
     {
         _inventory = executor.GetComponent<IItemAmountAdd>();
     }
@@ -28,5 +35,10 @@ public class ItemToInventoryTask : Task
         _item.Remove(_amount);
         _inventory.Add(_itemDef, _amount);
         onEnd(true);
+    }
+
+    protected override void OnFailure(bool executed)
+    {
+        _item.Unreserve(_amount);
     }
 }

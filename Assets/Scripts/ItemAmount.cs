@@ -56,6 +56,18 @@ public class ItemAmount : MonoBehaviour, IAmount
         _reservedAmount += amount;
     }
 
+    public void Unreserve(ulong amount)
+    {
+        if (amount > _reservedAmount)
+        {
+            throw new ArgumentOutOfRangeException(
+                "The released amount exceeds the current reserved amount."
+                );
+        }
+
+        _reservedAmount -= amount;
+    }
+
     public void Remove(ulong amount)
     {
         if (amount > _reservedAmount)

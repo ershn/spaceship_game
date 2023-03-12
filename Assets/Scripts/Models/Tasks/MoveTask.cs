@@ -11,7 +11,7 @@ public class MoveTask : Task
         _dest = dest;
     }
 
-    public override void Prepare(GameObject executor)
+    public override void Attach(GameObject executor)
     {
         _pathFinder = executor.GetComponent<PathFinder>();
     }

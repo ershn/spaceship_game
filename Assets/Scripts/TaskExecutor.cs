@@ -33,7 +33,7 @@ public class TaskExecutor : MonoBehaviour
     void StartTask(ITask task)
     {
         _task = task;
-        _task.Prepare(gameObject);
+        _task.Attach(gameObject);
         _task.Then(_ => _task = null);
         _task.Start();
     }
