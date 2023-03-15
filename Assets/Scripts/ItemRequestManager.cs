@@ -44,11 +44,9 @@ public class ItemRequestManager : MonoBehaviour
 
             var markedAmount = requestedAmount >= availableAmount
                 ? availableAmount : requestedAmount;
-            item.Reserve(markedAmount);
             requestedAmount -= markedAmount;
 
             var task = CreateItemDeliveryTask(itemDef, markedAmount, item, inventory);
-
             tasks.Add(task);
             task.Then(_ =>
             {
@@ -57,11 +55,12 @@ public class ItemRequestManager : MonoBehaviour
                     _requestToTasks.Remove(request);
             });
 
-            OnTaskCreation.Invoke(task);
-
             if (requestedAmount == 0)
                 break;
         }
+
+        foreach (var task in tasks)
+            OnTaskCreation.Invoke(task);
     }
 
     public void CancelItemDelivery(ItemRequest request)
@@ -77,12 +76,14 @@ public class ItemRequestManager : MonoBehaviour
         )
     {
         Debug.Log($"Request item delivery: {itemDef}, {amount}");
-        return new TaskSequence(new ITask[]
-        {
-            new MoveTask(item.transform.position),
-            new ItemToInventoryTask(item, itemDef, amount),
-            new MoveTask(inventory.transform.position),
-            new InventoryToInventoryTask(inventory, itemDef, amount)
-        });
+
+        new TaskNode(new MoveTask(item.transform.position), out var startNode)
+        .To(new TaskNode(new ItemToInventoryTask(item, itemDef, amount)))
+        .To(new TaskNode(new MoveTask(inventory.transform.position)),
+            new TaskNode(new DumpInventoryTask(), out var failureNode))
+        .To(new TaskNode(new InventoryToInventoryTask(inventory, itemDef, amount)),
+            failureNode);
+
+        return new GraphTask(startNode);
     }
 }

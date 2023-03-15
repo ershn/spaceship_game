@@ -21,7 +21,7 @@ public class ConstructionRequestManager : MonoBehaviour
     // TODO: handle canceled tasks
     public void RequestConstruction(IWork work)
     {
-        var task = new TaskSequence(new ITask[]
+        var task = new SequenceTask(new ITask[]
         {
             new MoveTask(work.transform.position),
             new WorkTask(work)

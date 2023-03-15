@@ -7,7 +7,6 @@ using UnityEngine;
 /// <list type="bullet">
 /// <item><description>Can Start once</description></item>
 /// <item><description>Can Cancel several times</description></item>
-/// <item><description>Can Rollback several times</description></item>
 /// <item><description>Can Cancel or Start then Cancel</description></item>
 /// <item><description>Callbacks execute once</description></item>
 /// <item><description>Callbacks will be triggered by Start and Cancel</description></item>
@@ -36,11 +35,6 @@ public abstract class Task : ITask
     /// Set to the result of Start/Cancel.
     /// </summary>
     public bool? Succeeded { get; protected set; }
-
-    /// <summary>
-    /// Set to true on effective Rollback.
-    /// </summary>
-    public bool RolledBack { get; protected set; } = false;
 
     public abstract void Attach(GameObject executor);
 
@@ -107,25 +101,6 @@ public abstract class Task : ITask
     /// Called on task cancelation or failure.
     /// </summary>
     protected virtual void OnFailure(bool executed)
-    {
-    }
-
-    public void Rollback()
-    {
-        if (RolledBack)
-            return;
-
-        if (Executed && (bool)Succeeded)
-        {
-            RolledBack = true;
-            OnRollback();
-        }
-    }
-
-    /// <summary>
-    /// Only called on first Rollback if Executed and Succeeded.
-    /// </summary>
-    protected virtual void OnRollback()
     {
     }
 }

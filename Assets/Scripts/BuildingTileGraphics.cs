@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridPlacer))]
+[RequireComponent(typeof(GridPosition))]
 [RequireComponent(typeof(BuildingDefHolder))]
 public class BuildingTileGraphics : MonoBehaviour
 {
     public Vector2IntTileBaseGameEvent OnTileChanged;
 
-    GridPlacer _gridPlacer;
+    GridPosition _gridPlacer;
     BuildingDef _buildingDef;
 
     void Awake()
     {
-        _gridPlacer = GetComponent<GridPlacer>();
+        _gridPlacer = GetComponent<GridPosition>();
         _buildingDef = GetComponent<BuildingDefHolder>().BuildingDef;
     }
 

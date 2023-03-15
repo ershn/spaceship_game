@@ -22,7 +22,8 @@ public class Looker : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!(Mathf.Approximately(_direction.x, 0.0f) && Mathf.Approximately(_direction.y, 0.0f)))
+        if (!(Mathf.Approximately(_direction.x, 0.0f)
+            && Mathf.Approximately(_direction.y, 0.0f)))
             OnLookDirectionUpdated.Invoke(_direction.normalized);
     }
 }

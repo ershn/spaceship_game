@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class TaskSequence : Task
+public class SequenceTask : Task
 {
     ITask[] _tasks;
     int _nextTaskIndex;
     ITask _task;
     Action<bool> _onEnd;
 
-    public TaskSequence(ITask[] tasks)
+    public SequenceTask(ITask[] tasks)
     {
         _tasks = tasks;
         _nextTaskIndex = 0;
