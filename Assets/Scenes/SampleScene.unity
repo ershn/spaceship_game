@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PotatoItem
       objectReference: {fileID: 0}
+    - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: ItemDef
       value: 
@@ -279,6 +283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SteelItem (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: ItemDef
       value: 
@@ -373,7 +381,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
+  logPathResults: 0
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -392,7 +400,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   euclideanEmbedding:
@@ -982,6 +990,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SteelFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 72901617766461770, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: BuildingDef
       value: 
@@ -1043,6 +1055,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SteelItem
       objectReference: {fileID: 0}
+    - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: ItemDef
       value: 
@@ -1093,67 +1109,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
---- !u!1001 &1672109520
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 72901617766461770, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_Name
-      value: SteelFloor (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: BuildingDef
-      value: 
-      objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d15732cf45301614f80b94837e55b267, type: 3}
 --- !u!1 &1695935641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,7 +1155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridPositioner: {fileID: 11400000, guid: dac4e01ef9447934ab45979516b10539, type: 2}
-  Floor: {fileID: 72901617766461770, guid: d15732cf45301614f80b94837e55b267, type: 3}
+  Floor: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
+  SteelFloor: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
 --- !u!114 &1695935644
 MonoBehaviour:
   m_ObjectHideFlags: 0
