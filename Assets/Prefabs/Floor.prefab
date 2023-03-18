@@ -16,13 +16,14 @@ GameObject:
   - component: {fileID: 7354273520412553579}
   - component: {fileID: 1492980114683187179}
   - component: {fileID: -9037717301101027011}
+  - component: {fileID: -427311761275840813}
   m_Layer: 0
-  m_Name: SteelFloor
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5680633180854098372
 Transform:
   m_ObjectHideFlags: 0
@@ -64,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f91f7c16039784e91d83e4c05c884d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingDef: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
+  BuildingDef: {fileID: 0}
 --- !u!114 &-1909066321609176523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,3 +187,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnTileChanged: {fileID: 11400000, guid: 1995b6c47ad995541a6cdebf1cddc4be, type: 2}
+--- !u!114 &-427311761275840813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03030011ddb0ab347818328d95190662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
