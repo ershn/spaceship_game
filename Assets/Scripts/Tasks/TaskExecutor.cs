@@ -1,22 +1,20 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TaskExecutor : MonoBehaviour
 {
-    public static event Action<TaskExecutor> OnCreation;
-    public static event Action<TaskExecutor> OnDestruction;
+    public TaskScheduler TaskScheduler;
 
     ITask _task;
 
     void Start()
     {
-        OnCreation?.Invoke(this);
+        TaskScheduler.AddExecutor(this);
     }
 
     void OnDestroy()
     {
-        OnDestruction?.Invoke(this);
+        TaskScheduler.RemoveExecutor(this);
     }
 
     public void ExecuteTask(ITask task)

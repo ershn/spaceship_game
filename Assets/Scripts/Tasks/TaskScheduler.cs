@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,18 +7,6 @@ public class TaskScheduler : MonoBehaviour
     HashSet<TaskExecutor> _idleExecutors = new();
     HashSet<TaskExecutor> _workingExecutors = new();
     Queue<ITask> _tasks = new();
-
-    void OnEnable()
-    {
-        TaskExecutor.OnCreation += AddExecutor;
-        TaskExecutor.OnDestruction += RemoveExecutor;
-    }
-
-    void OnDisable()
-    {
-        TaskExecutor.OnCreation -= AddExecutor;
-        TaskExecutor.OnDestruction -= RemoveExecutor;
-    }
 
     public void AddExecutor(TaskExecutor executor)
     {

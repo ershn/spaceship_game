@@ -1,22 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ConstructionRequestManager : MonoBehaviour
 {
-    public static ConstructionRequestManager Instance { get; private set; }
-
     public TaskEvent OnTaskCreation;
 
     Dictionary<IWork, ITask> _requestToTask = new();
-
-    void Awake()
-    {
-        if (Instance != null)
-            throw new InvalidOperationException("A singleton instance already exists.");
-
-        Instance = this;
-    }
 
     // TODO: handle canceled tasks
     public void RequestConstruction(IWork work)

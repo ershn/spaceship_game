@@ -13,6 +13,9 @@ public class ConstructionRequester : MonoBehaviour
         Canceled
     }
 
+    public ItemRequestManager ItemRequestManager;
+    public ConstructionRequestManager ConstructionRequestManager;
+
     BuildingComponents _buildingComponents;
     ConstructionWork _constructionWork;
 
@@ -54,7 +57,7 @@ public class ConstructionRequester : MonoBehaviour
             Debug.Log($"Request item: {request.ItemDef}, {request.Amount}");
 
             _requestedComponents[request.ItemDef] = request;
-            ItemRequestManager.Instance.RequestItemDelivery(request);
+            ItemRequestManager.RequestItemDelivery(request);
         }
 
         return _requestedComponents.Count == 0;
@@ -72,7 +75,7 @@ public class ConstructionRequester : MonoBehaviour
     {
         _phase = Phase.Canceled;
         foreach (var request in _requestedComponents.Values)
-            ItemRequestManager.Instance.CancelItemDelivery(request);
+            ItemRequestManager.CancelItemDelivery(request);
     }
 
 #endregion
@@ -81,7 +84,7 @@ public class ConstructionRequester : MonoBehaviour
     void RequestConstruction()
     {
         _phase = Phase.RequestingConstruction;
-        ConstructionRequestManager.Instance.RequestConstruction(_constructionWork);
+        ConstructionRequestManager.RequestConstruction(_constructionWork);
     }
 
     public void FulfillConstructionRequest()
@@ -92,7 +95,7 @@ public class ConstructionRequester : MonoBehaviour
     void CancelConstructionRequest()
     {
         _phase = Phase.Canceled;
-        ConstructionRequestManager.Instance.CancelConstruction(_constructionWork);
+        ConstructionRequestManager.CancelConstruction(_constructionWork);
     }
 
 #endregion

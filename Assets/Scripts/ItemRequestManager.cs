@@ -1,25 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ItemRequestManager : MonoBehaviour
 {
-    public static ItemRequestManager Instance { get; private set; }
-
     public TaskEvent OnTaskCreation;
 
     public ItemGridIndexer ItemGrid;
 
     Dictionary<ItemRequest, HashSet<ITask>> _requestToTasks = new();
-
-    void Awake()
-    {
-        if (Instance != null)
-            throw new InvalidOperationException("A singleton instance already exists.");
-
-        Instance = this;
-    }
 
     // TODO: handle canceled tasks
     // TODO: select the closest items
