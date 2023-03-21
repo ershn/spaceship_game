@@ -142,9 +142,13 @@ PrefabInstance:
       propertyPath: ItemDef
       value: 
       objectReference: {fileID: 11400000, guid: c1b46e2794241334f93a4b6e4caff569, type: 2}
+    - target: {fileID: 2496044289052535066, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -270,7 +274,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &560274381
 PrefabInstance:
@@ -291,9 +295,13 @@ PrefabInstance:
       propertyPath: ItemDef
       value: 
       objectReference: {fileID: 11400000, guid: 1e320a5b3161dd840b5be35cc8bd47a3, type: 2}
+    - target: {fileID: 2496044289052535066, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -434,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 873609800}
   - component: {fileID: 873609799}
-  - component: {fileID: 873609802}
+  - component: {fileID: 873609803}
   - component: {fileID: 873609801}
   m_Layer: 0
   m_Name: Grid
@@ -469,7 +477,7 @@ Transform:
   m_Children:
   - {fileID: 1123563458}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &873609801
 MonoBehaviour:
@@ -484,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnClick: {fileID: 11400000, guid: 46e1bba80ff0d6740ac93642cf9e524d, type: 2}
---- !u!114 &873609802
+--- !u!114 &873609803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -493,10 +501,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 873609798}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d599689ce09570e4aa0031d25ac907c3, type: 3}
+  m_Script: {fileID: 11500000, guid: ede89c4f19743814781f7f7fd5580cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridPositioner: {fileID: 11400000, guid: dac4e01ef9447934ab45979516b10539, type: 2}
 --- !u!1001 &1003192732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -504,13 +511,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5029522435181719863, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 743934611261804635, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: TaskScheduler
       value: 
       objectReference: {fileID: 2000432410}
     - target: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -936,6 +947,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1227286750}
   - component: {fileID: 1227286751}
+  - component: {fileID: 1227286752}
+  - component: {fileID: 1227286753}
   m_Layer: 0
   m_Name: EntityCreator
   m_TagString: Untagged
@@ -970,10 +983,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b648a930653f81442a7dbc69dc866dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridPositioner: {fileID: 11400000, guid: dac4e01ef9447934ab45979516b10539, type: 2}
+  Grid2D: {fileID: 873609803}
   ItemRequestManager: {fileID: 2000432407}
   ConstructionRequestManager: {fileID: 2000432411}
   FloorPrefab: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
+--- !u!114 &1227286752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227286749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424ab0a62da96984381ecefecf7031c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grid2D: {fileID: 873609803}
+  ItemPrefab: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+--- !u!114 &1227286753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227286749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22090d9275890794a8da65fc3c4e0fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
 --- !u!1001 &1259402903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -981,13 +1021,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5029522435181719863, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 743934611261804635, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: TaskScheduler
       value: 
       objectReference: {fileID: 2000432410}
     - target: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1062,9 +1106,13 @@ PrefabInstance:
       propertyPath: BuildingDef
       value: 
       objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
+    - target: {fileID: 5209878187157717699, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1127,9 +1175,13 @@ PrefabInstance:
       propertyPath: ItemDef
       value: 
       objectReference: {fileID: 11400000, guid: 1e320a5b3161dd840b5be35cc8bd47a3, type: 2}
+    - target: {fileID: 2496044289052535066, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1198,8 +1250,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695935641}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0013771, y: -0.25854766, z: 4.5488067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1218,7 +1270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0c12af6309b3f4caf66f8ee183a175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingCreator: {fileID: 1227286751}
+  BuildingInstantiator: {fileID: 1227286751}
+  TileGrid: {fileID: 11400000, guid: b0f842f899bffb947836b0f8491d5d92, type: 2}
   SteelFloor: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
 --- !u!114 &1695935644
 MonoBehaviour:
@@ -1272,7 +1325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729712202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0013771, y: 0.25854766, z: -4.5488067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1280,7 +1333,7 @@ Transform:
   - {fileID: 2000432409}
   - {fileID: 1695935642}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2000432406
 GameObject:
@@ -1328,6 +1381,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ItemCreator: {fileID: 1227286753}
   ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
 --- !u!4 &2000432409
 Transform:
@@ -1336,8 +1390,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000432406}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0013771, y: -0.25854766, z: 4.5488067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1390,13 +1444,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5029522435181719863, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
     - target: {fileID: 743934611261804635, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: TaskScheduler
       value: 
       objectReference: {fileID: 2000432410}
     - target: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_LocalPosition.x

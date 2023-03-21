@@ -7,7 +7,7 @@ public class GridPolyIndexer : GridIndexer
 {
     ArrayGrid<List<GameObject>> _grid = new(500);
 
-    public List<GameObject> Get(Vector2Int position) => _grid[position] ?? new();
+    public IEnumerable<GameObject> Get(Vector2Int position) => _grid[position] ?? new();
 
     public bool Has(Vector2Int position) => _grid[position] != null;
 

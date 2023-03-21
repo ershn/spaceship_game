@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
@@ -38,6 +39,16 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
                 );
         }
 
-        _inventory[itemDef] -= amount;
+        _inventory[itemDef] = currentAmount - amount;
+
+        Amount -= amount;
+    }
+
+    public IEnumerable<ItemDefAmount> Empty()
+    {
+        var inventory = _inventory;
+        Amount = 0;
+        _inventory = new();
+        return inventory.Select(elem => new ItemDefAmount(elem.Key, elem.Value));
     }
 }

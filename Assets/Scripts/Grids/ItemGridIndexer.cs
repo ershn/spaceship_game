@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -10,6 +11,11 @@ public class ItemGridIndexer : GridPolyIndexer
     // public event ItemEvent OnItemRemoved;
 
     Dictionary<ItemDef, Dictionary<Vector2Int, GameObject>> _index = new();
+
+    public GameObject Find(Vector2Int position, ItemDef itemDef) =>
+        Get(position).FirstOrDefault(item =>
+            item.GetComponent<ItemDefHolder>().ItemDef == itemDef
+            );
 
     public IEnumerable<GameObject> GetAllItems(ItemDef itemDef)
     {

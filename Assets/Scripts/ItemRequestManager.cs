@@ -6,6 +6,7 @@ public class ItemRequestManager : MonoBehaviour
 {
     public TaskEvent OnTaskCreation;
 
+    public ItemCreator ItemCreator;
     public ItemGridIndexer ItemGrid;
 
     Dictionary<ItemRequest, HashSet<ITask>> _requestToTasks = new();
@@ -67,10 +68,10 @@ public class ItemRequestManager : MonoBehaviour
         Debug.Log($"Request item delivery: {itemDef}, {amount}");
 
         new TaskNode(new MoveTask(item.transform.position), out var startNode)
-        .To(new TaskNode(new ItemToInventoryTask(item, itemDef, amount)))
-        .To(new TaskNode(new MoveTask(inventory.transform.position)),
-            new TaskNode(new DumpInventoryTask(), out var failureNode))
-        .To(new TaskNode(new InventoryToInventoryTask(inventory, itemDef, amount)),
+        .To(new(new ItemToInventoryTask(item, itemDef, amount)))
+        .To(new(new MoveTask(inventory.transform.position)),
+            new(new DumpInventoryTask(ItemCreator), out var failureNode))
+        .To(new(new InventoryToInventoryTask(inventory, itemDef, amount)),
             failureNode);
 
         return new GraphTask(startNode);

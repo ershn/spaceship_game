@@ -2,21 +2,30 @@ using UnityEngine;
 
 public class GridPosition : MonoBehaviour
 {
-    public GridPositioner GridPositioner;
+    public Grid2D Grid2D;
     public GridIndexer GridIndexer;
 
-    public Vector2Int CellPosition { get; private set; }
+    Vector2Int _cellPosition;
+    public Vector2Int CellPosition
+    {
+        get
+        {
+            if (Grid2D != null)
+                _cellPosition = Grid2D.WorldToCell(transform.position);
+            return _cellPosition;
+        }
+    }
 
     void Start()
     {
-        CellPosition = GridPositioner.WorldToCell(transform.position);
-        AddToGridIndexer();
+        if (GridIndexer != null)
+            AddToGridIndexer();
     }
 
     void OnDestroy()
     {
-        RemoveFromGridIndexer();
-        CellPosition = default;
+        if (GridIndexer != null)
+            RemoveFromGridIndexer();
     }
 
     void AddToGridIndexer()

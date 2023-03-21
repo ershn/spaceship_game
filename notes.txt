@@ -1,6 +1,4 @@
 TODO
-- create DropInventoryTask
-- drop the Inventory when a task sequence including ItemToInventoryTask fails
 - pass a TaskResult object to onEnd callbacks
   - Success property
-- remove singletons (static events and static instances)
+- get the grid through the parent game object ?
