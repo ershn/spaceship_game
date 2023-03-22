@@ -2,20 +2,22 @@ using UnityEngine;
 
 public class ItemInstantiator : MonoBehaviour
 {
-    public Grid2D Grid2D;
-
     public ItemDefHolder ItemPrefab;
+
+    Grid2D _grid2D;
+
+    void Awake()
+    {
+        _grid2D = transform.root.GetComponent<Grid2D>();
+    }
 
     public ItemDefHolder Instantiate(Vector2Int cellPosition, ItemDef itemDef, ulong amount)
     {
-        var position = Grid2D.CellCenterWorld(cellPosition);
+        var position = _grid2D.CellCenterWorld(cellPosition);
 
-        var item = Instantiate(ItemPrefab, position, Quaternion.identity);
+        var item = Instantiate(ItemPrefab, position, Quaternion.identity, transform.root);
 
         item.ItemDef = itemDef;
-
-        var gridPosition = item.GetComponent<GridPosition>();
-        gridPosition.Grid2D = Grid2D;
 
         var itemAmount = item.GetComponent<ItemAmount>();
         itemAmount.Amount = amount;

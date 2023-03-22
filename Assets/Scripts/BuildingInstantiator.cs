@@ -2,22 +2,25 @@ using UnityEngine;
 
 public class BuildingInstantiator : MonoBehaviour
 {
-    public Grid2D Grid2D;
     public ItemRequestManager ItemRequestManager;
     public ConstructionRequestManager ConstructionRequestManager;
 
     public BuildingDefHolder FloorPrefab;
 
+    Grid2D _grid2D;
+
+    void Awake()
+    {
+        _grid2D = transform.root.GetComponent<Grid2D>();
+    }
+
     public BuildingDefHolder InstantiateFloor(Vector2Int cellPosition, BuildingDef buildingDef)
     {
-        var position = Grid2D.CellCenterWorld(cellPosition);
+        var position = _grid2D.CellCenterWorld(cellPosition);
 
-        var floor = Instantiate(FloorPrefab, position, Quaternion.identity);
+        var floor = Instantiate(FloorPrefab, position, Quaternion.identity, transform.root);
 
         floor.BuildingDef = buildingDef;
-
-        var gridPosition = floor.GetComponent<GridPosition>();
-        gridPosition.Grid2D = Grid2D;
 
         var constructionRequester = floor.GetComponent<ConstructionRequester>();
         constructionRequester.ItemRequestManager = ItemRequestManager;

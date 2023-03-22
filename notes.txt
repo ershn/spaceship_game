@@ -1,4 +1,3 @@
 TODO
 - pass a TaskResult object to onEnd callbacks
   - Success property
-- get the grid through the parent game object ?

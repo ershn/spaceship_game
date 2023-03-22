@@ -2,18 +2,15 @@ using UnityEngine;
 
 public class GridPosition : MonoBehaviour
 {
-    public Grid2D Grid2D;
     public GridIndexer GridIndexer;
 
-    Vector2Int _cellPosition;
-    public Vector2Int CellPosition
+    Grid2D _grid2D;
+
+    public Vector2Int CellPosition => _grid2D.WorldToCell(transform.position);
+
+    void Awake()
     {
-        get
-        {
-            if (Grid2D != null)
-                _cellPosition = Grid2D.WorldToCell(transform.position);
-            return _cellPosition;
-        }
+        _grid2D = transform.root.GetComponent<Grid2D>();
     }
 
     void Start()
