@@ -18,5 +18,4 @@ MonoBehaviour:
   - ItemDef: {fileID: 11400000, guid: 1e320a5b3161dd840b5be35cc8bd47a3, type: 2}
     Amount: 10000000
   MaxHealthPoints: 100
-  BuildingUnitTime: 0.03
-  ConstructionTime: 10
+  ConstructionTime: 5

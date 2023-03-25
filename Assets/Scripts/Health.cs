@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +9,7 @@ public class Health : MonoBehaviour
 
     IHealthDef _healthDef;
 
-    public int MaxHealthPoints { get => _healthDef.MaxHealthPoints; }
+    public int MaxHealthPoints => _healthDef.MaxHealthPoints;
     public int HealthPoints { get; private set; } = 1;
 
     void Awake()
@@ -26,11 +24,16 @@ public class Health : MonoBehaviour
         NotifyHealthChange();
     }
 
-    public void SetHealthPercentage(int percentage)
+    public void SetTotalHealth(float total)
     {
-        HealthPoints = MaxHealthPoints * percentage / 100;
+        var newHealthPoints = Mathf.FloorToInt(MaxHealthPoints * total);
 
-        NotifyHealthChange();
+        if (newHealthPoints != HealthPoints)
+        {
+            HealthPoints = newHealthPoints;
+
+            NotifyHealthChange();
+        }
     }
 
     void NotifyHealthChange()

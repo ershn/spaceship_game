@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1492980114683187179}
   - component: {fileID: -9037717301101027011}
   - component: {fileID: -427311761275840813}
+  - component: {fileID: -223798451696912205}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -51,7 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e724852220210e4c8088628193a4147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridPositioner: {fileID: 11400000, guid: dac4e01ef9447934ab45979516b10539, type: 2}
   GridIndexer: {fileID: 11400000, guid: b0f842f899bffb947836b0f8491d5d92, type: 2}
 --- !u!114 &2360495379068193615
 MonoBehaviour:
@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55aca26532fb8ad4d8a3e1747f153439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemRequestManager: {fileID: 0}
+  ConstructionRequestManager: {fileID: 0}
 --- !u!114 &5355182027032121478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,13 +119,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e05d40c488de140865d22a0e15bc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnConstructionProgressPercentage:
+  OnConstructionStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnConstructionProgress:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492980114683187179}
         m_TargetAssemblyTypeName: Health, Assembly-CSharp
-        m_MethodName: SetHealthPercentage
+        m_MethodName: SetTotalHealth
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -223798451696912205}
+        m_TargetAssemblyTypeName: ProgressBarGraphics, Assembly-CSharp
+        m_MethodName: SetProgress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnConstructionCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1909066321609176523}
+        m_TargetAssemblyTypeName: ConstructionRequester, Assembly-CSharp
+        m_MethodName: FulfillConstructionRequest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -9037717301101027011}
+        m_TargetAssemblyTypeName: BuildingTileGraphics, Assembly-CSharp
+        m_MethodName: ToNormalTile
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -149,31 +193,7 @@ MonoBehaviour:
       m_Calls: []
   OnMaxHealth:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1909066321609176523}
-        m_TargetAssemblyTypeName: ConstructionRequester, Assembly-CSharp
-        m_MethodName: FulfillConstructionRequest
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: -9037717301101027011}
-        m_TargetAssemblyTypeName: TileGraphics, Assembly-CSharp
-        m_MethodName: ToNormalTile
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &-9037717301101027011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,3 +219,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03030011ddb0ab347818328d95190662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-223798451696912205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b29c4a35ed7cf742806f692c941a579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalPosition: {x: 0, y: -0.7}
+  ProgressBarPrefab: {fileID: 4479304217287990219, guid: 5cea21f91acb29445bdd85fd3aa850d4, type: 3}

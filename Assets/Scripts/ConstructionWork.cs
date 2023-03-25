@@ -1,14 +1,27 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BuildingDefHolder))]
 public class ConstructionWork : MonoBehaviour, IWork
 {
-    public IntEvent OnConstructionProgressPercentage;
+    enum Phase
+    {
+        Pending,
+        Started,
+        Completed
+    }
+
+    public UnityEvent OnConstructionStarted;
+    public FloatEvent OnConstructionProgress;
+    public UnityEvent OnConstructionCompleted;
 
     BuildingDef _buildingDef;
 
-    float RequiredTime { get => _buildingDef.ConstructionTime; }
+    float RequiredTime => _buildingDef.ConstructionTime;
     float _currentTime = 0f;
+
+    Phase _phase = Phase.Pending;
 
     void Awake()
     {
@@ -17,11 +30,26 @@ public class ConstructionWork : MonoBehaviour, IWork
 
     public bool AddWorkTime(float time)
     {
+        if (_phase == Phase.Completed)
+            throw new InvalidOperationException("Construction work already completed");
+
+        if (_phase == Phase.Pending)
+        {
+            _phase = Phase.Started;
+            OnConstructionStarted.Invoke();
+        }
+
         _currentTime += time;
 
-        var progress = Mathf.Clamp(Mathf.RoundToInt(_currentTime / RequiredTime * 100), 0, 100);
-        OnConstructionProgressPercentage.Invoke(progress);
+        var progress = Mathf.Clamp01(_currentTime / RequiredTime);
+        OnConstructionProgress.Invoke(progress);
 
-        return progress == 100;
+        if (progress >= 1f)
+        {
+            _phase = Phase.Completed;
+            OnConstructionCompleted.Invoke();
+        }
+
+        return _phase == Phase.Completed;
     }
 }
