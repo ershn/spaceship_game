@@ -27,13 +27,13 @@ public class GridPosition : MonoBehaviour
 
     void AddToGridIndexer()
     {
-        Debug.Log($"AddToGameGrid: {CellPosition}, {gameObject}");
+        Debug.Log($"AddToGridIndexer: {CellPosition}, {gameObject}");
         GridIndexer.Add(this);
     }
 
     void RemoveFromGridIndexer()
     {
-        Debug.Log($"RemoveFromGameGrid: {CellPosition}, {gameObject}");
+        Debug.Log($"RemoveFromGridIndexer: {CellPosition}, {gameObject}");
         GridIndexer.Remove(this);
     }
 }

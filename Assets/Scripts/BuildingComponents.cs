@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(BuildingDef))]
+[RequireComponent(typeof(BuildingDefHolder))]
+[RequireComponent(typeof(GridPosition))]
 public class BuildingComponents : MonoBehaviour, IItemAmountAdd
 {
-    struct Amounts
+    class Amounts
     {
         public ulong MaxAmount;
-        public ulong Amount;
+        public ulong CurrentAmount;
     }
 
     public ItemDefEvent OnComponentMaxAmount;
 
+    public ItemCreator ItemCreator;
+
     BuildingDef _buildingDef;
+    GridPosition _gridPosition;
 
     Dictionary<ItemDef, Amounts> _inventory;
 
     void Awake()
     {
         _buildingDef = GetComponent<BuildingDefHolder>().BuildingDef;
+        _gridPosition = GetComponent<GridPosition>();
 
         InitInventory();
     }
@@ -33,7 +38,7 @@ public class BuildingComponents : MonoBehaviour, IItemAmountAdd
             _inventory[componentAmount.ItemDef] = new Amounts()
             {
                 MaxAmount = componentAmount.Amount,
-                Amount = 0
+                CurrentAmount = 0
             };
         }
     }
@@ -41,7 +46,7 @@ public class BuildingComponents : MonoBehaviour, IItemAmountAdd
     public IEnumerable<ItemDefAmount> GetRequiredAmounts()
     {
         return _inventory.Select(kv =>
-            new ItemDefAmount(kv.Key, kv.Value.MaxAmount - kv.Value.Amount)
+            new ItemDefAmount(kv.Key, kv.Value.MaxAmount - kv.Value.CurrentAmount)
         );
     }
 
@@ -49,16 +54,34 @@ public class BuildingComponents : MonoBehaviour, IItemAmountAdd
     {
         var component = _inventory[itemDef];
 
-        if (component.Amount + amount > component.MaxAmount)
+        if (component.CurrentAmount + amount > component.MaxAmount)
         {
             throw new ArgumentOutOfRangeException(
                 "The total component amount would exceed the limit."
                 );
         }
 
-        component.Amount += amount;
+        component.CurrentAmount += amount;
 
-        if (component.Amount == component.MaxAmount)
+        if (component.CurrentAmount == component.MaxAmount)
             OnComponentMaxAmount.Invoke(itemDef);
+    }
+
+    public void Dump()
+    {
+        var cellPosition = _gridPosition.CellPosition;
+
+        foreach (var component in _inventory)
+        {
+            var itemDef = component.Key;
+            var amounts = component.Value;
+
+            if (amounts.CurrentAmount > 0)
+            {
+                Debug.Log($"Dumping item: {cellPosition}, {itemDef}, {amounts.CurrentAmount}");
+                ItemCreator.Upsert(cellPosition, itemDef, amounts.CurrentAmount);
+                amounts.CurrentAmount = 0;
+            }
+        }
     }
 }

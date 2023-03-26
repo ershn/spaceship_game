@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eb99eed3f167ba546bdc056fc6d41e63
+guid: 43895b6722cdd4d4daf2fa904b5c1c3c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,8 +45,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 7
+  spritePivot: {x: 0.5, y: 0}
   spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: progress_bar_background
+      name: tiles_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 240
-        width: 56
-        height: 16
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,35 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d393642e6db3b7546bc331be6ebe3ad7
-      internalID: 71254999
+      spriteID: a2811a4353aa4bd4c89ab22c3440b98c
+      internalID: -727443656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: progress_bar_foreground
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 228
-        width: 48
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 820d7f3ead3e64844972ea42a0e811a4
-      internalID: -1161397460
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cancel_task_button
+      name: tiles_1
       rect:
         serializedVersion: 2
         x: 64
@@ -173,8 +152,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 883bdd8429fc373468f0bc695dfe1f59
-      internalID: -859306767
+      spriteID: e9c26437076be4a4e8c218f8c36b9539
+      internalID: 1962471564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3492fb7de47eed848aca68a89563d2c9
+      internalID: 1082092608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86d16a31eb1ef424e824a2703df9360d
+      internalID: -889633309
       vertices: []
       indices: 
       edges: []
@@ -190,9 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      progress_bar_foreground: -1161397460
-      progress_bar_background: 71254999
-      cancel_task_button: -1220507078
+      tiles_1: 1962471564
+      tiles_3: -889633309
+      tiles_0: -727443656
+      tiles_2: 1082092608
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

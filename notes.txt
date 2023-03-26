@@ -1,3 +1,8 @@
 TODO
 - pass a TaskResult object to onEnd callbacks
   - Success property
+- add building deconstruction
+- allow to build a rectangular area of floors
+- add a storage building
+- add a sweep order
+- update to the new Input System

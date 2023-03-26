@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class BuildingInstantiator : MonoBehaviour
 {
+    public TilemapUpdater TilemapUpdater;
     public ItemRequestManager ItemRequestManager;
     public ConstructionRequestManager ConstructionRequestManager;
+    public ItemCreator ItemCreator;
 
     public BuildingDefHolder FloorPrefab;
 
@@ -22,9 +24,15 @@ public class BuildingInstantiator : MonoBehaviour
 
         floor.BuildingDef = buildingDef;
 
-        var constructionRequester = floor.GetComponent<ConstructionRequester>();
-        constructionRequester.ItemRequestManager = ItemRequestManager;
-        constructionRequester.ConstructionRequestManager = ConstructionRequestManager;
+        var constructor = floor.GetComponent<BuildingConstructor>();
+        constructor.ItemRequestManager = ItemRequestManager;
+        constructor.ConstructionRequestManager = ConstructionRequestManager;
+
+        var components = floor.GetComponent<BuildingComponents>();
+        components.ItemCreator = ItemCreator;
+
+        var tileGraphics = floor.GetComponent<BuildingTileGraphics>();
+        tileGraphics.TilemapUpdater = TilemapUpdater;
 
         floor.gameObject.SetActive(true);
 

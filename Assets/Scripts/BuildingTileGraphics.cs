@@ -4,14 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(BuildingDefHolder))]
 public class BuildingTileGraphics : MonoBehaviour
 {
-    public Vector2IntTileBaseGameEvent OnTileChanged;
+    public TilemapUpdater TilemapUpdater;
 
-    GridPosition _gridPlacer;
+    GridPosition _gridPosition;
     BuildingDef _buildingDef;
 
     void Awake()
     {
-        _gridPlacer = GetComponent<GridPosition>();
+        _gridPosition = GetComponent<GridPosition>();
         _buildingDef = GetComponent<BuildingDefHolder>().BuildingDef;
     }
 
@@ -20,13 +20,23 @@ public class BuildingTileGraphics : MonoBehaviour
         ToBlueprintTile();
     }
 
+    void OnDestroy()
+    {
+        UnsetTile();
+    }
+
     public void ToBlueprintTile()
     {
-        OnTileChanged.Invoke(_gridPlacer.CellPosition, _buildingDef.BlueprintTile);
+        TilemapUpdater.SetTile(_gridPosition.CellPosition, _buildingDef.BlueprintTile);
     }
 
     public void ToNormalTile()
     {
-        OnTileChanged.Invoke(_gridPlacer.CellPosition, _buildingDef.NormalTile);
+        TilemapUpdater.SetTile(_gridPosition.CellPosition, _buildingDef.NormalTile);
+    }
+
+    public void UnsetTile()
+    {
+        TilemapUpdater.UnsetTile(_gridPosition.CellPosition);
     }
 }
