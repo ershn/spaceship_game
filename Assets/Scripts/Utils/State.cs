@@ -1,3 +1,5 @@
+using System;
+
 public abstract class State
 {
     readonly IStateMachine _stateMachine;
@@ -20,7 +22,10 @@ public abstract class State
         OnCancel();
     }
 
-    protected abstract void OnCancel();
+    protected virtual void OnCancel()
+    {
+        throw new NotImplementedException("OnCancel not implemented for this State");
+    }
 
     protected virtual void OnStart() { }
 

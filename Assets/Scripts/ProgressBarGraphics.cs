@@ -19,6 +19,12 @@ public class ProgressBarGraphics : MonoBehaviour
             Destroy(_progressBar.gameObject);
     }
 
+    public void Reset()
+    {
+        if (_progressBar != null)
+            Destroy(_progressBar.gameObject);
+    }
+
     ProgressBarController CreateBar()
     {
         var position = transform.TransformPoint(LocalPosition);

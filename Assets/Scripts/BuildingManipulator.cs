@@ -20,14 +20,22 @@ public class BuildingManipulator : MonoBehaviour
         _buildingInstantiator.InstantiateFloor(cellPosition, buildingDef);
     }
 
-    public void CancelConstruction(Vector2Int cellPosition)
+    public void Deconstruct(Vector2Int cellPosition)
     {
-        if (!FloorGrid.Has(cellPosition))
+        if (!FloorGrid.TryGet(cellPosition, out var building))
             return;
+        Debug.Log($"Deconstruct: {cellPosition}");
+        building.GetComponent<BuildingDeconstructor>().Deconstruct();
+    }
 
-        Debug.Log($"CancelConstruction: {cellPosition}");
-        var building = FloorGrid.Get(cellPosition);
-        var constructor = building.GetComponent<BuildingConstructor>();
-        constructor.Cancel();
+    public void Cancel(Vector2Int cellPosition)
+    {
+        if (!FloorGrid.TryGet(cellPosition, out var building))
+            return;
+        Debug.Log($"Cancel: {cellPosition}");
+        if (building.TryGetComponent<BuildingConstructor>(out var constructor))
+            constructor.Cancel();
+        else
+            building.GetComponent<BuildingDeconstructor>().Cancel();
     }
 }

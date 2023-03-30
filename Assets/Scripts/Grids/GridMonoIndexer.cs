@@ -6,7 +6,20 @@ public class GridMonoIndexer : GridIndexer
 {
     ArrayGrid<GameObject> _grid = new(500);
 
-    public GameObject Get(Vector2Int position) => _grid[position];
+    public GameObject Get(Vector2Int position)
+    {
+        var obj = _grid[position];
+        if (obj == null)
+            throw new InvalidOperationException("Grid cell empty");
+
+        return obj;
+    }
+
+    public bool TryGet(Vector2Int position, out GameObject obj)
+    {
+        obj = _grid[position];
+        return obj != null;
+    }
 
     public bool Has(Vector2Int position) => _grid[position] != null;
 

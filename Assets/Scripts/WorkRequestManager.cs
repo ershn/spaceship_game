@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConstructionRequestManager : MonoBehaviour
+public class WorkRequestManager : MonoBehaviour
 {
     public TaskEvent OnTaskCreation;
 
     Dictionary<IWork, ITask> _requestToTask = new();
 
     // TODO: handle canceled tasks
-    public void RequestConstruction(IWork work)
+    public void RequestWork(IWork work)
     {
         var task = new SequenceTask(new ITask[]
         {
@@ -22,7 +22,7 @@ public class ConstructionRequestManager : MonoBehaviour
         OnTaskCreation.Invoke(task);
     }
 
-    public void CancelConstruction(IWork work)
+    public void CancelWork(IWork work)
     {
         if (_requestToTask.TryGetValue(work, out var task))
             task.Cancel();

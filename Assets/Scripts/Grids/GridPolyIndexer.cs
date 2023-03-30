@@ -9,8 +9,6 @@ public class GridPolyIndexer : GridIndexer
 
     public IEnumerable<GameObject> Get(Vector2Int position) => _grid[position] ?? new();
 
-    public bool Has(Vector2Int position) => _grid[position] != null;
-
     public override void Add(GridPosition obj)
     {
         var list = _grid[obj.CellPosition];

@@ -4,7 +4,7 @@ public class BuildingInstantiator : MonoBehaviour
 {
     public TilemapUpdater TilemapUpdater;
     public ItemRequestManager ItemRequestManager;
-    public ConstructionRequestManager ConstructionRequestManager;
+    public WorkRequestManager WorkRequestManager;
     public ItemCreator ItemCreator;
 
     public BuildingDefHolder FloorPrefab;
@@ -24,12 +24,15 @@ public class BuildingInstantiator : MonoBehaviour
 
         floor.BuildingDef = buildingDef;
 
-        var constructor = floor.GetComponent<BuildingConstructor>();
-        constructor.ItemRequestManager = ItemRequestManager;
-        constructor.ConstructionRequestManager = ConstructionRequestManager;
-
         var components = floor.GetComponent<BuildingComponents>();
         components.ItemCreator = ItemCreator;
+
+        var constructor = floor.GetComponent<BuildingConstructor>();
+        constructor.ItemRequestManager = ItemRequestManager;
+        constructor.WorkRequestManager = WorkRequestManager;
+
+        var deconstructor = floor.GetComponent<BuildingDeconstructor>();
+        deconstructor.WorkRequestManager = WorkRequestManager;
 
         var tileGraphics = floor.GetComponent<BuildingTileGraphics>();
         tileGraphics.TilemapUpdater = TilemapUpdater;

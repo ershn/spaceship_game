@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(BuildingLifecycle))]
 [RequireComponent(typeof(BuildingComponents))]
 [RequireComponent(typeof(ConstructionWork))]
 public class BuildingConstructor : MonoBehaviour, IStateMachine
@@ -65,75 +67,68 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
     class RequestConstruction : State
     {
         readonly BuildingConstructor _constructor;
-        readonly ConstructionRequestManager _constructionRequestManager;
+        readonly WorkRequestManager _workRequestManager;
         readonly ConstructionWork _constructionWork;
 
         public RequestConstruction(BuildingConstructor constructor)
             : base(constructor)
         {
             _constructor = constructor;
-            _constructionRequestManager = constructor.ConstructionRequestManager;
+            _workRequestManager = constructor.WorkRequestManager;
             _constructionWork = constructor.GetComponent<ConstructionWork>();
         }
 
         protected override void OnStart() =>
-            _constructionWork.OnConstructionCompleted.AddListener(Complete);
+            _constructionWork.OnWorkCompleted.AddListener(Complete);
 
         protected override void OnEnd() =>
-            _constructionWork.OnConstructionCompleted.RemoveListener(Complete);
+            _constructionWork.OnWorkCompleted.RemoveListener(Complete);
 
         protected override void OnDo()
         {
-            _constructionRequestManager.RequestConstruction(_constructionWork);
+            _workRequestManager.RequestWork(_constructionWork);
         }
 
         void Complete()
         {
+            Destroy(_constructor);
+            Destroy(_constructionWork);
+            _constructor.OnConstructionCompleted.Invoke();
             ToEnded();
         }
 
         protected override void OnCancel()
         {
-            _constructionRequestManager.CancelConstruction(_constructionWork);
+            _workRequestManager.CancelWork(_constructionWork);
             ToState(new CancelConstruction(_constructor));
         }
     }
 
     class CancelConstruction : State
     {
-        readonly BuildingConstructor _constructor;
-        readonly BuildingComponents _buildingComponents;
+        readonly BuildingLifecycle _lifecycle;
 
         public CancelConstruction(BuildingConstructor constructor)
             : base(constructor)
         {
-            _constructor = constructor;
-            _buildingComponents = constructor.GetComponent<BuildingComponents>();
+            _lifecycle = constructor.GetComponent<BuildingLifecycle>();
         }
 
         protected override void OnDo()
         {
-            _buildingComponents.Dump();
-            Destroy(_constructor.gameObject);
-            ToEnded();
-        }
-
-        protected override void OnCancel()
-        {
+            _lifecycle.Destroy();
             ToEnded();
         }
     }
 
+    public UnityEvent OnConstructionCompleted;
+
     public ItemRequestManager ItemRequestManager;
-    public ConstructionRequestManager ConstructionRequestManager;
+    public WorkRequestManager WorkRequestManager;
 
     State _state;
     bool _ended;
-
-    void Start()
-    {
-        ToState(new RequestComponents(this));
-    }
+    bool _canceled;
 
     public void ToState(State state)
     {
@@ -147,9 +142,17 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
         _state = null;
     }
 
+    public void Construct()
+    {
+        ToState(new RequestComponents(this));
+    }
+
     public void Cancel()
     {
-        if (!_ended)
+        if (!_ended && !_canceled)
+        {
+            _canceled = true;
             _state.Cancel();
+        }
     }
 }

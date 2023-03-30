@@ -10,10 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5680633180854098372}
   - component: {fileID: 5209878187157717699}
+  - component: {fileID: 5912266160555966976}
   - component: {fileID: 2360495379068193615}
-  - component: {fileID: -1909066321609176523}
   - component: {fileID: 5355182027032121478}
+  - component: {fileID: -1909066321609176523}
   - component: {fileID: 7354273520412553579}
+  - component: {fileID: -5918008174406760629}
+  - component: {fileID: 6054319213389089848}
   - component: {fileID: 1492980114683187179}
   - component: {fileID: -9037717301101027011}
   - component: {fileID: -223798451696912205}
@@ -53,6 +56,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridIndexer: {fileID: 11400000, guid: b0f842f899bffb947836b0f8491d5d92, type: 2}
+--- !u!114 &5912266160555966976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f78d06e833e974c856858145f5b6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2360495379068193615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,20 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingDef: {fileID: 0}
---- !u!114 &-1909066321609176523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72901617766461770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55aca26532fb8ad4d8a3e1747f153439, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemRequestManager: {fileID: 0}
-  ConstructionRequestManager: {fileID: 0}
 --- !u!114 &5355182027032121478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +96,36 @@ MonoBehaviour:
   OnComponentMaxAmount:
     m_PersistentCalls:
       m_Calls: []
+  ItemCreator: {fileID: 0}
+--- !u!114 &-1909066321609176523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55aca26532fb8ad4d8a3e1747f153439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnConstructionCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5918008174406760629}
+        m_TargetAssemblyTypeName: BuildingDeconstructor, Assembly-CSharp
+        m_MethodName: Allow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ItemRequestManager: {fileID: 0}
+  WorkRequestManager: {fileID: 0}
 --- !u!114 &7354273520412553579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,10 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e05d40c488de140865d22a0e15bc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnConstructionStarted:
+  OnWorkStarted:
     m_PersistentCalls:
       m_Calls: []
-  OnConstructionProgress:
+  OnWorkProgress:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1492980114683187179}
@@ -137,12 +168,76 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnConstructionCompleted:
+  OnWorkCompleted:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -9037717301101027011}
         m_TargetAssemblyTypeName: BuildingTileGraphics, Assembly-CSharp
         m_MethodName: ToNormalTile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnWorkReset:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-5918008174406760629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1d2078c9c87eb4c913a2b734e09756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorkRequestManager: {fileID: 0}
+--- !u!114 &6054319213389089848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8705b244cc57a4986da74297163ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnWorkStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWorkProgress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -223798451696912205}
+        m_TargetAssemblyTypeName: ProgressBarGraphics, Assembly-CSharp
+        m_MethodName: SetProgress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnWorkCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWorkReset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -223798451696912205}
+        m_TargetAssemblyTypeName: ProgressBarGraphics, Assembly-CSharp
+        m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

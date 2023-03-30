@@ -50,7 +50,18 @@ public class UIActionReducer : MonoBehaviour
     void CancelTask(Vector2 position)
     {
         var cellPosition = _worldGrid2D.WorldToCell(position);
-        _worldIO.BuildingManipulator.CancelConstruction(cellPosition);
+        _worldIO.BuildingManipulator.Cancel(cellPosition);
+    }
+
+    public void SelectDeconstructTask()
+    {
+        _onWorldClick = DeconstructTask;
+    }
+
+    void DeconstructTask(Vector2 position)
+    {
+        var cellPosition = _worldGrid2D.WorldToCell(position);
+        _worldIO.BuildingManipulator.Deconstruct(cellPosition);
     }
     
 #endregion

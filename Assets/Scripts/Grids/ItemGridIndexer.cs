@@ -5,11 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ItemGridIndexer : GridPolyIndexer
 {
-    // public delegate void ItemEvent(Vector2Int position, GameObject item, ItemDef itemDef);
-
-    // public event ItemEvent OnItemAdded;
-    // public event ItemEvent OnItemRemoved;
-
     Dictionary<ItemDef, Dictionary<Vector2Int, GameObject>> _index = new();
 
     public GameObject Find(Vector2Int position, ItemDef itemDef) =>
