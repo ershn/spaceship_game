@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Item/Generic")]
 public class ItemDef : ScriptableObject, IGizmoDef
 {
     public Sprite LowAmountSprite;

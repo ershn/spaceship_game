@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Grid/Poly")]
 public class GridPolyIndexer : GridIndexer
 {
     ArrayGrid<List<GameObject>> _grid = new(500);

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
@@ -10,7 +9,7 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
     GridPosition _gridPosition;
 
     public ulong MaxAmount = 100.KiloGrams();
-    public ulong Amount { get; private set; }
+    public ulong CurrentAmount { get; private set; }
 
     Dictionary<ItemDef, ulong> _inventory = new();
 
@@ -21,7 +20,7 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
 
     public void Add(ItemDef itemDef, ulong amount)
     {
-        if (Amount + amount > MaxAmount)
+        if (CurrentAmount + amount > MaxAmount)
         {
             throw new ArgumentOutOfRangeException(
                 "The total inventory amount would exceed the limit."
@@ -33,7 +32,7 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
         else
             _inventory[itemDef] = amount;
 
-        Amount += amount;
+        CurrentAmount += amount;
     }
 
     public void Remove(ItemDef itemDef, ulong amount)
@@ -49,7 +48,7 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
 
         _inventory[itemDef] = currentAmount - amount;
 
-        Amount -= amount;
+        CurrentAmount -= amount;
     }
 
     public void Dump()
@@ -57,7 +56,7 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
         foreach (var item in _inventory)
             ItemCreator.Upsert(_gridPosition.CellPosition, item.Key, item.Value);
 
-        Amount = 0;
+        CurrentAmount = 0;
         _inventory = new();
     }
 }

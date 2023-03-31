@@ -1,4 +1,4 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game Events/GameObject")]
+[CreateAssetMenu(menuName = "Event/GameObject")]
 public class GameObjectGameEvent : GenericGameEvent<GameObject> {}

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Grid/Item")]
 public class ItemGridIndexer : GridPolyIndexer
 {
     Dictionary<ItemDef, Dictionary<Vector2Int, GameObject>> _index = new();

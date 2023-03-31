@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Building/Generic")]
 public class BuildingDef : ScriptableObject, IGizmoDef
 {
     public TileBase BlueprintTile;

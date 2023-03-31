@@ -1,5 +1,5 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(menuName = "Game Events/GameObject, TileBase")]
+[CreateAssetMenu(menuName = "Event/GameObject, TileBase")]
 public class GameObjectTileBaseGameEvent : GenericGameEvent<GameObject, TileBase> {}

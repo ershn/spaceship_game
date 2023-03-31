@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Grid/Mono")]
 public class GridMonoIndexer : GridIndexer
 {
     ArrayGrid<GameObject> _grid = new(500);
