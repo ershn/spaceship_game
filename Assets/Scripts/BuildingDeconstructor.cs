@@ -41,7 +41,7 @@ public class BuildingDeconstructor : MonoBehaviour
 
     public void Cancel()
     {
-        if (!_allowed || !_started)
+        if (!_started)
             return;
 
         _deconstructionWork.OnWorkCompleted.RemoveListener(Complete);

@@ -5,11 +5,19 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
 {
-    public ulong MaxAmount = 100.KiloGrams();
+    public ItemCreator ItemCreator;
 
+    GridPosition _gridPosition;
+
+    public ulong MaxAmount = 100.KiloGrams();
     public ulong Amount { get; private set; }
 
     Dictionary<ItemDef, ulong> _inventory = new();
+
+    void Awake()
+    {
+        _gridPosition = GetComponent<GridPosition>();
+    }
 
     public void Add(ItemDef itemDef, ulong amount)
     {
@@ -44,11 +52,12 @@ public class Inventory : MonoBehaviour, IItemAmountAdd, IItemAmountRemove
         Amount -= amount;
     }
 
-    public IEnumerable<ItemDefAmount> Empty()
+    public void Dump()
     {
-        var inventory = _inventory;
+        foreach (var item in _inventory)
+            ItemCreator.Upsert(_gridPosition.CellPosition, item.Key, item.Value);
+
         Amount = 0;
         _inventory = new();
-        return inventory.Select(elem => new ItemDefAmount(elem.Key, elem.Value));
     }
 }

@@ -1032,6 +1032,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clone (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: ItemCreator
+      value: 
+      objectReference: {fileID: 1227286753}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
 --- !u!4 &1042855775 stripped
@@ -1737,6 +1741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clone
       objectReference: {fileID: 0}
+    - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: ItemCreator
+      value: 
+      objectReference: {fileID: 1227286753}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
 --- !u!1001 &1360967126
@@ -2049,7 +2057,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  ItemCreator: {fileID: 1227286753}
   ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
 --- !u!4 &2000432409
 Transform:
@@ -2168,6 +2175,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: ItemCreator
+      value: 
+      objectReference: {fileID: 1227286753}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
 --- !u!1 &2053378856
