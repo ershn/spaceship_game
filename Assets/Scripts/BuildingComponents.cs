@@ -5,22 +5,22 @@ using UnityEngine;
 
 [RequireComponent(typeof(BuildingDefHolder))]
 [RequireComponent(typeof(GridPosition))]
-public class BuildingComponents : MonoBehaviour, IItemAmountAdd
+public class BuildingComponents : MonoBehaviour, IInventoryAdd
 {
-    class Amounts
+    class Masses
     {
-        public ulong MaxAmount;
-        public ulong CurrentAmount;
+        public ulong MaxMass;
+        public ulong CurrentMass;
     }
 
-    public ItemDefEvent OnComponentMaxAmount;
+    public ItemDefEvent OnComponentMaxMass;
 
     public ItemCreator ItemCreator;
 
     BuildingDef _buildingDef;
     GridPosition _gridPosition;
 
-    Dictionary<ItemDef, Amounts> _inventory;
+    Dictionary<ItemDef, Masses> _inventory;
 
     void Awake()
     {
@@ -33,38 +33,34 @@ public class BuildingComponents : MonoBehaviour, IItemAmountAdd
     void InitInventory()
     {
         _inventory = new();
-        foreach (var componentAmount in _buildingDef.ComponentAmounts)
+        foreach (var componentMass in _buildingDef.ComponentMasses)
         {
-            _inventory[componentAmount.ItemDef] = new Amounts()
+            _inventory[componentMass.ItemDef] = new Masses()
             {
-                MaxAmount = componentAmount.Amount,
-                CurrentAmount = 0
+                MaxMass = componentMass.Mass,
+                CurrentMass = 0
             };
         }
     }
 
-    public IEnumerable<ItemDefAmount> GetRequiredAmounts()
-    {
-        return _inventory.Select(kv =>
-            new ItemDefAmount(kv.Key, kv.Value.MaxAmount - kv.Value.CurrentAmount)
-        );
-    }
+    public IEnumerable<(ItemDef, ulong)> GetMissingComponents() =>
+        _inventory.Select(kv => (kv.Key, kv.Value.MaxMass - kv.Value.CurrentMass));
 
-    public void Add(ItemDef itemDef, ulong amount)
+    public void Add(ItemDef itemDef, ulong mass)
     {
         var component = _inventory[itemDef];
 
-        if (component.CurrentAmount + amount > component.MaxAmount)
+        if (component.CurrentMass + mass > component.MaxMass)
         {
             throw new ArgumentOutOfRangeException(
-                "The total component amount would exceed the limit."
+                "The total component mass would exceed the limit"
                 );
         }
 
-        component.CurrentAmount += amount;
+        component.CurrentMass += mass;
 
-        if (component.CurrentAmount == component.MaxAmount)
-            OnComponentMaxAmount.Invoke(itemDef);
+        if (component.CurrentMass == component.MaxMass)
+            OnComponentMaxMass.Invoke(itemDef);
     }
 
     public void Dump()
@@ -74,13 +70,13 @@ public class BuildingComponents : MonoBehaviour, IItemAmountAdd
         foreach (var component in _inventory)
         {
             var itemDef = component.Key;
-            var amounts = component.Value;
+            var masses = component.Value;
 
-            if (amounts.CurrentAmount > 0)
+            if (masses.CurrentMass > 0)
             {
-                Debug.Log($"Dumping item: {cellPosition}, {itemDef}, {amounts.CurrentAmount}");
-                ItemCreator.Upsert(cellPosition, itemDef, amounts.CurrentAmount);
-                amounts.CurrentAmount = 0;
+                Debug.Log($"Dumping item: {cellPosition}, {itemDef}, {masses.CurrentMass}");
+                ItemCreator.Upsert(cellPosition, itemDef, masses.CurrentMass);
+                masses.CurrentMass = 0;
             }
         }
     }

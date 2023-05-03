@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MoveTask : Task
 {
-    Vector2 _dest;
+    readonly Vector2 _dest;
     PathFinder _pathFinder;
 
     public MoveTask(Vector2 dest)

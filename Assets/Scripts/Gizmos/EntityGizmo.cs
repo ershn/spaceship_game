@@ -1,48 +1,82 @@
+using System.IO;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Windows;
 
 [RequireComponent(typeof(IGizmoDef))]
 public class EntityGizmo : MonoBehaviour
 {
     IGizmoDef _gizmoDef;
-    string _iconFilename;
 
     void OnDrawGizmos()
     {
         _gizmoDef ??= GetComponent<IGizmoDef>();
 
-        if (CreateIcon(out var filename))
-            Gizmos.DrawIcon(transform.position, filename);
+        var asset = _gizmoDef.GizmoAsset;
+        if (asset != null && FetchIconFile(asset, out var fileName))
+            Gizmos.DrawIcon(transform.position, fileName);
     }
 
-    bool CreateIcon(out string filename)
+    bool FetchIconFile(Object asset, out string fileName)
     {
-        if (_iconFilename == null)
+        var texture = GetAssetPreview(asset);
+        if (texture == null)
         {
-            if (_gizmoDef.GizmoAsset != null)
-                _iconFilename = CreateIcon(_gizmoDef.GizmoAsset);
+            fileName = null;
+            return false;
         }
         else
         {
-            if (_gizmoDef.GizmoAsset == null)
-                _iconFilename = null;
+            fileName = FetchIconFile(asset.name, texture);
+            return true;
         }
-
-        filename = _iconFilename;
-        return _iconFilename != null;
     }
 
-    static string CreateIcon(Object obj)
+    static Texture2D GetAssetPreview(Object asset)
     {
-        var iconFilename = $"{obj.name}.png";
-        var iconPath = $"{Application.dataPath}/Gizmos/{iconFilename}";
-        if (!File.Exists(iconPath))
+        var texture = AssetPreview.GetAssetPreview(asset);
+        if (texture == null)
         {
-            var texture = AssetPreview.GetAssetPreview(obj);
-            var pngBytes = texture.EncodeToPNG();
-            File.WriteAllBytes(iconPath, pngBytes);
+            var path = AssetDatabase.GetAssetPath(asset);
+            if (!string.IsNullOrEmpty(path))
+            {
+                AssetDatabase.ImportAsset(path);
+                texture = AssetPreview.GetAssetPreview(asset);
+            }
         }
-        return iconFilename;
+        return texture;
+    }
+
+    Hash128? _cachedIconHash;
+    string _cachedIconFileName;
+
+    string FetchIconFile(string name, Texture2D texture)
+    {
+        if (texture.imageContentsHash == _cachedIconHash)
+            return _cachedIconFileName;
+
+        var fileName = CreateIconFile(name, texture);
+        _cachedIconHash = texture.imageContentsHash;
+        _cachedIconFileName = fileName;
+        return fileName;
+    }
+
+    static string CreateIconFile(string name, Texture2D texture)
+    {
+        var gizmoDirPath = $"{Application.dataPath}/Gizmos";
+        var fileName = $"{name}.{texture.imageContentsHash}.png";
+        var filePath = $"{gizmoDirPath}/{fileName}";
+        if (!File.Exists(filePath))
+        {
+            var existingFilePaths = Directory.GetFiles(gizmoDirPath, $"{name}.*.png");
+            foreach (var path in existingFilePaths)
+            {
+                File.Delete(path);
+                File.Delete($"{path}.meta");
+            }
+
+            var pngBytes = texture.EncodeToPNG();
+            File.WriteAllBytes(filePath, pngBytes);
+        }
+        return fileName;
     }
 }

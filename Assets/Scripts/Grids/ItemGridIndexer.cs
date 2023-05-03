@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,32 +6,46 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Grid/Item")]
 public class ItemGridIndexer : GridPolyIndexer
 {
-    Dictionary<ItemDef, Dictionary<Vector2Int, GameObject>> _index = new();
+    readonly Dictionary<ItemDef, HashSet<GameObject>> _itemDefIndex = new();
+    readonly Dictionary<Type, HashSet<GameObject>> _itemDefTypeIndex = new();
 
-    public GameObject Find(Vector2Int position, ItemDef itemDef) =>
-        Get(position).FirstOrDefault(item =>
-            item.GetComponent<ItemDefHolder>().ItemDef == itemDef
-            );
-
-    public IEnumerable<GameObject> GetAllItems(ItemDef itemDef)
+    public bool TryGetItem(Vector2Int position, ItemDef itemDef, out GameObject obj)
     {
-        return (_index.TryGetValue(itemDef, out var dict) ? dict : new()).Values;
+        obj = Get(position).FirstOrDefault(
+            item => item.GetComponent<ItemDefHolder>().ItemDef == itemDef
+            );
+        return obj != null;
     }
+
+    public IEnumerable<GameObject> Filter(ItemDef itemDef) =>
+        _itemDefIndex.TryGetValue(itemDef, out var list) ? list : new();
+
+    public IEnumerable<GameObject> Filter<T>() where T : ItemDef =>
+        _itemDefTypeIndex.TryGetValue(typeof(T), out var list) ? list : new();
 
     protected override void OnAdd(GridPosition obj)
     {
         var itemDef = obj.GetComponent<ItemDefHolder>().ItemDef;
-        if (!_index.TryGetValue(itemDef, out var itemIndex))
-        {
-            itemIndex = new();
-            _index[itemDef] = itemIndex;
-        }
-        itemIndex[obj.CellPosition] = obj.gameObject;
+        AddToIndex(_itemDefIndex, itemDef, obj.gameObject);
+        AddToIndex(_itemDefTypeIndex, itemDef.GetType(), obj.gameObject);
     }
 
     protected override void OnRemove(GridPosition obj)
     {
         var itemDef = obj.GetComponent<ItemDefHolder>().ItemDef;
-        _index[itemDef].Remove(obj.CellPosition);
+        _itemDefIndex[itemDef].Remove(obj.gameObject);
+        _itemDefTypeIndex[itemDef.GetType()].Remove(obj.gameObject);
+    }
+
+    private void AddToIndex<TKey>(
+        Dictionary<TKey, HashSet<GameObject>> index, TKey key, GameObject obj
+        )
+    {
+        if (!index.TryGetValue(key, out var set))
+        {
+            set = new();
+            index[key] = set;
+        }
+        set.Add(obj);
     }
 }

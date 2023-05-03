@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,72 +10,83 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
 {
     class RequestComponents : State
     {
+        readonly ItemGridIndexer _itemGrid;
+        readonly TaskScheduler _taskScheduler;
+
         readonly BuildingConstructor _constructor;
-        readonly ItemRequestManager _itemRequestManager;
         readonly BuildingComponents _buildingComponents;
 
-        Dictionary<ItemDef, ItemRequest> _requestedComponents;
+        Dictionary<ItemDef, ITaskSet> _componentTaskSets;
 
         public RequestComponents(BuildingConstructor constructor)
             : base(constructor)
         {
+            _itemGrid = constructor.ItemGrid;
+            _taskScheduler = constructor.TaskScheduler;
+
             _constructor = constructor;
-            _itemRequestManager = constructor.ItemRequestManager;
             _buildingComponents = constructor.GetComponent<BuildingComponents>();
         }
 
         protected override void OnStart() =>
-            _buildingComponents.OnComponentMaxAmount.AddListener(Fulfill);
+            _buildingComponents.OnComponentMaxMass.AddListener(Fulfill);
 
         protected override void OnEnd() =>
-            _buildingComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
+            _buildingComponents.OnComponentMaxMass.RemoveListener(Fulfill);
 
         protected override void OnDo()
         {
-            _requestedComponents = new();
+            _componentTaskSets = new();
 
-            foreach (var component in _buildingComponents.GetRequiredAmounts())
+            foreach (var (itemDef, missingMass) in _buildingComponents.GetMissingComponents())
             {
-                var request = new ItemRequest(
-                    component.ItemDef, component.Amount, _buildingComponents
-                    );
+                var taskSet = _itemGrid
+                .Filter(itemDef)
+                .CumulateMass(missingMass)
+                .Select(item =>
+                    TaskCreator.DeliverItem(item.itemMass, item.markedMass, _buildingComponents)
+                    )
+                .ToTaskSet();
 
-                Debug.Log($"Request item: {request.ItemDef}, {request.Amount}");
-                _requestedComponents[request.ItemDef] = request;
-                _itemRequestManager.RequestItemDelivery(request);
+                _componentTaskSets[itemDef] = taskSet;
+                _taskScheduler.QueueTaskSet(taskSet);
             }
 
-            if (_requestedComponents.Count == 0)
+            if (_componentTaskSets.Count == 0)
                 ToState(new RequestConstruction(_constructor));
         }
 
         void Fulfill(ItemDef itemDef)
         {
-            _requestedComponents.Remove(itemDef);
+            _componentTaskSets.Remove(itemDef);
 
-            if (_requestedComponents.Count == 0)
+            if (_componentTaskSets.Count == 0)
                 ToState(new RequestConstruction(_constructor));
         }
 
         protected override void OnCancel()
         {
-            foreach (var request in _requestedComponents.Values)
-                _itemRequestManager.CancelItemDelivery(request);
+            foreach (var taskSet in _componentTaskSets.Values)
+                taskSet.Cancel();
             ToState(new CancelConstruction(_constructor));
         }
     }
 
     class RequestConstruction : State
     {
+        readonly TaskScheduler _taskScheduler;
+
         readonly BuildingConstructor _constructor;
-        readonly WorkRequestManager _workRequestManager;
         readonly ConstructionWork _constructionWork;
+
+        ITask _task;
 
         public RequestConstruction(BuildingConstructor constructor)
             : base(constructor)
         {
+            _taskScheduler = constructor.TaskScheduler;
+
             _constructor = constructor;
-            _workRequestManager = constructor.WorkRequestManager;
             _constructionWork = constructor.GetComponent<ConstructionWork>();
         }
 
@@ -86,7 +98,8 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
 
         protected override void OnDo()
         {
-            _workRequestManager.RequestWork(_constructionWork);
+            _task = TaskCreator.WorkOn(_constructionWork);
+            _taskScheduler.QueueTask(_task);
         }
 
         void Complete()
@@ -99,7 +112,7 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
 
         protected override void OnCancel()
         {
-            _workRequestManager.CancelWork(_constructionWork);
+            _task.Cancel();
             ToState(new CancelConstruction(_constructor));
         }
     }
@@ -123,8 +136,8 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
 
     public UnityEvent OnConstructionCompleted;
 
-    public ItemRequestManager ItemRequestManager;
-    public WorkRequestManager WorkRequestManager;
+    public ItemGridIndexer ItemGrid;
+    public TaskScheduler TaskScheduler;
 
     State _state;
     bool _ended;

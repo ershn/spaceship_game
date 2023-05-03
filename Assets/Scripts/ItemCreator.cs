@@ -12,12 +12,11 @@ public class ItemCreator : MonoBehaviour
         _instantiator = GetComponent<ItemInstantiator>();
     }
 
-    public void Upsert(Vector2Int cellPosition, ItemDef itemDef, ulong amount)
+    public void Upsert(Vector2Int cellPosition, ItemDef itemDef, ulong mass)
     {
-        var item = ItemGrid.Find(cellPosition, itemDef);
-        if (item != null)
-            item.GetComponent<ItemAmount>().Add(amount);
+        if (ItemGrid.TryGetItem(cellPosition, itemDef, out var item))
+            item.GetComponent<ItemMass>().Add(mass);
         else
-            _instantiator.Instantiate(cellPosition, itemDef, amount);
+            _instantiator.Instantiate(cellPosition, itemDef, mass);
     }
 }

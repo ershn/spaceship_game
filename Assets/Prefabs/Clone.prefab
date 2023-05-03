@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936845640216784407}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.28, z: 0}
+  m_LocalPosition: {x: 0.035, y: -0.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 15544595, guid: 5d6413baeed5d3e4dac77f90f0158143, type: 3}
+  m_Sprite: {fileID: -227709086, guid: c0c70b20d35f1584092c99c3678f3918, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 1936845640216784407}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c0a122efa73ba974d9c768006741fefc, type: 2}
+  m_Controller: {fileID: 9100000, guid: da05d24a4a6e83344b4771f79ee71e85, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cf7229eb2079e4e8ae0e5ecb012825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InitialLookDirection: {x: 0, y: -1}
 --- !u!1 &1936845640939817397
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +134,6 @@ GameObject:
   - component: {fileID: 1936845640939817400}
   - component: {fileID: 1936845640939817407}
   - component: {fileID: 7272889626338864215}
-  - component: {fileID: 7583047053477862024}
   - component: {fileID: 3604563941592413650}
   - component: {fileID: 4700994274530803201}
   - component: {fileID: 743934611261804635}
@@ -172,7 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e724852220210e4c8088628193a4147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid2D: {fileID: 0}
   GridIndexer: {fileID: 0}
 --- !u!50 &1936845640939817393
 Rigidbody2D:
@@ -253,12 +252,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinDistanceForNextWaypoint: 0.5
   MinDistanceForStop: 0.2
-  OnDirectionUpdated:
+  OnMoveDirectionUpdated:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7272889626338864215}
         m_TargetAssemblyTypeName: Mover, Assembly-CSharp
-        m_MethodName: UpdateDirection
+        m_MethodName: UpdateMoveDirection
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -268,9 +267,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7583047053477862024}
-        m_TargetAssemblyTypeName: Looker, Assembly-CSharp
-        m_MethodName: UpdateDirection
+      - m_Target: {fileID: 5289475653224769322}
+        m_TargetAssemblyTypeName: MoverAnimator, Assembly-CSharp
+        m_MethodName: UpdateMoveDirection
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -292,35 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6087e9078cb210c46ace898778bf8e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
---- !u!114 &7583047053477862024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1936845640939817397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f19e6976639cb4d8281a6801587852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InitialLookDirection: {x: 0, y: -1}
-  OnLookDirectionUpdated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5289475653224769322}
-        m_TargetAssemblyTypeName: LookerAnimator, Assembly-CSharp
-        m_MethodName: UpdateLookDirection
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  Speed: 2
 --- !u!114 &3604563941592413650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df845ebf0ae61924d848a9863dda43d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAmount: 100000000
+  ItemCreator: {fileID: 0}
+  MaxMass: 100000000
 --- !u!114 &4700994274530803201
 MonoBehaviour:
   m_ObjectHideFlags: 0

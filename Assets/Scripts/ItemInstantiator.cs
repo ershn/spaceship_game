@@ -11,7 +11,7 @@ public class ItemInstantiator : MonoBehaviour
         _grid2D = transform.root.GetComponent<Grid2D>();
     }
 
-    public ItemDefHolder Instantiate(Vector2Int cellPosition, ItemDef itemDef, ulong amount)
+    public ItemDefHolder Instantiate(Vector2Int cellPosition, ItemDef itemDef, ulong mass)
     {
         var position = _grid2D.CellCenterWorld(cellPosition);
 
@@ -19,8 +19,8 @@ public class ItemInstantiator : MonoBehaviour
 
         item.ItemDef = itemDef;
 
-        var itemAmount = item.GetComponent<ItemAmount>();
-        itemAmount.Amount = amount;
+        var itemMass = item.GetComponent<ItemMass>();
+        itemMass.Mass = mass;
 
         item.gameObject.SetActive(true);
 

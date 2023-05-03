@@ -3,12 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Generic")]
 public class ItemDef : ScriptableObject, IGizmoDef
 {
-    public Sprite LowAmountSprite;
-    public Sprite NormalAmountSprite;
-    public Sprite HighAmountSprite;
+    public Sprite LowMassSprite;
+    public Sprite NormalMassSprite;
+    public Sprite HighMassSprite;
 
-    public Object GizmoAsset => LowAmountSprite;
+    public Object GizmoAsset => LowMassSprite;
 
-    public ulong NormalAmountThreshold = 100.KiloGrams();
-    public ulong HighAmountThreshold = 1.Ton();
+    public ulong NormalMassThreshold = 100.KiloGrams();
+    public ulong HighMassThreshold = 1.Ton();
 }

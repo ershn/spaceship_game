@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class TaskScheduler : MonoBehaviour
 {
-    HashSet<TaskExecutor> _idleExecutors = new();
-    HashSet<TaskExecutor> _workingExecutors = new();
-    Queue<ITask> _tasks = new();
+    struct QueuedTask
+    {
+        public ITask Task;
+        public TaskExecutor Executor;
+    }
+
+    readonly HashSet<TaskExecutor> _idleExecutors = new();
+    readonly HashSet<TaskExecutor> _workingExecutors = new();
+    readonly Queue<QueuedTask> _queuedTasks = new();
 
     public void AddExecutor(TaskExecutor executor)
     {
@@ -18,10 +24,16 @@ public class TaskScheduler : MonoBehaviour
         _idleExecutors.Remove(executor);
     }
 
-    public void QueueTask(ITask task)
+    public void QueueTask(ITask task, TaskExecutor executor = null)
     {
         Debug.Log($"QueueTask: {task}");
-        _tasks.Enqueue(task);
+        _queuedTasks.Enqueue(new() { Task = task, Executor = executor });
+    }
+
+    public void QueueTaskSet(ITaskSet taskSet)
+    {
+        foreach (var task in taskSet.AsEnumerable())
+            QueueTask(task);
     }
 
     void Update()
@@ -31,23 +43,25 @@ public class TaskScheduler : MonoBehaviour
 
     void AssignTasks()
     {
-        while (_tasks.TryPeek(out var task))
+        while (_queuedTasks.TryPeek(out var queuedTask))
         {
-            if (task.Canceled || AssignTask(task))
-                _tasks.Dequeue();
+            if (queuedTask.Task.Canceled || AssignTask(queuedTask))
+                _queuedTasks.Dequeue();
             else
                 break;
         }
     }
 
-    bool AssignTask(ITask task)
+    bool AssignTask(QueuedTask queuedTask)
     {
-        var executor = _idleExecutors.FirstOrDefault();
+        var executor = SelectIdleExecutor(queuedTask.Executor);
         if (executor == null)
             return false;
 
         _idleExecutors.Remove(executor);
         _workingExecutors.Add(executor);
+
+        var task = queuedTask.Task;
 
         task.Then(_ =>
         {
@@ -58,5 +72,13 @@ public class TaskScheduler : MonoBehaviour
         executor.ExecuteTask(task);
 
         return true;
+    }
+
+    TaskExecutor SelectIdleExecutor(TaskExecutor targetExecutor = null)
+    {
+        if (targetExecutor != null)
+            return _idleExecutors.Contains(targetExecutor) ? targetExecutor : null;
+        else
+            return _idleExecutors.FirstOrDefault();
     }
 }

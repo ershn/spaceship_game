@@ -4,13 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(DeconstructionWork))]
 public class BuildingDeconstructor : MonoBehaviour
 {
-    public WorkRequestManager WorkRequestManager;
+    public TaskScheduler TaskScheduler;
 
     BuildingLifecycle _lifecycle;
     DeconstructionWork _deconstructionWork;
 
     bool _allowed;
     bool _started;
+    ITask _task;
 
     void Awake()
     {
@@ -30,7 +31,8 @@ public class BuildingDeconstructor : MonoBehaviour
 
         _started = true;
         _deconstructionWork.OnWorkCompleted.AddListener(Complete);
-        WorkRequestManager.RequestWork(_deconstructionWork);
+        _task = TaskCreator.WorkOn(_deconstructionWork);
+        TaskScheduler.QueueTask(_task);
     }
 
     void Complete()
@@ -45,8 +47,9 @@ public class BuildingDeconstructor : MonoBehaviour
             return;
 
         _deconstructionWork.OnWorkCompleted.RemoveListener(Complete);
-        WorkRequestManager.CancelWork(_deconstructionWork);
-        _deconstructionWork.ResetWorkTime();
+        _task.Cancel();
+        _deconstructionWork.Reset();
+        _task = null;
         _started = false;
     }
 }

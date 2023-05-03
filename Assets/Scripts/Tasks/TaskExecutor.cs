@@ -20,7 +20,7 @@ public class TaskExecutor : MonoBehaviour
     public void ExecuteTask(ITask task)
     {
         if (IsTaskExecuting())
-            throw new ArgumentException("A task is already executing.");
+            throw new ArgumentException("A task is already executing");
 
         Debug.Log($"ExecuteTask: {task}");
         StartTask(task);

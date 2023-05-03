@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class BuildingInstantiator : MonoBehaviour
 {
+    public TaskScheduler TaskScheduler;
     public TilemapUpdater TilemapUpdater;
-    public ItemRequestManager ItemRequestManager;
-    public WorkRequestManager WorkRequestManager;
     public ItemCreator ItemCreator;
+
+    public ItemGridIndexer ItemGrid;
 
     public BuildingDefHolder FloorPrefab;
 
@@ -28,11 +29,11 @@ public class BuildingInstantiator : MonoBehaviour
         components.ItemCreator = ItemCreator;
 
         var constructor = floor.GetComponent<BuildingConstructor>();
-        constructor.ItemRequestManager = ItemRequestManager;
-        constructor.WorkRequestManager = WorkRequestManager;
+        constructor.ItemGrid = ItemGrid;
+        constructor.TaskScheduler = TaskScheduler;
 
         var deconstructor = floor.GetComponent<BuildingDeconstructor>();
-        deconstructor.WorkRequestManager = WorkRequestManager;
+        deconstructor.TaskScheduler = TaskScheduler;
 
         var tileGraphics = floor.GetComponent<BuildingTileGraphics>();
         tileGraphics.TilemapUpdater = TilemapUpdater;

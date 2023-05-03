@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WorkTask : Task
 {
-    IWork _work;
+    readonly IWork _work;
     Worker _worker;
 
     public WorkTask(IWork work)

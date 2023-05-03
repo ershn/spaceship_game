@@ -7,7 +7,7 @@ public class PathFinder : MonoBehaviour
     public float MinDistanceForNextWaypoint = .5f;
     public float MinDistanceForStop = .2f;
 
-    public Vector2Event OnDirectionUpdated;
+    public Vector2Event OnMoveDirectionUpdated;
 
     Seeker _seeker;
 
@@ -65,7 +65,7 @@ public class PathFinder : MonoBehaviour
     public void MoveTo(Vector2 dest, Action<bool> onEnd)
     {
         if (IsExecuting())
-            throw new InvalidOperationException("Already moving to a destination.");
+            throw new InvalidOperationException("Already moving to a destination");
 
         StartExecuting(dest, onEnd);
     }
@@ -73,7 +73,7 @@ public class PathFinder : MonoBehaviour
     public void Cancel()
     {
         if (!IsExecuting())
-            throw new InvalidOperationException("Not moving to any destination.");
+            throw new InvalidOperationException("Not moving to any destination");
 
         if (!IsMoving())
             CancelPathCalculation();
@@ -101,7 +101,7 @@ public class PathFinder : MonoBehaviour
     void StopMoving(bool success)
     {
         _path = null;
-        OnDirectionUpdated.Invoke(Vector2.zero);
+        OnMoveDirectionUpdated.Invoke(Vector2.zero);
         _onMovementEnd(success);
     }
 
@@ -116,7 +116,7 @@ public class PathFinder : MonoBehaviour
 
         var currentWaypoint = _path.vectorPath[_currentWaypointIndex];
         var moveDirection = (currentWaypoint - transform.position).normalized;
-        OnDirectionUpdated.Invoke(moveDirection);
+        OnMoveDirectionUpdated.Invoke(moveDirection);
 
         var waypointDistance = Vector3.Distance(transform.position, currentWaypoint);
         if (waypointDistance < MinDistanceForNextWaypoint &&

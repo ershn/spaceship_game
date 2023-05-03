@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f490a147ffb4dc9458b3a5d7a0a1f1d2, type: 3}
   m_Name: SteelItem
   m_EditorClassIdentifier: 
-  LowAmountSprite: {fileID: 765385655, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
-  NormalAmountSprite: {fileID: -1246378258, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
-  HighAmountSprite: {fileID: 1682644251, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
-  NormalAmountThreshold: 100000000
-  HighAmountThreshold: 1000000000
+  LowMassSprite: {fileID: 765385655, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+  NormalMassSprite: {fileID: -1246378258, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+  HighMassSprite: {fileID: 1682644251, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+  NormalMassThreshold: 100000000
+  HighMassThreshold: 1000000000

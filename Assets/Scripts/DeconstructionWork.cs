@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BuildingDefHolder))]
-public class DeconstructionWork : AbstractWork
+public class DeconstructionWork : TransactionalWork
 {
     BuildingDef _buildingDef;
 

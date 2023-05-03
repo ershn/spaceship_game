@@ -244,7 +244,7 @@ PrefabInstance:
     - target: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: ItemDef
       value: 
-      objectReference: {fileID: 11400000, guid: c1b46e2794241334f93a4b6e4caff569, type: 2}
+      objectReference: {fileID: 11400000, guid: 5aad5464d3de42b40971460048f34432, type: 2}
     - target: {fileID: 2496044289052535066, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: Grid2D
       value: 
@@ -386,6 +386,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 873609800}
     m_Modifications:
+    - target: {fileID: 97167780237384032, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Mass
+      value: 50000000
+      objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
       value: SteelItem (1)
@@ -453,6 +457,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
   m_PrefabInstance: {fileID: 277907180}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &611185954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+  m_PrefabInstance: {fileID: 277907180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &611185962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611185954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81bb34600fdbfc4794e5af8a99d1011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &680159963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1936845640939817392, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
@@ -1176,6 +1197,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1114809804 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1936845640939817397, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+  m_PrefabInstance: {fileID: 1259402903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1114809815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114809804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37388789feacc07479303b6244c193de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
+  TaskScheduler: {fileID: 2000432410}
+  MaxStoredCalories: 7500000
+  InitialStoredCalories: 5000000
+  CaloriesConsumedPerCycle: 2500000
+  FoodConsumptionCaloriesThreshold: 4000000
+--- !u!114 &1114809826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114809804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3673064338e63b4893914e82f47e88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimePerKiloGramConsumed: 2
 --- !u!1 &1123563457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,21 +1816,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1123563466}
     - target: {fileID: -5918008174406760629, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
+    - target: {fileID: -5918008174406760629, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: WorkRequestManager
       value: 
-      objectReference: {fileID: 2000432411}
+      objectReference: {fileID: 0}
+    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: ItemGrid
+      value: 
+      objectReference: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
+    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
     - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: ItemRequestManager
       value: 
-      objectReference: {fileID: 2000432407}
+      objectReference: {fileID: 0}
     - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: WorkRequestManager
       value: 
-      objectReference: {fileID: 2000432411}
+      objectReference: {fileID: 0}
+    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: ItemOperationFactory
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: ConstructionRequestManager
       value: 
-      objectReference: {fileID: 2000432411}
+      objectReference: {fileID: 0}
     - target: {fileID: 72901617766461770, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: m_Name
       value: SteelFloor
@@ -1852,6 +1925,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 873609800}
     m_Modifications:
+    - target: {fileID: 97167780237384032, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Mass
+      value: 50000000
+      objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
       value: SteelItem
@@ -1972,10 +2049,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b648a930653f81442a7dbc69dc866dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TaskScheduler: {fileID: 2000432410}
   TilemapUpdater: {fileID: 1123563466}
-  ItemRequestManager: {fileID: 2000432407}
-  WorkRequestManager: {fileID: 2000432411}
   ItemCreator: {fileID: 1227286753}
+  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
   FloorPrefab: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
 --- !u!1 &1729712202
 GameObject:
@@ -2020,8 +2097,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2000432409}
-  - component: {fileID: 2000432407}
-  - component: {fileID: 2000432411}
   - component: {fileID: 2000432410}
   m_Layer: 0
   m_Name: TaskManager
@@ -2030,34 +2105,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2000432407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000432406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e26b670d2bfec224f863a7ea5853cfd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnTaskCreation:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2000432410}
-        m_TargetAssemblyTypeName: TaskScheduler, Assembly-CSharp
-        m_MethodName: QueueTask
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
 --- !u!4 &2000432409
 Transform:
   m_ObjectHideFlags: 0
@@ -2085,33 +2132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1fbe4e03854a44bcee42037bd1dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2000432411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000432406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e95814e35d87dfd4c920d9f228cef828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnTaskCreation:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2000432410}
-        m_TargetAssemblyTypeName: TaskScheduler, Assembly-CSharp
-        m_MethodName: QueueTask
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &2002365712
 PrefabInstance:
   m_ObjectHideFlags: 0

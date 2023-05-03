@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SequenceTask : Task
 {
-    ITask[] _tasks;
+    readonly ITask[] _tasks;
     int _nextTaskIndex;
     ITask _task;
     Action<bool> _onEnd;

@@ -14,7 +14,7 @@ public class ItemGraphics : MonoBehaviour
         _itemDef = GetComponent<ItemDefHolder>().ItemDef;
     }
 
-    public void ToLowAmountSprite() => _spriteRenderer.sprite = _itemDef.LowAmountSprite;
-    public void ToNormalAmountSprite() => _spriteRenderer.sprite = _itemDef.NormalAmountSprite;
-    public void ToHighAmountSprite() => _spriteRenderer.sprite = _itemDef.HighAmountSprite;
+    public void ToLowMassSprite() => _spriteRenderer.sprite = _itemDef.LowMassSprite;
+    public void ToNormalMassSprite() => _spriteRenderer.sprite = _itemDef.NormalMassSprite;
+    public void ToHighMassSprite() => _spriteRenderer.sprite = _itemDef.HighMassSprite;
 }

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlueprintTile: {fileID: 11400000, guid: 414639c20446b514f8ca5684bdf42ca1, type: 2}
   NormalTile: {fileID: 11400000, guid: 4249a9c0bdff9f4438c80de37e0d5474, type: 2}
-  ComponentAmounts:
+  ComponentMasses:
   - ItemDef: {fileID: 11400000, guid: 1e320a5b3161dd840b5be35cc8bd47a3, type: 2}
-    Amount: 10000000
+    Mass: 10000000
   MaxHealthPoints: 100
   ConstructionTime: 5
+  DeconstructionTimeMultiplier: 0.5

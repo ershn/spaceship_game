@@ -75,7 +75,7 @@ public abstract class Task : ITask
     {
     }
 
-    Stack<Action<bool>> _callbacks = new();
+    readonly Stack<Action<bool>> _callbacks = new();
 
     /// <summary>
     /// Added callbacks are executed in reverse order.

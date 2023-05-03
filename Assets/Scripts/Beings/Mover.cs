@@ -1,28 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
     public float Speed = 3f;
 
-    Rigidbody2D _rigidbody;
+    Rigidbody2D _rigidbody2D;
 
-    Vector2 _direction;
+    Vector2 _moveDirection;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    public void UpdateDirection(Vector2 direction)
+    public void UpdateMoveDirection(Vector2 moveDirection)
     {
-        _direction = direction;
+        _moveDirection = moveDirection;
     }
 
     void FixedUpdate()
     {
-        _rigidbody.position += Speed * Time.deltaTime * _direction;
+        _rigidbody2D.position += Speed * Time.deltaTime * _moveDirection;
     }
 }
