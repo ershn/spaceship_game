@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class MoverAnimator : MonoBehaviour
 {
     public Vector2 InitialLookDirection = Vector2.down;

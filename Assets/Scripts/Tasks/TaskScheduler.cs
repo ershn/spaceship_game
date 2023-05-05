@@ -69,7 +69,7 @@ public class TaskScheduler : MonoBehaviour
             _idleExecutors.Add(executor);
         });
 
-        executor.ExecuteTask(task);
+        executor.Execute(task);
 
         return true;
     }

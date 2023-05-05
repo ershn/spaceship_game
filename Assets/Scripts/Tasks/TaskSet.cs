@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class TaskSet : ITaskSet
 {
@@ -16,7 +17,7 @@ public class TaskSet : ITaskSet
 
     public void Cancel()
     {
-        foreach (var task in _tasks)
+        foreach (var task in _tasks.ToArray())
             task.Cancel();
     }
 

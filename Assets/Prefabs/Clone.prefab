@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1936845640216784403}
   - component: {fileID: 1936845640216784402}
   - component: {fileID: 5289475653224769322}
+  - component: {fileID: 4766987155260039468}
   m_Layer: 0
   m_Name: CloneGraphics
   m_TagString: Untagged
@@ -119,6 +120,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialLookDirection: {x: 0, y: -1}
+--- !u!114 &4766987155260039468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936845640216784407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b2eb52b3d39304cbe50faad8d89aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1936845640939817397
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,9 +147,12 @@ GameObject:
   - component: {fileID: 1936845640939817400}
   - component: {fileID: 1936845640939817407}
   - component: {fileID: 7272889626338864215}
+  - component: {fileID: 2721532087074220333}
   - component: {fileID: 3604563941592413650}
   - component: {fileID: 4700994274530803201}
   - component: {fileID: 743934611261804635}
+  - component: {fileID: 2614378112282577688}
+  - component: {fileID: 8268926400701983631}
   m_Layer: 7
   m_Name: Clone
   m_TagString: Untagged
@@ -292,6 +308,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 2
+--- !u!114 &2721532087074220333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936845640939817397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894cc9fc0bc0fd242bcb97a76d1a8c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4766987155260039468}
+        m_TargetAssemblyTypeName: BeingAnimator, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Die
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3604563941592413650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,3 +374,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TaskScheduler: {fileID: 0}
+--- !u!114 &2614378112282577688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936845640939817397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37388789feacc07479303b6244c193de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
+  TaskScheduler: {fileID: 0}
+  MaxStoredCalories: 7500000
+  InitialStoredCalories: 500000
+  CaloriesConsumedPerCycle: 2500000
+  FoodConsumptionCaloriesThreshold: 4000000
+--- !u!114 &8268926400701983631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936845640939817397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3673064338e63b4893914e82f47e88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimePerKiloGramConsumed: 2

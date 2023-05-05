@@ -1,13 +1,14 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Death))]
 [RequireComponent(typeof(TaskExecutor))]
 public class Stomach : MonoBehaviour
 {
     public ItemGridIndexer ItemGrid;
     public TaskScheduler TaskScheduler;
 
+    Death _death;
     TaskExecutor _taskExecutor;
     FoodConsumption _foodConsumption;
 
@@ -21,6 +22,8 @@ public class Stomach : MonoBehaviour
 
     void Awake()
     {
+        _death = GetComponent<Death>();
+        _death.OnDeath.AddListener(OnDeath);
         _taskExecutor = GetComponent<TaskExecutor>();
         _foodConsumption = GetComponent<FoodConsumption>();
     }
@@ -31,12 +34,17 @@ public class Stomach : MonoBehaviour
         _timeOfLastMeal = Time.time;
     }
 
+    void OnDeath()
+    {
+        enabled = false;
+    }
+
     void Update()
     {
         var currentCalories = CurrentCalories();
 
         if (currentCalories == 0)
-            throw new NotImplementedException("Implement clone starvation");
+            _death.Die();
         else if (currentCalories < FoodConsumptionCaloriesThreshold)
             TryOrderFoodConsumption();
     }
@@ -101,8 +109,10 @@ public class Stomach : MonoBehaviour
         if (!foodItems.Any())
             return false;
 
-        Debug.Log($"Consume food: {calories / 1.KiloCalorie()} kcal");
-        _foodConsumptionTask = TaskCreator.EatFood(foodItems, _foodConsumption);
+        var markedCalories = foodItems.Aggregate(0ul, (acc, item) => acc + item.markedCalories);
+        Debug.Log($"Consume food: {markedCalories / 1.KiloCalorie()} kcal");
+
+        _foodConsumptionTask = TaskCreator.EatFood(foodItems.CaloriesToMass(), _foodConsumption);
         _foodConsumptionTask.Then(success =>
         {
             Debug.Log($"Food consumption {(success ? "completed" : "canceled")}");

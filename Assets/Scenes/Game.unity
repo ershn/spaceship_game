@@ -233,6 +233,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 873609800}
     m_Modifications:
+    - target: {fileID: 97167780237384032, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Mass
+      value: 1000000
+      objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
       value: PotatoItem
@@ -1053,6 +1057,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clone (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
     - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: ItemCreator
       value: 
@@ -1197,42 +1205,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &1114809804 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1936845640939817397, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
-  m_PrefabInstance: {fileID: 1259402903}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1114809815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114809804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37388789feacc07479303b6244c193de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
-  TaskScheduler: {fileID: 2000432410}
-  MaxStoredCalories: 7500000
-  InitialStoredCalories: 5000000
-  CaloriesConsumedPerCycle: 2500000
-  FoodConsumptionCaloriesThreshold: 4000000
---- !u!114 &1114809826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114809804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3673064338e63b4893914e82f47e88a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimePerKiloGramConsumed: 2
 --- !u!1 &1123563457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,6 +1770,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clone
       objectReference: {fileID: 0}
+    - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
     - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: ItemCreator
       value: 
@@ -2195,6 +2171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
     - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: ItemCreator
       value: 

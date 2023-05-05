@@ -20,6 +20,9 @@ public class Mover : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_moveDirection == Vector2.zero)
+            return;
+
         _rigidbody2D.position += Speed * Time.deltaTime * _moveDirection;
     }
 }

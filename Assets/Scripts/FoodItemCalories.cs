@@ -16,6 +16,18 @@ public class FoodItemCalories : MonoBehaviour
 
     public ulong TotalCalories => _foodItemDef.MassToCalories(_itemMass.Get());
 
+    public ulong GetCalories(ulong mass)
+    {
+        if (mass > _itemMass.Get())
+        {
+            throw new ArgumentOutOfRangeException(
+                "The specified mass exceeds the current total"
+                );
+        }
+
+        return _foodItemDef.MassToCalories(mass);
+    }
+
     public ulong GetMass(ulong calories)
     {
         if (calories > TotalCalories)
