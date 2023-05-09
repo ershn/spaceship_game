@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [CreateAssetMenu(menuName = "Grid/Poly")]
 public class GridPolyIndexer : GridIndexer
@@ -29,11 +29,10 @@ public class GridPolyIndexer : GridIndexer
     public override void Remove(GridPosition obj)
     {
         var list = _grid[obj.CellPosition];
-        if (list == null)
-            throw new InvalidOperationException("Grid cell empty");
+        Assert.IsNotNull(list);
 
-        if (!list.Remove(obj.gameObject))
-            throw new InvalidOperationException("Object not in grid cell");
+        var removed = list.Remove(obj.gameObject);
+        Assert.IsTrue(removed);
 
         if (list.Count == 0)
             _grid[obj.CellPosition] = null;

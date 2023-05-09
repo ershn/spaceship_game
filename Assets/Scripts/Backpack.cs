@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
 {
@@ -19,12 +19,17 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
         _gridPosition = GetComponent<GridPosition>();
     }
 
+    public (T, ulong) First<T>() where T : ItemDef
+    {
+        var kv = _inventory.First();
+        return ((T)kv.Key, kv.Value);
+    }
+
     public bool TryFirst<T>(out (T, ulong) first) where T : ItemDef
     {
         if (_inventory.Any())
         {
-            var kv = _inventory.First();
-            first = ((T)kv.Key, kv.Value);
+            first = First<T>();
             return true;
         }
         else
@@ -36,12 +41,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
 
     public void Add(ItemDef itemDef, ulong mass)
     {
-        if (CurrentMass + mass > MaxMass)
-        {
-            throw new ArgumentOutOfRangeException(
-                "The total inventory mass would exceed the limit"
-                );
-        }
+        Assert.IsTrue(CurrentMass + mass <= MaxMass);
 
         if (_inventory.TryGetValue(itemDef, out var currentMass))
             _inventory[itemDef] = currentMass + mass;
@@ -54,13 +54,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
     public void Remove(ItemDef itemDef, ulong mass)
     {
         var currentMass = _inventory[itemDef];
-
-        if (mass > currentMass)
-        {
-            throw new ArgumentOutOfRangeException(
-                "The removed mass exceeds the current mass"
-                );
-        }
+        Assert.IsTrue(mass <= currentMass);
 
         var updatedMass = currentMass - mass;
         if (updatedMass > 0)

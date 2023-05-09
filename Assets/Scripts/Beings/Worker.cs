@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Worker : MonoBehaviour
 {
@@ -8,8 +9,7 @@ public class Worker : MonoBehaviour
 
     public void WorkOn(IWork work, Action<bool> onEnd)
     {
-        if (_work != null)
-            throw new InvalidOperationException("Already working");
+        Assert.IsNull(_work);
 
         _work = work;
         _onEnd = onEnd;
@@ -17,8 +17,7 @@ public class Worker : MonoBehaviour
 
     public void Cancel()
     {
-        if (_work == null)
-            throw new InvalidOperationException("Not working");
+        Assert.IsNotNull(_work);
 
         _work = null;
         _onEnd(false);

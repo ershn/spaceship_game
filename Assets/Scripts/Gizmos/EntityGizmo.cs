@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(IGizmoDef))]
 public class EntityGizmo : MonoBehaviour
 {
+    const uint AssetReimportDelaySecs = 5;
+
     IGizmoDef _gizmoDef;
 
     void OnDrawGizmos()
@@ -31,15 +33,22 @@ public class EntityGizmo : MonoBehaviour
         }
     }
 
-    static Texture2D GetAssetPreview(Object asset)
+    string _lastReimportedAssetPath;
+    System.DateTime _reimportTimer;
+
+    Texture2D GetAssetPreview(Object asset)
     {
         var texture = AssetPreview.GetAssetPreview(asset);
         if (texture == null)
         {
             var path = AssetDatabase.GetAssetPath(asset);
-            if (!string.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(path) &&
+                (_lastReimportedAssetPath != path || _reimportTimer < System.DateTime.Now))
             {
                 AssetDatabase.ImportAsset(path);
+                _lastReimportedAssetPath = path;
+                _reimportTimer = System.DateTime.Now.AddSeconds(AssetReimportDelaySecs);
+
                 texture = AssetPreview.GetAssetPreview(asset);
             }
         }

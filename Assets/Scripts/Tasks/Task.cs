@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Task characteristics:
@@ -40,8 +41,7 @@ public abstract class Task : ITask
 
     public void Start()
     {
-        if (Canceled || Started)
-            throw new InvalidOperationException("Task already started/canceled");
+        Assert.IsFalse(Canceled || Started);
 
         Started = true;
         OnStart(success =>

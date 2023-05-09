@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Death))]
 public class TaskExecutor : MonoBehaviour
@@ -24,8 +24,7 @@ public class TaskExecutor : MonoBehaviour
 
     public void Execute(ITask task)
     {
-        if (_task != null)
-            throw new ArgumentException("A task is already executing");
+        Assert.IsNull(_task);
 
         Debug.Log($"Execute task: {task}");
         _task = task;

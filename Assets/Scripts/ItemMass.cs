@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(ItemDefHolder))]
@@ -46,36 +46,21 @@ public class ItemMass : MonoBehaviour
 
     public void Reserve(ulong mass)
     {
-        if (mass > Mass - _reservedMass)
-        {
-            throw new ArgumentOutOfRangeException(
-                "The reserved mass exceeds the current unreserved mass"
-                );
-        }
+        Assert.IsTrue(mass <= Mass - _reservedMass);
 
         _reservedMass += mass;
     }
 
     public void Unreserve(ulong mass)
     {
-        if (mass > _reservedMass)
-        {
-            throw new ArgumentOutOfRangeException(
-                "The released mass exceeds the current reserved mass"
-                );
-        }
+        Assert.IsTrue(mass <= _reservedMass);
 
         _reservedMass -= mass;
     }
 
     public void Remove(ulong mass)
     {
-        if (mass > _reservedMass)
-        {
-            throw new ArgumentOutOfRangeException(
-                "The removed mass exceeds the current reserved mass"
-                );
-        }
+        Assert.IsTrue(mass <= _reservedMass);
 
         var oldMass = Mass;
         _reservedMass -= mass;

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.Assertions;
 
 public class PathFinder : MonoBehaviour
 {
@@ -64,16 +65,14 @@ public class PathFinder : MonoBehaviour
 
     public void MoveTo(Vector2 dest, Action<bool> onEnd)
     {
-        if (IsExecuting())
-            throw new InvalidOperationException("Already moving to a destination");
+        Assert.IsFalse(IsExecuting());
 
         StartExecuting(dest, onEnd);
     }
 
     public void Cancel()
     {
-        if (!IsExecuting())
-            throw new InvalidOperationException("Not moving to any destination");
+        Assert.IsTrue(IsExecuting());
 
         if (!IsMoving())
             CancelPathCalculation();

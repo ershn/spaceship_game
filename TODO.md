@@ -14,15 +14,20 @@
 - optimization: allow to pick several items during the same task
 - optimization: pick the closest items and executors to fulfill a task
 
-## Graphics
-- add an eating animation
-- add an idle animation
-
 ## Task scheduling
 - add task priorities
 - priorities tasks with a fixed executor
 
-## UI
+## Graphics
+
+### Clone
+- add an eating animation
+- add an idle animation
+
+### Items
+- fix the rendering order of items on the same tile
+
+## UX/UI
 - allow to build a rectangular area of floors
 - add an info window to show being/item/building properties
 

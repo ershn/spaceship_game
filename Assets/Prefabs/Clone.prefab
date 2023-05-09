@@ -389,7 +389,7 @@ MonoBehaviour:
   ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
   TaskScheduler: {fileID: 0}
   MaxStoredCalories: 7500000
-  InitialStoredCalories: 500000
+  InitialStoredCalories: 4000000
   CaloriesConsumedPerCycle: 2500000
   FoodConsumptionCaloriesThreshold: 4000000
 --- !u!114 &8268926400701983631

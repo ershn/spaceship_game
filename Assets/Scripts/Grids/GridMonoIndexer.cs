@@ -1,16 +1,15 @@
-using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [CreateAssetMenu(menuName = "Grid/Mono")]
 public class GridMonoIndexer : GridIndexer
 {
-    ArrayGrid<GameObject> _grid = new(500);
+    readonly ArrayGrid<GameObject> _grid = new(500);
 
     public GameObject Get(Vector2Int position)
     {
         var obj = _grid[position];
-        if (obj == null)
-            throw new InvalidOperationException("Grid cell empty");
+        Assert.IsNotNull(obj);
 
         return obj;
     }
@@ -25,8 +24,7 @@ public class GridMonoIndexer : GridIndexer
 
     public override void Add(GridPosition obj)
     {
-        if (_grid[obj.CellPosition] != null)
-            throw new InvalidOperationException("Grid cell already used");
+        Assert.IsNull(_grid[obj.CellPosition]);
 
         _grid[obj.CellPosition] = obj.gameObject;
 
@@ -39,8 +37,7 @@ public class GridMonoIndexer : GridIndexer
 
     public override void Remove(GridPosition obj)
     {
-        if (_grid[obj.CellPosition] == null)
-            throw new InvalidOperationException("Grid cell empty");
+        Assert.IsNotNull(_grid[obj.CellPosition]);
 
         _grid[obj.CellPosition] = null;
 

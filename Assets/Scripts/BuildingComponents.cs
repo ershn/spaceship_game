@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(BuildingDefHolder))]
 [RequireComponent(typeof(GridPosition))]
@@ -49,13 +49,7 @@ public class BuildingComponents : MonoBehaviour, IInventoryAdd
     public void Add(ItemDef itemDef, ulong mass)
     {
         var component = _inventory[itemDef];
-
-        if (component.CurrentMass + mass > component.MaxMass)
-        {
-            throw new ArgumentOutOfRangeException(
-                "The total component mass would exceed the limit"
-                );
-        }
+        Assert.IsTrue(component.CurrentMass + mass <= component.MaxMass);
 
         component.CurrentMass += mass;
 

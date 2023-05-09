@@ -15,7 +15,8 @@ public static class ItemEnumerableExtensions
             var markedMass = Math.Min(totalMass, itemMass.Get());
             totalMass -= markedMass;
             return (totalMass > 0, (itemMass, markedMass));
-        });
+        })
+        .ToArray();
 
     public static IEnumerable<(FoodItemCalories itemCalories, ulong markedCalories)>
         CumulateCalories(this IEnumerable<GameObject> items, ulong totalCalories) =>
@@ -27,7 +28,8 @@ public static class ItemEnumerableExtensions
             var markedCalories = Math.Min(totalCalories, itemCalories.TotalCalories);
             totalCalories -= markedCalories;
             return (totalCalories > 0, (itemCalories, markedCalories));
-        });
+        })
+        .ToArray();
 
     public static IEnumerable<(ItemMass itemMass, ulong markedMass)> CaloriesToMass(
         this IEnumerable<(FoodItemCalories itemCalories, ulong markedCalories)> items

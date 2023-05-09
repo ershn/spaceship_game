@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public abstract class TransactionalWork : MonoBehaviour, IWork
@@ -23,8 +23,7 @@ public abstract class TransactionalWork : MonoBehaviour, IWork
 
     public bool Work(float time)
     {
-        if (_phase == Phase.Completed)
-            throw new InvalidOperationException("Work already completed");
+        Assert.AreNotEqual(_phase, Phase.Completed);
 
         if (_phase == Phase.Pending)
         {

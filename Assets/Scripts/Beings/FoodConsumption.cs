@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Backpack))]
@@ -34,9 +33,7 @@ public class FoodConsumption : MonoBehaviour, IWork
 
     bool ConsumeMass(ulong targetMass)
     {
-        if (!_backpack.TryFirst<FoodItemDef>(out var foodItem))
-            throw new InvalidOperationException("No food in backpack");
-
+        var foodItem = _backpack.First<FoodItemDef>();
         do
         {
             var (itemDef, itemMass) = foodItem;
