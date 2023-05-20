@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 # Editor settings
 .vscode/
+
+# Memo file
+MEMO.md

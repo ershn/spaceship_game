@@ -1,0 +1,17 @@
+#property-header {
+    flex-direction: row;
+    margin-left: 3px;
+}
+
+#property-header>Label {
+    flex: 82 1 120px;
+    -unity-text-align: middle-left;
+}
+
+#property-header>#property-header-content {
+    flex: 100 1 212px;
+}
+
+#property-content {
+    margin-left: 12px;
+}
