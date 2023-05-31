@@ -49,8 +49,7 @@ public class Stomach : MonoBehaviour
             TryOrderFoodConsumption();
     }
 
-    float CyclesSinceLastMeal() =>
-        (Time.time - _timeOfLastMeal) / Clock.CycleLength;
+    float CyclesSinceLastMeal() => (Time.time - _timeOfLastMeal) / Clock.CycleLength;
 
     ulong CaloriesConsumedSinceLastMeal() =>
         (ulong)(CaloriesConsumedPerCycle * CyclesSinceLastMeal());
@@ -59,7 +58,8 @@ public class Stomach : MonoBehaviour
     {
         var caloriesConsumed = CaloriesConsumedSinceLastMeal();
         return _caloriesAfterLastMeal > caloriesConsumed
-            ? _caloriesAfterLastMeal - caloriesConsumed : 0;
+            ? _caloriesAfterLastMeal - caloriesConsumed
+            : 0;
     }
 
     public void StoreCalories(ulong calories)
@@ -77,8 +77,10 @@ public class Stomach : MonoBehaviour
             return;
 
         var currentCalories = CurrentCalories();
-        if (_nextOrderTryCaloriesThreshold != null
-            && currentCalories >= _nextOrderTryCaloriesThreshold)
+        if (
+            _nextOrderTryCaloriesThreshold != null
+            && currentCalories >= _nextOrderTryCaloriesThreshold
+        )
             return;
 
         Debug.Log($"Try to consume food (stored: {currentCalories / 1.KiloCalorie()} kcal)");
@@ -91,20 +93,17 @@ public class Stomach : MonoBehaviour
 
     ulong NextOrderTryCaloriesThreshold(ulong currentCalories)
     {
-        var multiplier = currentCalories < 1000.KiloCalories()
-        ? 100.KiloCalories()
-        : 500.KiloCalories();
+        var multiplier =
+            currentCalories < 1000.KiloCalories() ? 100.KiloCalories() : 500.KiloCalories();
 
         return currentCalories % multiplier == 0
-        ? (currentCalories / multiplier - 1) * multiplier
-        : currentCalories / multiplier * multiplier;
+            ? (currentCalories / multiplier - 1) * multiplier
+            : currentCalories / multiplier * multiplier;
     }
 
     bool OrderFoodConsumption(ulong calories)
     {
-        var foodItems = ItemGrid
-        .Filter<FoodItemDef>()
-        .CumulateCalories(calories);
+        var foodItems = ItemGrid.Filter<FoodItemDef>().CumulateCalories(calories);
 
         if (!foodItems.Any())
             return false;
@@ -123,7 +122,7 @@ public class Stomach : MonoBehaviour
         return true;
     }
 
-#region debug log
+    #region debug log
 
     float _timeOfLastCaloriesLog;
 
@@ -136,5 +135,5 @@ public class Stomach : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 }

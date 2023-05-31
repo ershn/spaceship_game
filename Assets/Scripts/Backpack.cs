@@ -19,13 +19,15 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
         _gridPosition = GetComponent<GridPosition>();
     }
 
-    public (T, ulong) First<T>() where T : ItemDef
+    public (T, ulong) First<T>()
+        where T : ItemDef
     {
-        var kv = _inventory.First();
-        return ((T)kv.Key, kv.Value);
+        var (itemDef, amount) = _inventory.First();
+        return ((T)itemDef, amount);
     }
 
-    public bool TryFirst<T>(out (T, ulong) first) where T : ItemDef
+    public bool TryFirst<T>(out (T, ulong) first)
+        where T : ItemDef
     {
         if (_inventory.Any())
         {
@@ -39,29 +41,31 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
         }
     }
 
-    public void Add(ItemDef itemDef, ulong mass)
+    public void Add(ItemDef itemDef, ulong amount)
     {
+        var mass = itemDef.AmountAddressingMode.AmountToMass(amount);
         Assert.IsTrue(CurrentMass + mass <= MaxMass);
 
-        if (_inventory.TryGetValue(itemDef, out var currentMass))
-            _inventory[itemDef] = currentMass + mass;
+        if (_inventory.TryGetValue(itemDef, out var currentAmount))
+            _inventory[itemDef] = currentAmount + amount;
         else
-            _inventory[itemDef] = mass;
+            _inventory[itemDef] = amount;
 
         CurrentMass += mass;
     }
 
-    public void Remove(ItemDef itemDef, ulong mass)
+    public void Remove(ItemDef itemDef, ulong amount)
     {
-        var currentMass = _inventory[itemDef];
-        Assert.IsTrue(mass <= currentMass);
+        var currentAmount = _inventory[itemDef];
+        Assert.IsTrue(amount <= currentAmount);
 
-        var updatedMass = currentMass - mass;
-        if (updatedMass > 0)
-            _inventory[itemDef] = updatedMass;
+        var updatedAmount = currentAmount - amount;
+        if (updatedAmount > 0)
+            _inventory[itemDef] = updatedAmount;
         else
             _inventory.Remove(itemDef);
 
+        var mass = itemDef.AmountAddressingMode.AmountToMass(amount);
         CurrentMass -= mass;
     }
 

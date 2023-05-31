@@ -9,7 +9,7 @@ public class BuildingDef : ScriptableObject, IGizmoDef
 
     public Object GizmoAsset => NormalTile;
 
-    public ItemDefMass[] ComponentMasses;
+    public ItemDefAmount[] ComponentAmounts;
 
     public int MaxHealthPoints = 100;
 

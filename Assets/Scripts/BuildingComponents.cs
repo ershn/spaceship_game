@@ -7,20 +7,20 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(GridPosition))]
 public class BuildingComponents : MonoBehaviour, IInventoryAdd
 {
-    class Masses
+    class Amounts
     {
-        public ulong MaxMass;
-        public ulong CurrentMass;
+        public ulong MaxAmount;
+        public ulong CurrentAmount;
     }
 
-    public ItemDefEvent OnComponentMaxMass;
+    public ItemDefEvent OnComponentMaxAmount;
 
     public ItemCreator ItemCreator;
 
     BuildingDef _buildingDef;
     GridPosition _gridPosition;
 
-    Dictionary<ItemDef, Masses> _inventory;
+    Dictionary<ItemDef, Amounts> _inventory;
 
     void Awake()
     {
@@ -33,45 +33,41 @@ public class BuildingComponents : MonoBehaviour, IInventoryAdd
     void InitInventory()
     {
         _inventory = new();
-        foreach (var componentMass in _buildingDef.ComponentMasses)
+        foreach (var componentAmount in _buildingDef.ComponentAmounts)
         {
-            _inventory[componentMass.ItemDef] = new Masses()
+            _inventory[componentAmount.ItemDef] = new Amounts()
             {
-                MaxMass = componentMass.Mass,
-                CurrentMass = 0
+                MaxAmount = componentAmount.Amount,
+                CurrentAmount = 0
             };
         }
     }
 
     public IEnumerable<(ItemDef, ulong)> GetMissingComponents() =>
-        _inventory.Select(kv => (kv.Key, kv.Value.MaxMass - kv.Value.CurrentMass));
+        _inventory.Select(kv => (kv.Key, kv.Value.MaxAmount - kv.Value.CurrentAmount));
 
-    public void Add(ItemDef itemDef, ulong mass)
+    public void Add(ItemDef itemDef, ulong amount)
     {
         var component = _inventory[itemDef];
-        Assert.IsTrue(component.CurrentMass + mass <= component.MaxMass);
+        Assert.IsTrue(component.CurrentAmount + amount <= component.MaxAmount);
 
-        component.CurrentMass += mass;
+        component.CurrentAmount += amount;
 
-        if (component.CurrentMass == component.MaxMass)
-            OnComponentMaxMass.Invoke(itemDef);
+        if (component.CurrentAmount == component.MaxAmount)
+            OnComponentMaxAmount.Invoke(itemDef);
     }
 
     public void Dump()
     {
         var cellPosition = _gridPosition.CellPosition;
 
-        foreach (var component in _inventory)
+        foreach (var (itemDef, amounts) in _inventory)
         {
-            var itemDef = component.Key;
-            var masses = component.Value;
+            if (amounts.CurrentAmount == 0)
+                continue;
 
-            if (masses.CurrentMass > 0)
-            {
-                Debug.Log($"Dumping item: {cellPosition}, {itemDef}, {masses.CurrentMass}");
-                ItemCreator.Upsert(cellPosition, itemDef, masses.CurrentMass);
-                masses.CurrentMass = 0;
-            }
+            ItemCreator.Upsert(cellPosition, itemDef, amounts.CurrentAmount);
+            amounts.CurrentAmount = 0;
         }
     }
 }

@@ -23,12 +23,16 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
             var types = DerivedTypes();
             var initialType = InitPropertyType(property, types, AllowNull);
             var content = CreateContent(property);
-            var selector =
-                CreateTypeSelector(types, initialType, AllowNull, type =>
-            {
-                ChangePropertyType(property, type);
-                UpdateContent(content, property);
-            });
+            var selector = CreateTypeSelector(
+                types,
+                initialType,
+                AllowNull,
+                type =>
+                {
+                    ChangePropertyType(property, type);
+                    UpdateContent(content, property);
+                }
+            );
 
             root = new VisualElement();
             root.Add(selector);
@@ -63,11 +67,7 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
         return types;
     }
 
-    Type InitPropertyType(
-        SerializedProperty property,
-        IEnumerable<Type> types,
-        bool allowNone
-        )
+    Type InitPropertyType(SerializedProperty property, IEnumerable<Type> types, bool allowNone)
     {
         if (!allowNone && property.managedReferenceValue == null)
             ChangePropertyType(property, types.First());
@@ -107,7 +107,7 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
         Type selectedType,
         bool allowNone,
         Action<Type> onSelection
-        )
+    )
     {
         var typeNames = new List<string>();
         if (allowNone)
@@ -152,8 +152,7 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
 
     void AddStyleSheet(VisualElement element)
     {
-        var styleSheet =
-            AssetDatabase.LoadAssetAtPath<StyleSheet>(StyleSheetPath);
+        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(StyleSheetPath);
         element.styleSheets.Add(styleSheet);
     }
 }

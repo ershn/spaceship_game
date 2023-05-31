@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class ItemFromWorldToBackpackTask : Task
 {
-    readonly ItemMass _item;
-    readonly ulong _mass;
+    readonly ItemAmount _item;
+    readonly ulong _amount;
     IInventoryAdd _backpack;
 
-    public ItemFromWorldToBackpackTask(ItemMass item, ulong mass)
+    public ItemFromWorldToBackpackTask(ItemAmount item, ulong amount)
     {
         _item = item;
-        _mass = mass;
+        _amount = amount;
 
         Init();
     }
 
     void Init()
     {
-        _item.Reserve(_mass);
+        _item.Reserve(_amount);
     }
 
     public override void Attach(GameObject executor)
@@ -28,13 +28,13 @@ public class ItemFromWorldToBackpackTask : Task
     // TODO: handle distance between item and executor
     protected override void OnStart(Action<bool> onEnd)
     {
-        _item.Remove(_mass);
-        _backpack.Add(_item.Def, _mass);
+        _item.Remove(_amount);
+        _backpack.Add(_item.Def, _amount);
         onEnd(true);
     }
 
     protected override void OnFailure(bool executed)
     {
-        _item.Unreserve(_mass);
+        _item.Unreserve(_amount);
     }
 }

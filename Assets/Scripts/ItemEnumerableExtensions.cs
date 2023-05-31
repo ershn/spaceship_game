@@ -5,38 +5,42 @@ using UnityEngine;
 
 public static class ItemEnumerableExtensions
 {
-    public static IEnumerable<(ItemMass itemMass, ulong markedMass)>
-        CumulateMass(this IEnumerable<GameObject> items, ulong totalMass) =>
+    public static IEnumerable<(ItemAmount itemAmount, ulong markedAmount)> CumulateAmount(
+        this IEnumerable<GameObject> items,
+        ulong totalAmount
+    ) =>
         items
-        .Select(gameObject => gameObject.GetComponent<ItemMass>())
-        .Where(itemMass => itemMass.Get() > 0)
-        .SelectWhile(itemMass =>
-        {
-            var markedMass = Math.Min(totalMass, itemMass.Get());
-            totalMass -= markedMass;
-            return (totalMass > 0, (itemMass, markedMass));
-        })
-        .ToArray();
+            .Select(gameObject => gameObject.GetComponent<ItemAmount>())
+            .Where(itemAmount => itemAmount.Get() > 0)
+            .SelectWhile(itemAmount =>
+            {
+                var markedAmount = Math.Min(totalAmount, itemAmount.Get());
+                totalAmount -= markedAmount;
+                return (totalAmount > 0, (itemAmount, markedAmount));
+            })
+            .ToArray();
 
-    public static IEnumerable<(FoodItemCalories itemCalories, ulong markedCalories)>
-        CumulateCalories(this IEnumerable<GameObject> items, ulong totalCalories) =>
+    public static IEnumerable<(
+        FoodItemCalories itemCalories,
+        ulong markedCalories
+    )> CumulateCalories(this IEnumerable<GameObject> items, ulong totalCalories) =>
         items
-        .Select(gameObject => gameObject.GetComponent<FoodItemCalories>())
-        .Where(itemCalories => itemCalories.TotalCalories > 0)
-        .SelectWhile(itemCalories =>
-        {
-            var markedCalories = Math.Min(totalCalories, itemCalories.TotalCalories);
-            totalCalories -= markedCalories;
-            return (totalCalories > 0, (itemCalories, markedCalories));
-        })
-        .ToArray();
+            .Select(gameObject => gameObject.GetComponent<FoodItemCalories>())
+            .Where(itemCalories => itemCalories.TotalCalories > 0)
+            .SelectWhile(itemCalories =>
+            {
+                var markedCalories = Math.Min(totalCalories, itemCalories.TotalCalories);
+                totalCalories -= markedCalories;
+                return (totalCalories > 0, (itemCalories, markedCalories));
+            })
+            .ToArray();
 
-    public static IEnumerable<(ItemMass itemMass, ulong markedMass)> CaloriesToMass(
+    public static IEnumerable<(ItemAmount itemAmount, ulong markedMass)> CaloriesToMass(
         this IEnumerable<(FoodItemCalories itemCalories, ulong markedCalories)> items
-        ) =>
+    ) =>
         items.Select(item =>
-        (
-            item.itemCalories.GetComponent<ItemMass>(),
-            item.itemCalories.GetMass(item.markedCalories)
-        ));
+        {
+            var (itemCalories, markedCalories) = item;
+            return (itemCalories.GetComponent<ItemAmount>(), itemCalories.GetMass(markedCalories));
+        });
 }

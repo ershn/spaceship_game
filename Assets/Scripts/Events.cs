@@ -3,22 +3,22 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class IntEvent : UnityEvent<int> {}
+public class IntEvent : UnityEvent<int> { }
 
 [Serializable]
-public class FloatEvent : UnityEvent<float> {}
+public class UlongEvent : UnityEvent<ulong> { }
 
 [Serializable]
-public class Vector2IntEvent : UnityEvent<Vector2Int> {}
+public class FloatEvent : UnityEvent<float> { }
 
 [Serializable]
-public class Vector2Event : UnityEvent<Vector2> {}
+public class Vector2IntEvent : UnityEvent<Vector2Int> { }
 
 [Serializable]
-public class GameObjectEvent : UnityEvent<GameObject> {}
+public class Vector2Event : UnityEvent<Vector2> { }
 
 [Serializable]
-public class ItemDefEvent : UnityEvent<ItemDef> {}
+public class GameObjectEvent : UnityEvent<GameObject> { }
 
 [Serializable]
-public class TaskEvent : UnityEvent<ITask> {}
+public class ItemDefEvent : UnityEvent<ItemDef> { }

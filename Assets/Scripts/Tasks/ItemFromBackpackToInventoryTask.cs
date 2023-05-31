@@ -5,16 +5,16 @@ public class ItemFromBackpackToInventoryTask : Task
 {
     readonly IInventoryAdd _inventory;
     readonly ItemDef _itemDef;
-    readonly ulong _mass;
+    readonly ulong _amount;
     IInventoryRemove _backpack;
 
     public ItemFromBackpackToInventoryTask(
-        IInventoryAdd inventory, ItemDef itemDef, ulong mass
+        IInventoryAdd inventory, ItemDef itemDef, ulong amount
         )
     {
         _inventory = inventory;
         _itemDef = itemDef;
-        _mass = mass;
+        _amount = amount;
     }
 
     public override void Attach(GameObject executor)
@@ -24,8 +24,8 @@ public class ItemFromBackpackToInventoryTask : Task
 
     protected override void OnStart(Action<bool> onEnd)
     {
-        _backpack.Remove(_itemDef, _mass);
-        _inventory.Add(_itemDef, _mass);
+        _backpack.Remove(_itemDef, _amount);
+        _inventory.Add(_itemDef, _amount);
         onEnd(true);
     }
 }

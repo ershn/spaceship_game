@@ -25,26 +25,30 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
             _taskScheduler = constructor.TaskScheduler;
 
             _constructor = constructor;
-            _buildingComponents = constructor.GetComponent<BuildingComponents>();
+            _buildingComponents =
+                constructor.GetComponent<BuildingComponents>();
         }
 
         protected override void OnStart() =>
-            _buildingComponents.OnComponentMaxMass.AddListener(Fulfill);
+            _buildingComponents.OnComponentMaxAmount.AddListener(Fulfill);
 
         protected override void OnEnd() =>
-            _buildingComponents.OnComponentMaxMass.RemoveListener(Fulfill);
+            _buildingComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
 
         protected override void OnDo()
         {
             _componentTaskSets = new();
 
-            foreach (var (itemDef, missingMass) in _buildingComponents.GetMissingComponents())
+            foreach (var (itemDef, missingAmount) in
+                        _buildingComponents.GetMissingComponents())
             {
                 var taskSet = _itemGrid
                 .Filter(itemDef)
-                .CumulateMass(missingMass)
+                .CumulateAmount(missingAmount)
                 .Select(item =>
-                    TaskCreator.DeliverItem(item.itemMass, item.markedMass, _buildingComponents)
+                    TaskCreator.DeliverItem(
+                        item.itemAmount, item.markedAmount, _buildingComponents
+                        )
                     )
                 .ToTaskSet();
 

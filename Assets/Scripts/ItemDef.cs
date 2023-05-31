@@ -1,14 +1,13 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Generic")]
 public class ItemDef : ScriptableObject, IGizmoDef
 {
-    public Sprite LowMassSprite;
-    public Sprite NormalMassSprite;
-    public Sprite HighMassSprite;
+    [SerializeReference, Polymorphic]
+    public AmountAddressingMode AmountAddressingMode;
 
-    public Object GizmoAsset => LowMassSprite;
+    public AmountSprite[] AmountSprites;
 
-    public ulong NormalMassThreshold = 100.KiloGrams();
-    public ulong HighMassThreshold = 1.Ton();
+    public Object GizmoAsset => AmountSprites.FirstOrDefault().Sprite;
 }

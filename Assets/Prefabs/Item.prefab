@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18bf2506802178e44b60ee40118e5432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnChangeToZeroMass:
+  OnAmountChangedToZero:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7998796026562671924}
@@ -155,43 +155,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnChangeToLowMass:
+  OnAmountChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4057525713406779392}
         m_TargetAssemblyTypeName: ItemGraphics, Assembly-CSharp
-        m_MethodName: ToLowMassSprite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnChangeToNormalMass:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4057525713406779392}
-        m_TargetAssemblyTypeName: ItemGraphics, Assembly-CSharp
-        m_MethodName: ToNormalMassSprite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnChangeToHighMass:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4057525713406779392}
-        m_TargetAssemblyTypeName: ItemGraphics, Assembly-CSharp
-        m_MethodName: ToHighMassSprite
-        m_Mode: 1
+        m_MethodName: ToAmountSprite
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -12,9 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6185378d603acab47b3afc577b240f41, type: 3}
   m_Name: PotatoItem
   m_EditorClassIdentifier: 
-  LowMassSprite: {fileID: 1961417398, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
-  NormalMassSprite: {fileID: 178422134, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
-  HighMassSprite: {fileID: -534738970, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
-  NormalMassThreshold: 100000000
-  HighMassThreshold: 1000000000
+  AmountAddressingMode:
+    rid: 3538439070970281995
+  AmountSprites:
+  - MinAmount: 1
+    Sprite: {fileID: 1961417398, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+  - MinAmount: 100000000
+    Sprite: {fileID: 178422134, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+  - MinAmount: 1000000000
+    Sprite: {fileID: -534738970, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
   GramToCaloriesMultiplier: 700
+  references:
+    version: 2
+    RefIds:
+    - rid: 3538439070970281995
+      type: {class: MassAddressingMode, ns: , asm: Assembly-CSharp}
