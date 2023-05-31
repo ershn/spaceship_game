@@ -42,8 +42,10 @@ public class EntityGizmo : MonoBehaviour
         if (texture == null)
         {
             var path = AssetDatabase.GetAssetPath(asset);
-            if (!string.IsNullOrEmpty(path) &&
-                (_lastReimportedAssetPath != path || _reimportTimer < System.DateTime.Now))
+            if (
+                !string.IsNullOrEmpty(path)
+                && (_lastReimportedAssetPath != path || _reimportTimer < System.DateTime.Now)
+            )
             {
                 AssetDatabase.ImportAsset(path);
                 _lastReimportedAssetPath = path;

@@ -17,7 +17,7 @@ public class PathFinder : MonoBehaviour
         _seeker = GetComponent<Seeker>();
     }
 
-#region executor
+    #region executor
 
     bool _executing = false;
     Action<bool> _onEnd;
@@ -80,9 +80,9 @@ public class PathFinder : MonoBehaviour
             StopMoving(success: false);
     }
 
-#endregion
+    #endregion
 
-#region mover
+    #region mover
 
     Path _path;
     int _currentWaypointIndex;
@@ -118,8 +118,10 @@ public class PathFinder : MonoBehaviour
         OnMoveDirectionUpdated.Invoke(moveDirection);
 
         var waypointDistance = Vector3.Distance(transform.position, currentWaypoint);
-        if (waypointDistance < MinDistanceForNextWaypoint &&
-            _currentWaypointIndex < _path.vectorPath.Count - 1)
+        if (
+            waypointDistance < MinDistanceForNextWaypoint
+            && _currentWaypointIndex < _path.vectorPath.Count - 1
+        )
             _currentWaypointIndex++;
     }
 
@@ -129,5 +131,5 @@ public class PathFinder : MonoBehaviour
             Move();
     }
 
-#endregion
+    #endregion
 }

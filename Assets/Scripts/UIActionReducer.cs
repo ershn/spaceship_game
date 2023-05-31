@@ -26,7 +26,7 @@ public class UIActionReducer : MonoBehaviour
         _onWorldClick?.Invoke(position);
     }
 
-#region blueprints
+    #region blueprints
 
     public void SelectBlueprint(BuildingDef buildingDef)
     {
@@ -38,9 +38,9 @@ public class UIActionReducer : MonoBehaviour
         var cellPosition = _worldGrid2D.WorldToCell(position);
         _worldIO.BuildingManipulator.Construct(cellPosition, buildingDef);
     }
- 
-#endregion
-#region tasks
+
+    #endregion
+    #region tasks
 
     public void SelectCancelTask()
     {
@@ -63,6 +63,6 @@ public class UIActionReducer : MonoBehaviour
         var cellPosition = _worldGrid2D.WorldToCell(position);
         _worldIO.BuildingManipulator.Deconstruct(cellPosition);
     }
-    
-#endregion
+
+    #endregion
 }

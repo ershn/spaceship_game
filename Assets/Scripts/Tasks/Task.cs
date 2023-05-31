@@ -71,9 +71,7 @@ public abstract class Task : ITask
     /// <summary>
     /// Only called on first Cancel if already Started and not already Executed.
     /// </summary>
-    protected virtual void OnCancel()
-    {
-    }
+    protected virtual void OnCancel() { }
 
     readonly Stack<Action<bool>> _callbacks = new();
 
@@ -100,7 +98,5 @@ public abstract class Task : ITask
     /// <summary>
     /// Called on task cancelation or failure.
     /// </summary>
-    protected virtual void OnFailure(bool executed)
-    {
-    }
+    protected virtual void OnFailure(bool executed) { }
 }

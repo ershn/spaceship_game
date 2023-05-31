@@ -25,8 +25,7 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
             _taskScheduler = constructor.TaskScheduler;
 
             _constructor = constructor;
-            _buildingComponents =
-                constructor.GetComponent<BuildingComponents>();
+            _buildingComponents = constructor.GetComponent<BuildingComponents>();
         }
 
         protected override void OnStart() =>
@@ -39,18 +38,20 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
         {
             _componentTaskSets = new();
 
-            foreach (var (itemDef, missingAmount) in
-                        _buildingComponents.GetMissingComponents())
+            foreach (var (itemDef, missingAmount) in _buildingComponents.GetMissingComponents())
             {
                 var taskSet = _itemGrid
-                .Filter(itemDef)
-                .CumulateAmount(missingAmount)
-                .Select(item =>
-                    TaskCreator.DeliverItem(
-                        item.itemAmount, item.markedAmount, _buildingComponents
-                        )
+                    .Filter(itemDef)
+                    .CumulateAmount(missingAmount)
+                    .Select(
+                        item =>
+                            TaskCreator.DeliverItem(
+                                item.itemAmount,
+                                item.markedAmount,
+                                _buildingComponents
+                            )
                     )
-                .ToTaskSet();
+                    .ToTaskSet();
 
                 _componentTaskSets[itemDef] = taskSet;
                 _taskScheduler.QueueTaskSet(taskSet);

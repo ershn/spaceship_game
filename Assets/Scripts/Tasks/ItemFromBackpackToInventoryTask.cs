@@ -8,9 +8,7 @@ public class ItemFromBackpackToInventoryTask : Task
     readonly ulong _amount;
     IInventoryRemove _backpack;
 
-    public ItemFromBackpackToInventoryTask(
-        IInventoryAdd inventory, ItemDef itemDef, ulong amount
-        )
+    public ItemFromBackpackToInventoryTask(IInventoryAdd inventory, ItemDef itemDef, ulong amount)
     {
         _inventory = inventory;
         _itemDef = itemDef;

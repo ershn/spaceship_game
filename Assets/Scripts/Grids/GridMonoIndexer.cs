@@ -31,9 +31,7 @@ public class GridMonoIndexer : GridIndexer
         OnAdd(obj);
     }
 
-    protected virtual void OnAdd(GridPosition obj)
-    {
-    }
+    protected virtual void OnAdd(GridPosition obj) { }
 
     public override void Remove(GridPosition obj)
     {
@@ -44,7 +42,5 @@ public class GridMonoIndexer : GridIndexer
         OnRemove(obj);
     }
 
-    protected virtual void OnRemove(GridPosition obj)
-    {
-    }
+    protected virtual void OnRemove(GridPosition obj) { }
 }

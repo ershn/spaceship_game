@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ArrayGrid<T>
 {
-    T[,] _array;
+    readonly T[,] _array;
     Vector2Int _centerPosition;
 
     public ArrayGrid(uint sideSize)

@@ -22,6 +22,6 @@ public class ProgressBarController : MonoBehaviour
         BarMask.rectTransform.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Horizontal,
             _originalBarMaskWidth * progress
-            );
+        );
     }
 }

@@ -14,6 +14,7 @@ public class TaskExecutor : MonoBehaviour
     }
 
     void OnEnable() => TaskScheduler.AddExecutor(this);
+
     void OnDisable() => TaskScheduler.RemoveExecutor(this);
 
     void OnDeath()

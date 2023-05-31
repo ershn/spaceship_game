@@ -37,4 +37,3 @@ public class MoverAnimator : MonoBehaviour
         _animator.SetFloat("Speed", moveMagnitude);
     }
 }
-

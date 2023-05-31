@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 [CreateAssetMenu(menuName = "Grid/Poly")]
 public class GridPolyIndexer : GridIndexer
 {
-    ArrayGrid<List<GameObject>> _grid = new(500);
+    readonly ArrayGrid<List<GameObject>> _grid = new(500);
 
     public IEnumerable<GameObject> Get(Vector2Int position) => _grid[position] ?? new();
 
@@ -22,9 +22,7 @@ public class GridPolyIndexer : GridIndexer
         OnAdd(obj);
     }
 
-    protected virtual void OnAdd(GridPosition obj)
-    {
-    }
+    protected virtual void OnAdd(GridPosition obj) { }
 
     public override void Remove(GridPosition obj)
     {
@@ -40,7 +38,5 @@ public class GridPolyIndexer : GridIndexer
         OnRemove(obj);
     }
 
-    protected virtual void OnRemove(GridPosition obj)
-    {
-    }
+    protected virtual void OnRemove(GridPosition obj) { }
 }
