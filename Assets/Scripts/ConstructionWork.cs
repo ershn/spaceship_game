@@ -1,14 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BuildingDefHolder))]
+[RequireComponent(typeof(StructureDefHolder))]
 public class ConstructionWork : TransactionalWork
 {
-    BuildingDef _buildingDef;
+    StructureDef _structureDef;
 
-    protected override float RequiredTime => _buildingDef.ConstructionTime;
+    protected override float RequiredTime => _structureDef.ConstructionTime;
 
     void Awake()
     {
-        _buildingDef = GetComponent<BuildingDefHolder>().BuildingDef;
+        _structureDef = GetComponent<StructureDefHolder>().StructureDef;
     }
 }

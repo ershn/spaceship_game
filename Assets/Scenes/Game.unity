@@ -212,7 +212,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 6cf1236f32b4a8546895ea8b3f3ce3b0, type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingDef, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: StructureDef, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -997,6 +997,7 @@ Transform:
   - {fileID: 775251504}
   - {fileID: 2107491783}
   - {fileID: 1272647144}
+  - {fileID: 1396075885}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1024,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e4701762b8d214da1eda39acac768a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingManipulator: {fileID: 1695935643}
+  StructureManipulator: {fileID: 1695935643}
 --- !u!1 &875439519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,7 +1368,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingDef, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: StructureDef, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2181,6 +2182,10 @@ PrefabInstance:
       propertyPath: BuildingDef
       value: 
       objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
+    - target: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
+      propertyPath: StructureDef
+      value: 
+      objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
     - target: {fileID: 5209878187157717699, guid: d15732cf45301614f80b94837e55b267, type: 3}
       propertyPath: Grid2D
       value: 
@@ -2238,6 +2243,92 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d15732cf45301614f80b94837e55b267, type: 3}
+--- !u!1001 &1396075884
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 873609800}
+    m_Modifications:
+    - target: {fileID: 97167780237384032, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Mass
+      value: 50000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 97167780237384032, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_Name
+      value: PotatoSeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: ItemDef
+      value: 
+      objectReference: {fileID: 11400000, guid: cdfb30c2dd438b447a15ad8cb9e7ebe9, type: 2}
+    - target: {fileID: 2496044289052535066, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: Grid2D
+      value: 
+      objectReference: {fileID: 873609803}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+--- !u!4 &1396075885 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+  m_PrefabInstance: {fileID: 1396075884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1479697770 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
@@ -2386,7 +2477,7 @@ MonoBehaviour:
   TilemapUpdater: {fileID: 1123563466}
   ItemCreator: {fileID: 1227286753}
   ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
-  FloorPrefab: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
+  StructurePrefab: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
 --- !u!1 &1729712202
 GameObject:
   m_ObjectHideFlags: 0

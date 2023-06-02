@@ -1,18 +1,18 @@
 using UnityEngine;
 
 [RequireComponent(typeof(GridPosition))]
-[RequireComponent(typeof(BuildingDefHolder))]
-public class BuildingTileGraphics : MonoBehaviour
+[RequireComponent(typeof(StructureDefHolder))]
+public class StructureTileGraphics : MonoBehaviour
 {
     public TilemapUpdater TilemapUpdater;
 
     GridPosition _gridPosition;
-    BuildingDef _buildingDef;
+    StructureDef _structureDef;
 
     void Awake()
     {
         _gridPosition = GetComponent<GridPosition>();
-        _buildingDef = GetComponent<BuildingDefHolder>().BuildingDef;
+        _structureDef = GetComponent<StructureDefHolder>().StructureDef;
     }
 
     void Start()
@@ -27,12 +27,12 @@ public class BuildingTileGraphics : MonoBehaviour
 
     public void ToBlueprintTile()
     {
-        TilemapUpdater.SetTile(_gridPosition.CellPosition, _buildingDef.BlueprintTile);
+        TilemapUpdater.SetTile(_gridPosition.CellPosition, _structureDef.BlueprintTile);
     }
 
     public void ToNormalTile()
     {
-        TilemapUpdater.SetTile(_gridPosition.CellPosition, _buildingDef.NormalTile);
+        TilemapUpdater.SetTile(_gridPosition.CellPosition, _structureDef.NormalTile);
     }
 
     public void UnsetTile()

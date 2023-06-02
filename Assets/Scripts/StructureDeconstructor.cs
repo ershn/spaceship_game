@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BuildingLifecycle))]
+[RequireComponent(typeof(StructureLifecycle))]
 [RequireComponent(typeof(DeconstructionWork))]
-public class BuildingDeconstructor : MonoBehaviour
+public class StructureDeconstructor : MonoBehaviour
 {
     public TaskScheduler TaskScheduler;
 
-    BuildingLifecycle _lifecycle;
+    StructureLifecycle _lifecycle;
     DeconstructionWork _deconstructionWork;
 
     bool _allowed;
@@ -15,7 +15,7 @@ public class BuildingDeconstructor : MonoBehaviour
 
     void Awake()
     {
-        _lifecycle = GetComponent<BuildingLifecycle>();
+        _lifecycle = GetComponent<StructureLifecycle>();
         _deconstructionWork = GetComponent<DeconstructionWork>();
     }
 

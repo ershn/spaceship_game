@@ -3,42 +3,42 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(BuildingLifecycle))]
-[RequireComponent(typeof(BuildingComponents))]
+[RequireComponent(typeof(StructureLifecycle))]
+[RequireComponent(typeof(StructureComponents))]
 [RequireComponent(typeof(ConstructionWork))]
-public class BuildingConstructor : MonoBehaviour, IStateMachine
+public class StructureConstructor : MonoBehaviour, IStateMachine
 {
     class RequestComponents : State
     {
         readonly ItemGridIndexer _itemGrid;
         readonly TaskScheduler _taskScheduler;
 
-        readonly BuildingConstructor _constructor;
-        readonly BuildingComponents _buildingComponents;
+        readonly StructureConstructor _constructor;
+        readonly StructureComponents _structureComponents;
 
         Dictionary<ItemDef, ITaskSet> _componentTaskSets;
 
-        public RequestComponents(BuildingConstructor constructor)
+        public RequestComponents(StructureConstructor constructor)
             : base(constructor)
         {
             _itemGrid = constructor.ItemGrid;
             _taskScheduler = constructor.TaskScheduler;
 
             _constructor = constructor;
-            _buildingComponents = constructor.GetComponent<BuildingComponents>();
+            _structureComponents = constructor.GetComponent<StructureComponents>();
         }
 
         protected override void OnStart() =>
-            _buildingComponents.OnComponentMaxAmount.AddListener(Fulfill);
+            _structureComponents.OnComponentMaxAmount.AddListener(Fulfill);
 
         protected override void OnEnd() =>
-            _buildingComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
+            _structureComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
 
         protected override void OnDo()
         {
             _componentTaskSets = new();
 
-            foreach (var (itemDef, missingAmount) in _buildingComponents.GetMissingComponents())
+            foreach (var (itemDef, missingAmount) in _structureComponents.GetMissingComponents())
             {
                 var taskSet = _itemGrid
                     .Filter(itemDef)
@@ -48,7 +48,7 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
                             TaskCreator.DeliverItem(
                                 item.itemAmount,
                                 item.markedAmount,
-                                _buildingComponents
+                                _structureComponents
                             )
                     )
                     .ToTaskSet();
@@ -81,12 +81,12 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
     {
         readonly TaskScheduler _taskScheduler;
 
-        readonly BuildingConstructor _constructor;
+        readonly StructureConstructor _constructor;
         readonly ConstructionWork _constructionWork;
 
         ITask _task;
 
-        public RequestConstruction(BuildingConstructor constructor)
+        public RequestConstruction(StructureConstructor constructor)
             : base(constructor)
         {
             _taskScheduler = constructor.TaskScheduler;
@@ -124,12 +124,12 @@ public class BuildingConstructor : MonoBehaviour, IStateMachine
 
     class CancelConstruction : State
     {
-        readonly BuildingLifecycle _lifecycle;
+        readonly StructureLifecycle _lifecycle;
 
-        public CancelConstruction(BuildingConstructor constructor)
+        public CancelConstruction(StructureConstructor constructor)
             : base(constructor)
         {
-            _lifecycle = constructor.GetComponent<BuildingLifecycle>();
+            _lifecycle = constructor.GetComponent<StructureLifecycle>();
         }
 
         protected override void OnDo()

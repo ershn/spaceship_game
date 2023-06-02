@@ -3,9 +3,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(BuildingDefHolder))]
+[RequireComponent(typeof(StructureDefHolder))]
 [RequireComponent(typeof(GridPosition))]
-public class BuildingComponents : MonoBehaviour, IInventoryAdd
+public class StructureComponents : MonoBehaviour, IInventoryAdd
 {
     class Amounts
     {
@@ -17,14 +17,14 @@ public class BuildingComponents : MonoBehaviour, IInventoryAdd
 
     public ItemCreator ItemCreator;
 
-    BuildingDef _buildingDef;
+    StructureDef _structureDef;
     GridPosition _gridPosition;
 
     Dictionary<ItemDef, Amounts> _inventory;
 
     void Awake()
     {
-        _buildingDef = GetComponent<BuildingDefHolder>().BuildingDef;
+        _structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _gridPosition = GetComponent<GridPosition>();
 
         InitInventory();
@@ -33,7 +33,7 @@ public class BuildingComponents : MonoBehaviour, IInventoryAdd
     void InitInventory()
     {
         _inventory = new();
-        foreach (var componentAmount in _buildingDef.ComponentAmounts)
+        foreach (var componentAmount in _structureDef.ComponentAmounts)
         {
             _inventory[componentAmount.ItemDef] = new Amounts()
             {
