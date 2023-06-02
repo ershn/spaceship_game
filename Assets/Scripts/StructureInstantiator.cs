@@ -8,7 +8,6 @@ public class StructureInstantiator : MonoBehaviour
 
     public ItemGridIndexer ItemGrid;
 
-    [UnityEngine.Serialization.FormerlySerializedAs("FloorPrefab")]
     public StructureDefHolder StructurePrefab;
 
     Grid2D _grid2D;
