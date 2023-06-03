@@ -1,13 +1,9 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(menuName = "Structure")]
-public class StructureDef : ScriptableObject, IGizmoDef
+public class StructureDef : ScriptableObject
 {
-    public TileBase BlueprintTile;
-    public TileBase NormalTile;
-
-    public Object GizmoAsset => NormalTile;
+    [SerializeReference, Polymorphic]
+    public StructureGraphicsDef StructureGraphicsDef;
 
     public ItemDefAmount[] ComponentAmounts;
 

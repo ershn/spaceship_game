@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 670a6c24f82d3584fa3cd6d99836ee48, type: 3}
+  m_Script: {fileID: 11500000, guid: d1ff3df7517025349b7a5f0c00b6043c, type: 3}
   m_Name: DirtFloor
   m_EditorClassIdentifier: 
-  BlueprintTile: {fileID: 11400000, guid: 888bee1c223058e43aa1af12a2e6dbed, type: 2}
-  NormalTile: {fileID: 11400000, guid: c89619575d31e8c49993b105fb3c20ec, type: 2}
+  StructureGraphicsDef:
+    rid: 3538439142373326851
   ComponentAmounts:
   - ItemDef: {fileID: 11400000, guid: 1e320a5b3161dd840b5be35cc8bd47a3, type: 2}
     Amount: 10000000
@@ -22,3 +22,12 @@ MonoBehaviour:
   MaxHealthPoints: 100
   ConstructionTime: 5
   DeconstructionTimeMultiplier: 0.5
+  Cultivable: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 3538439142373326851
+      type: {class: StructureTileGraphicsDef, ns: , asm: Assembly-CSharp}
+      data:
+        BlueprintTile: {fileID: 11400000, guid: 888bee1c223058e43aa1af12a2e6dbed, type: 2}
+        NormalTile: {fileID: 11400000, guid: c89619575d31e8c49993b105fb3c20ec, type: 2}

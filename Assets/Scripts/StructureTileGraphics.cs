@@ -7,12 +7,14 @@ public class StructureTileGraphics : MonoBehaviour
     public TilemapUpdater TilemapUpdater;
 
     GridPosition _gridPosition;
-    StructureDef _structureDef;
+    StructureTileGraphicsDef _tileGraphicsDef;
 
     void Awake()
     {
         _gridPosition = GetComponent<GridPosition>();
-        _structureDef = GetComponent<StructureDefHolder>().StructureDef;
+
+        var structureDef = GetComponent<StructureDefHolder>().StructureDef;
+        _tileGraphicsDef = (StructureTileGraphicsDef)structureDef.StructureGraphicsDef;
     }
 
     void Start()
@@ -27,12 +29,12 @@ public class StructureTileGraphics : MonoBehaviour
 
     public void ToBlueprintTile()
     {
-        TilemapUpdater.SetTile(_gridPosition.CellPosition, _structureDef.BlueprintTile);
+        TilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.BlueprintTile);
     }
 
     public void ToNormalTile()
     {
-        TilemapUpdater.SetTile(_gridPosition.CellPosition, _structureDef.NormalTile);
+        TilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.NormalTile);
     }
 
     public void UnsetTile()

@@ -6,7 +6,7 @@
 - add a food producing plant
 
 ### Food consumption
-- equally distribute food between clones when there isn't enough of it
+- low priority: equally distribute food between clones when there isn't enough of it
 
 ### Item deliveries
 - handle scenarios where there aren't enough items to fulfill a request

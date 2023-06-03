@@ -1,8 +1,6 @@
 using UnityEngine;
 
-public class ItemDefHolder : MonoBehaviour, IGizmoDef
+public class ItemDefHolder : MonoBehaviour
 {
     public ItemDef ItemDef;
-
-    public Object GizmoAsset => ItemDef != null ? ItemDef.GizmoAsset : null;
 }

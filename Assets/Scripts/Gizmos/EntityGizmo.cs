@@ -2,18 +2,14 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(IGizmoDef))]
+[RequireComponent(typeof(IGizmoAssetProvider))]
 public class EntityGizmo : MonoBehaviour
 {
     const uint AssetReimportDelaySecs = 5;
 
-    IGizmoDef _gizmoDef;
-
     void OnDrawGizmos()
     {
-        _gizmoDef ??= GetComponent<IGizmoDef>();
-
-        var asset = _gizmoDef.GizmoAsset;
+        var asset = GetComponent<IGizmoAssetProvider>().GizmoAsset;
         if (asset != null && FetchIconFile(asset, out var fileName))
             Gizmos.DrawIcon(transform.position, fileName);
     }

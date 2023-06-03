@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IGizmoDef
+public interface IGizmoAssetProvider
 {
     Object GizmoAsset { get; }
 }
