@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9461b4483e4c25f41881f5c4fcf7a0c3, type: 3}
+  m_Name: PotatoPlant
+  m_EditorClassIdentifier: 
+  StructureGraphicsDef:
+    rid: 7814593155480158209
+  ComponentAmounts:
+  - ItemDef: {fileID: 11400000, guid: cdfb30c2dd438b447a15ad8cb9e7ebe9, type: 2}
+    Amount: 1
+  MaxHealthPoints: 100
+  ConstructionTime: 1
+  DeconstructionTimeMultiplier: 0.5
+  references:
+    version: 2
+    RefIds:
+    - rid: 7814593155480158209
+      type: {class: StructureSpriteGraphicsDef, ns: , asm: Assembly-CSharp}
+      data:
+        Sprite: {fileID: 296275369, guid: c45991171fa8b174191fbe1a0979134f, type: 3}
+        BlueprintColor: {r: 1, g: 1, b: 1, a: 0.39215687}

@@ -1,6 +1,8 @@
-using UnityEngine;
+using System;
 
 public abstract class StructureGraphicsDef : IGizmoAssetProvider
 {
-    public abstract Object GizmoAsset { get; }
+    public abstract Type RendererType { get; }
+
+    public abstract UnityEngine.Object GizmoAsset { get; }
 }

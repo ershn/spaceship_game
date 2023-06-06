@@ -35,8 +35,8 @@ public class StructureInstantiator : MonoBehaviour
         var deconstructor = floor.GetComponent<StructureDeconstructor>();
         deconstructor.TaskScheduler = TaskScheduler;
 
-        var tileGraphics = floor.GetComponent<StructureTileGraphics>();
-        tileGraphics.TilemapUpdater = TilemapUpdater;
+        var graphics = floor.GetComponent<StructureGraphics>();
+        graphics.TilemapUpdater = TilemapUpdater;
 
         floor.gameObject.SetActive(true);
 

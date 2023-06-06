@@ -2,12 +2,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(GridPosition))]
 [RequireComponent(typeof(StructureDefHolder))]
-public class StructureTileGraphics : MonoBehaviour
+public class StructureTileGraphics : MonoBehaviour, IStructureGraphics
 {
-    public TilemapUpdater TilemapUpdater;
-
     GridPosition _gridPosition;
     StructureTileGraphicsDef _tileGraphicsDef;
+    TilemapUpdater _tilemapUpdater;
 
     void Awake()
     {
@@ -17,9 +16,14 @@ public class StructureTileGraphics : MonoBehaviour
         _tileGraphicsDef = (StructureTileGraphicsDef)structureDef.StructureGraphicsDef;
     }
 
+    public void Setup(TilemapUpdater tilemapUpdater)
+    {
+        _tilemapUpdater = tilemapUpdater;
+    }
+
     void Start()
     {
-        ToBlueprintTile();
+        ToBlueprintGraphics();
     }
 
     void OnDestroy()
@@ -27,18 +31,18 @@ public class StructureTileGraphics : MonoBehaviour
         UnsetTile();
     }
 
-    public void ToBlueprintTile()
+    public void ToBlueprintGraphics()
     {
-        TilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.BlueprintTile);
+        _tilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.BlueprintTile);
     }
 
-    public void ToNormalTile()
+    public void ToNormalGraphics()
     {
-        TilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.NormalTile);
+        _tilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.NormalTile);
     }
 
-    public void UnsetTile()
+    void UnsetTile()
     {
-        TilemapUpdater.UnsetTile(_gridPosition.CellPosition);
+        _tilemapUpdater.UnsetTile(_gridPosition.CellPosition);
     }
 }

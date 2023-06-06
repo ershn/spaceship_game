@@ -99,7 +99,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 163
+  controlID: 155
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -376,7 +376,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Art/Tiles
+    - Assets/Art/Sprites/Plants
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -384,16 +384,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 58
   m_LastFolders:
-  - Assets/Art/Tiles
+  - Assets/Art/Sprites/Plants
   m_LastFoldersGridSize: 58
   m_LastProjectPath: C:\Users\ershn\Documents\GameDev\Spaceship Game
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 50670000
-    m_LastClickedID: 26448
-    m_ExpandedIDs: 00000000ea2900005a6600005c660000a0660000c666000036670000386700003a6700003c6700003e67000040670000426700004467000046670000486700004c6700004e67000000ca9a3b
+    m_SelectedIDs: a4660000
+    m_LastClickedID: 26276
+    m_ExpandedIDs: 000000007c65000080650000c8650000126600001c6600008c6600008e66000090660000926600009466000096660000986600009a6600009c6600009e660000ce66000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -421,7 +421,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ea2900005a6600005c660000a0660000c666000036670000386700003a6700003c6700003e67000040670000426700004467000046670000486700004a6700004c6700004e67000050670000526700005467000056670000586700005a670000
+    m_ExpandedIDs: 000000007c65000080650000c8650000126600001c6600008c6600008e66000090660000926600009466000096660000986600009a6600009c6600009e660000a0660000a2660000a4660000a6660000a8660000aa660000ac660000ae660000b0660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -448,8 +448,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: 6e6500007c680000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: 6e6500007c6800009266000094660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -662,7 +662,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Data/Structures
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -670,16 +670,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 62
   m_LastFolders:
-  - Assets/Scripts/Data/Structures
+  - Assets/Prefabs
   m_LastFoldersGridSize: 62
   m_LastProjectPath: C:\Users\ershn\Documents\GameDev\Spaceship Game
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
     scrollPos: {x: 0, y: 90.5}
-    m_SelectedIDs: 4a670000
-    m_LastClickedID: 26442
-    m_ExpandedIDs: 00000000ea2900005a6600005c660000a0660000c666000036670000386700003a6700003c6700003e67000040670000426700004467000046670000486700004c6700004e67000000ca9a3b
+    m_SelectedIDs: d8660000
+    m_LastClickedID: 26328
+    m_ExpandedIDs: 000000007c65000080650000c8650000126600001c6600008c6600008e66000090660000926600009466000096660000986600009a6600009c6600009e660000a2660000a466000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -707,7 +707,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 42830000
     m_LastClickedID: 33602
-    m_ExpandedIDs: 00000000ea2900005a6600005c660000a0660000c666000036670000386700003a6700003c6700003e67000040670000426700004467000046670000486700004a6700004c6700004e67000050670000526700005467000056670000586700005a670000
+    m_ExpandedIDs: 000000007c65000080650000c8650000126600001c6600008c6600008e66000090660000926600009466000096660000986600009a6600009c6600009e660000a0660000a2660000a4660000a6660000a8660000aa660000ac660000ae660000b0660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -826,7 +826,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: f26e0000
     m_LastClickedID: 28402
-    m_ExpandedIDs: 00000000ea2900005a6600005c660000a0660000c666000036670000386700003a6700003c6700003e67000040670000426700004467000046670000486700004a6700004c6700004e67000050670000526700005467000056670000586700005a670000
+    m_ExpandedIDs: 000000007c65000080650000c8650000126600001c6600008c6600008e66000090660000926600009466000096660000986600009a6600009c6600009e660000a0660000a2660000a4660000a6660000a8660000aa660000ac660000ae660000b0660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -852,9 +852,9 @@ MonoBehaviour:
       m_ResourceFile: 
   m_AssetTreeState:
     scrollPos: {x: 0, y: 540}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000ea2900005a6600005c660000a0660000c666000036670000386700003a6700003c6700003e67000040670000426700004467000046670000486700004a6700004c6700004e67000050670000526700005467000056670000586700005a670000
+    m_SelectedIDs: 5e640000
+    m_LastClickedID: 25694
+    m_ExpandedIDs: ffffffff000000007c65000080650000c8650000126600001c6600008c6600008e66000090660000926600009466000096660000986600009a6600009c6600009e660000a0660000a2660000a4660000a6660000a8660000aa660000ac660000ae660000b0660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -879,8 +879,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 5e640000
+    m_LastClickedInstanceID: 25694
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000a65e0000c25e000042830000
     m_RenameOverlay:
@@ -951,7 +951,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 1282
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
@@ -994,9 +994,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b8f2ffff
+      m_SelectedIDs: 70650000
       m_LastClickedID: 0
-      m_ExpandedIDs: a4f9ffff7a650000b4650000126600001e660000
+      m_ExpandedIDs: 12fbffff9c640000d66400003465000040650000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1389,9 +1389,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.9801005, y: 0.20625177, z: 0.18007895}
+    m_Target: {x: 0.036037475, y: -0.00055978075, z: 0.036568373}
     speed: 2
-    m_Value: {x: -0.9801005, y: 0.20625177, z: 0.18007895}
+    m_Value: {x: 0.036037475, y: -0.00055978075, z: 0.036568373}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1441,9 +1441,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.5404153
+    m_Target: 6.3133736
     speed: 2
-    m_Value: 6.5404153
+    m_Value: 6.3133736
   m_Ortho:
     m_Target: 1
     speed: 2

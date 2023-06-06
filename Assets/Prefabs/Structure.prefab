@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -5918008174406760629}
   - component: {fileID: 6054319213389089848}
   - component: {fileID: 1492980114683187179}
-  - component: {fileID: -9037717301101027011}
+  - component: {fileID: -3018789841210648802}
   - component: {fileID: -223798451696912205}
   - component: {fileID: 5404655656399315721}
   - component: {fileID: -3539653072683442591}
@@ -172,9 +172,9 @@ MonoBehaviour:
   OnWorkCompleted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -9037717301101027011}
-        m_TargetAssemblyTypeName: BuildingTileGraphics, Assembly-CSharp
-        m_MethodName: ToNormalTile
+      - m_Target: {fileID: -3018789841210648802}
+        m_TargetAssemblyTypeName: StructureGraphics, Assembly-CSharp
+        m_MethodName: ToNormalGraphics
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   OnMaxHealth:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-9037717301101027011
+--- !u!114 &-3018789841210648802
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 72901617766461770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 375b1ee6b5d0e0a4aa51dd0278460512, type: 3}
+  m_Script: {fileID: 11500000, guid: 644ff675add71fe4ba3239c97cda3982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TilemapUpdater: {fileID: 0}
