@@ -65,5 +65,9 @@ crashlytics-build.properties
 omnisharp.json
 .editorconfig
 
+# Local only tool files
+.config/
+Analyzers/
+
 # Memo file
 MEMO.md
