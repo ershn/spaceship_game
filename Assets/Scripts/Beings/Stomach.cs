@@ -5,8 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(TaskExecutor))]
 public class Stomach : MonoBehaviour
 {
-    public ItemGridIndexer ItemGrid;
     public TaskScheduler TaskScheduler;
+
+    ItemGridIndex _itemGrid;
 
     Death _death;
     TaskExecutor _taskExecutor;
@@ -22,6 +23,8 @@ public class Stomach : MonoBehaviour
 
     void Awake()
     {
+        _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
+
         _death = GetComponent<Death>();
         _death.OnDeath.AddListener(OnDeath);
         _taskExecutor = GetComponent<TaskExecutor>();
@@ -103,7 +106,7 @@ public class Stomach : MonoBehaviour
 
     bool OrderFoodConsumption(ulong calories)
     {
-        var foodItems = ItemGrid.Filter<FoodItemDef>().CumulateCalories(calories);
+        var foodItems = _itemGrid.Filter<FoodItemDef>().CumulateCalories(calories);
 
         if (!foodItems.Any())
             return false;

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Grid/Item")]
-public class ItemGridIndexer : GridPolyIndexer
+public class ItemGridIndex : GOListGridIndex
 {
     readonly Dictionary<ItemDef, HashSet<GameObject>> _itemDefIndex = new();
     readonly Dictionary<Type, HashSet<GameObject>> _itemDefTypeIndex = new();

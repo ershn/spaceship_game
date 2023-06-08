@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class StructureDef : ScriptableObject
+public abstract class StructureDef : ScriptableObject, IGridElementDef
 {
+    public abstract GridIndexType GridIndexType { get; }
+
     [SerializeReference, Polymorphic]
     public StructureGraphicsDef StructureGraphicsDef;
 

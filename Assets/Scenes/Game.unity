@@ -956,6 +956,7 @@ GameObject:
   - component: {fileID: 873609800}
   - component: {fileID: 873609799}
   - component: {fileID: 873609803}
+  - component: {fileID: 873609805}
   - component: {fileID: 873609804}
   m_Layer: 0
   m_Name: World
@@ -1027,6 +1028,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StructureManipulator: {fileID: 1695935643}
+--- !u!114 &873609805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873609798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cd49ceaaa9b534db6b31ef6b215f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &875439519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,7 +1976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22090d9275890794a8da65fc3c4e0fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
 --- !u!1001 &1259402903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2461,7 +2473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0c12af6309b3f4caf66f8ee183a175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloorGrid: {fileID: 11400000, guid: b0f842f899bffb947836b0f8491d5d92, type: 2}
 --- !u!114 &1695935644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,7 +2488,6 @@ MonoBehaviour:
   TaskScheduler: {fileID: 2000432410}
   TilemapUpdater: {fileID: 1123563466}
   ItemCreator: {fileID: 1227286753}
-  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
   StructurePrefab: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
 --- !u!1 &1729712202
 GameObject:

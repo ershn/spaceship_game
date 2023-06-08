@@ -10,7 +10,7 @@ public class StructureConstructor : MonoBehaviour, IStateMachine
 {
     class RequestComponents : State
     {
-        readonly ItemGridIndexer _itemGrid;
+        readonly ItemGridIndex _itemGrid;
         readonly TaskScheduler _taskScheduler;
 
         readonly StructureConstructor _constructor;
@@ -141,12 +141,18 @@ public class StructureConstructor : MonoBehaviour, IStateMachine
 
     public UnityEvent OnConstructionCompleted;
 
-    public ItemGridIndexer ItemGrid;
     public TaskScheduler TaskScheduler;
+
+    ItemGridIndex ItemGrid;
 
     State _state;
     bool _ended;
     bool _canceled;
+
+    void Awake()
+    {
+        ItemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
+    }
 
     public void ToState(State state)
     {

@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[CreateAssetMenu(menuName = "Grid/Mono")]
-public class GridMonoIndexer : GridIndexer
+public class GOGridIndex : GridIndex
 {
     readonly ArrayGrid<GameObject> _grid = new(500);
 

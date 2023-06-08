@@ -43,7 +43,6 @@ public class ConnectingTile : TileBase
         mask += tilemap.GetTile(position + new Vector3Int(0, -1, 0)) == this ? 4 : 0;
         mask += tilemap.GetTile(position + new Vector3Int(-1, 0, 0)) == this ? 8 : 0;
 
-#pragma warning disable CS8509
         return mask switch
         {
             0 => Sprites[(uint)SpriteIndex.NorthEastSouthWest],
@@ -62,8 +61,8 @@ public class ConnectingTile : TileBase
             13 => Sprites[(uint)SpriteIndex.East],
             14 => Sprites[(uint)SpriteIndex.North],
             15 => Sprites[(uint)SpriteIndex.None],
+            _ => throw new System.NotImplementedException(),
         };
-#pragma warning restore CS8509
     }
 
     public override void RefreshTile(Vector3Int position, ITilemap tilemap)

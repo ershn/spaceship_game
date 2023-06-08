@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GridPosition : MonoBehaviour
 {
-    public GridIndexer GridIndexer;
+    GridIndex _gridIndex;
 
     Grid2D _grid2D;
 
@@ -10,30 +10,34 @@ public class GridPosition : MonoBehaviour
 
     void Awake()
     {
+        if (TryGetComponent<IGridElementDef>(out var gridElementDef))
+        {
+            var gridIndexType = gridElementDef.GridIndexType;
+            _gridIndex = transform.root.GetComponent<GridIndexes>().GetIndex(gridIndexType);
+        }
+
         _grid2D = transform.root.GetComponent<Grid2D>();
     }
 
     void Start()
     {
-        if (GridIndexer != null)
-            AddToGridIndexer();
+        if (_gridIndex != null)
+            AddToGridIndex();
     }
 
     void OnDestroy()
     {
-        if (GridIndexer != null)
-            RemoveFromGridIndexer();
+        if (_gridIndex != null)
+            RemoveFromGridIndex();
     }
 
-    void AddToGridIndexer()
+    void AddToGridIndex()
     {
-        Debug.Log($"AddToGridIndexer: {CellPosition}, {gameObject}");
-        GridIndexer.Add(this);
+        _gridIndex.Add(this);
     }
 
-    void RemoveFromGridIndexer()
+    void RemoveFromGridIndex()
     {
-        Debug.Log($"RemoveFromGridIndexer: {CellPosition}, {gameObject}");
-        GridIndexer.Remove(this);
+        _gridIndex.Remove(this);
     }
 }

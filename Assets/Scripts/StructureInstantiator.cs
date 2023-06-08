@@ -6,8 +6,6 @@ public class StructureInstantiator : MonoBehaviour
     public TilemapUpdater TilemapUpdater;
     public ItemCreator ItemCreator;
 
-    public ItemGridIndexer ItemGrid;
-
     public StructureDefHolder StructurePrefab;
 
     Grid2D _grid2D;
@@ -29,7 +27,6 @@ public class StructureInstantiator : MonoBehaviour
         components.ItemCreator = ItemCreator;
 
         var constructor = floor.GetComponent<StructureConstructor>();
-        constructor.ItemGrid = ItemGrid;
         constructor.TaskScheduler = TaskScheduler;
 
         var deconstructor = floor.GetComponent<StructureDeconstructor>();

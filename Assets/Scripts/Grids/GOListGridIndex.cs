@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[CreateAssetMenu(menuName = "Grid/Poly")]
-public class GridPolyIndexer : GridIndexer
+public class GOListGridIndex : GridIndex
 {
     readonly ArrayGrid<List<GameObject>> _grid = new(500);
 
