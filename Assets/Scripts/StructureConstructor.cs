@@ -1,46 +1,48 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(StructureLifecycle))]
-[RequireComponent(typeof(StructureComponents))]
-[RequireComponent(typeof(ConstructionWork))]
-public class StructureConstructor : MonoBehaviour, IStateMachine
-{
-    class RequestComponents : State
-    {
-        readonly ItemGridIndex _itemGrid;
-        readonly TaskScheduler _taskScheduler;
+using StateNode = Vertex<SuccessState, IState>;
 
+[RequireComponent(typeof(ConstructionWork))]
+[RequireComponent(typeof(StructureComponents))]
+[RequireComponent(typeof(StructureLifecycle))]
+public class StructureConstructor : MonoBehaviour
+{
+    class RequestComponents : IState
+    {
         readonly StructureConstructor _constructor;
         readonly StructureComponents _structureComponents;
 
+        Action<bool> _onEnd;
         Dictionary<ItemDef, ITaskSet> _componentTaskSets;
 
         public RequestComponents(StructureConstructor constructor)
-            : base(constructor)
         {
-            _itemGrid = constructor.ItemGrid;
-            _taskScheduler = constructor.TaskScheduler;
-
             _constructor = constructor;
             _structureComponents = constructor.GetComponent<StructureComponents>();
         }
 
-        protected override void OnStart() =>
+        public void Start(Action<bool> onEnd)
+        {
             _structureComponents.OnComponentMaxAmount.AddListener(Fulfill);
+            _onEnd = success =>
+            {
+                _structureComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
+                onEnd(success);
+            };
+            Request();
+        }
 
-        protected override void OnEnd() =>
-            _structureComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
-
-        protected override void OnDo()
+        void Request()
         {
             _componentTaskSets = new();
 
             foreach (var (itemDef, missingAmount) in _structureComponents.GetMissingComponents())
             {
-                var taskSet = _itemGrid
+                var taskSet = _constructor._itemGrid
                     .Filter(itemDef)
                     .CumulateAmount(missingAmount)
                     .Select(
@@ -54,129 +56,126 @@ public class StructureConstructor : MonoBehaviour, IStateMachine
                     .ToTaskSet();
 
                 _componentTaskSets[itemDef] = taskSet;
-                _taskScheduler.QueueTaskSet(taskSet);
+                _constructor.TaskScheduler.QueueTaskSet(taskSet);
             }
 
-            if (_componentTaskSets.Count == 0)
-                ToState(new RequestConstruction(_constructor));
+            if (!_componentTaskSets.Any())
+                _onEnd(true);
         }
 
         void Fulfill(ItemDef itemDef)
         {
             _componentTaskSets.Remove(itemDef);
 
-            if (_componentTaskSets.Count == 0)
-                ToState(new RequestConstruction(_constructor));
+            if (!_componentTaskSets.Any())
+                _onEnd(true);
         }
 
-        protected override void OnCancel()
+        public void Cancel()
         {
             foreach (var taskSet in _componentTaskSets.Values)
                 taskSet.Cancel();
-            ToState(new CancelConstruction(_constructor));
+
+            _onEnd(false);
         }
     }
 
-    class RequestConstruction : State
+    class RequestConstruction : IState
     {
-        readonly TaskScheduler _taskScheduler;
-
         readonly StructureConstructor _constructor;
         readonly ConstructionWork _constructionWork;
 
+        Action<bool> _onEnd;
         ITask _task;
 
         public RequestConstruction(StructureConstructor constructor)
-            : base(constructor)
         {
-            _taskScheduler = constructor.TaskScheduler;
-
             _constructor = constructor;
             _constructionWork = constructor.GetComponent<ConstructionWork>();
         }
 
-        protected override void OnStart() =>
-            _constructionWork.OnWorkCompleted.AddListener(Complete);
-
-        protected override void OnEnd() =>
-            _constructionWork.OnWorkCompleted.RemoveListener(Complete);
-
-        protected override void OnDo()
+        public void Start(Action<bool> onEnd)
         {
-            _task = TaskCreator.WorkOn(_constructionWork);
-            _taskScheduler.QueueTask(_task);
+            _constructionWork.OnWorkCompleted.AddListener(Fulfill);
+            _onEnd = success =>
+            {
+                _constructionWork.OnWorkCompleted.RemoveListener(Fulfill);
+                onEnd(success);
+            };
+            Request();
         }
 
-        void Complete()
+        void Request()
+        {
+            _task = TaskCreator.WorkOn(_constructionWork);
+            _constructor.TaskScheduler.QueueTask(_task);
+        }
+
+        void Fulfill()
         {
             Destroy(_constructor);
             Destroy(_constructionWork);
             _constructor.OnConstructionCompleted.Invoke();
-            ToEnded();
+            _onEnd(true);
         }
 
-        protected override void OnCancel()
+        public void Cancel()
         {
             _task.Cancel();
-            ToState(new CancelConstruction(_constructor));
+            _onEnd(false);
         }
     }
 
-    class CancelConstruction : State
+    class CancelConstruction : IState
     {
         readonly StructureLifecycle _lifecycle;
 
         public CancelConstruction(StructureConstructor constructor)
-            : base(constructor)
         {
             _lifecycle = constructor.GetComponent<StructureLifecycle>();
         }
 
-        protected override void OnDo()
+        public void Start(Action<bool> onEnd)
         {
             _lifecycle.Destroy();
-            ToEnded();
+            onEnd(true);
         }
+
+        public void Cancel() { }
     }
 
     public UnityEvent OnConstructionCompleted;
 
     public TaskScheduler TaskScheduler;
 
-    ItemGridIndex ItemGrid;
+    ItemGridIndex _itemGrid;
 
-    State _state;
-    bool _ended;
-    bool _canceled;
+    StateExecutor _stateExecutor;
 
     void Awake()
     {
-        ItemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
-    }
-
-    public void ToState(State state)
-    {
-        _state = state;
-        _state.Do();
-    }
-
-    public void ToEnded()
-    {
-        _ended = true;
-        _state = null;
+        _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
     }
 
     public void Construct()
     {
-        ToState(new RequestComponents(this));
+        _stateExecutor = new(StateGraph());
+        _stateExecutor.Start();
     }
 
     public void Cancel()
     {
-        if (!_ended && !_canceled)
-        {
-            _canceled = true;
-            _state.Cancel();
-        }
+        _stateExecutor?.Cancel();
+    }
+
+    StateNode StateGraph()
+    {
+        new StateNode(new RequestComponents(this), out var startNode)
+            .Link(
+                new(new RequestConstruction(this)),
+                new(new CancelConstruction(this), out var failureNode)
+            )
+            .Link(null, failureNode);
+        return startNode;
     }
 }
