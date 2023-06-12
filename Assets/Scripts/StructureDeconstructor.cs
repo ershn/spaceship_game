@@ -1,13 +1,16 @@
+using static FunctionalUtils;
 using UnityEngine;
 
-[RequireComponent(typeof(StructureLifecycle))]
 [RequireComponent(typeof(DeconstructionWork))]
+[RequireComponent(typeof(StructureCanceler))]
+[RequireComponent(typeof(StructureLifecycle))]
 public class StructureDeconstructor : MonoBehaviour
 {
     public TaskScheduler TaskScheduler;
 
     StructureLifecycle _lifecycle;
     DeconstructionWork _deconstructionWork;
+    StructureCanceler _structureCanceler;
 
     bool _allowed;
     bool _started;
@@ -17,6 +20,7 @@ public class StructureDeconstructor : MonoBehaviour
     {
         _lifecycle = GetComponent<StructureLifecycle>();
         _deconstructionWork = GetComponent<DeconstructionWork>();
+        _structureCanceler = GetComponent<StructureCanceler>();
     }
 
     public void Allow()
@@ -28,28 +32,29 @@ public class StructureDeconstructor : MonoBehaviour
     {
         if (!_allowed || _started)
             return;
-
         _started = true;
-        _deconstructionWork.OnWorkCompleted.AddListener(Complete);
+
+        var unregister = _structureCanceler.OnCancel.Register(Cancel);
         _task = TaskCreator.WorkOn(_deconstructionWork);
+        _task.Then(Do<bool>(unregister, Complete));
         TaskScheduler.QueueTask(_task);
     }
 
-    void Complete()
+    void Complete(bool succeeded)
     {
-        _deconstructionWork.OnWorkCompleted.RemoveListener(Complete);
-        _lifecycle.Destroy();
+        if (succeeded)
+            _lifecycle.Destroy();
+        else
+            _deconstructionWork.Reset();
     }
 
     public void Cancel()
     {
         if (!_started)
             return;
-
-        _deconstructionWork.OnWorkCompleted.RemoveListener(Complete);
-        _task.Cancel();
-        _deconstructionWork.Reset();
-        _task = null;
         _started = false;
+
+        _task.Cancel();
+        _task = null;
     }
 }

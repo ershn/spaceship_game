@@ -1,3 +1,4 @@
+using static FunctionalUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using UnityEngine.Events;
 using StateNode = Vertex<SuccessState, IState>;
 
 [RequireComponent(typeof(ConstructionWork))]
+[RequireComponent(typeof(StructureCanceler))]
 [RequireComponent(typeof(StructureComponents))]
 [RequireComponent(typeof(StructureLifecycle))]
 public class StructureConstructor : MonoBehaviour
@@ -27,12 +29,8 @@ public class StructureConstructor : MonoBehaviour
 
         public void Start(Action<bool> onEnd)
         {
-            _structureComponents.OnComponentMaxAmount.AddListener(Fulfill);
-            _onEnd = success =>
-            {
-                _structureComponents.OnComponentMaxAmount.RemoveListener(Fulfill);
-                onEnd(success);
-            };
+            var unregister = _structureComponents.OnComponentMaxAmount.Register(Fulfill);
+            _onEnd = Do(unregister, onEnd);
             Request();
         }
 
@@ -96,12 +94,8 @@ public class StructureConstructor : MonoBehaviour
 
         public void Start(Action<bool> onEnd)
         {
-            _constructionWork.OnWorkCompleted.AddListener(Fulfill);
-            _onEnd = success =>
-            {
-                _constructionWork.OnWorkCompleted.RemoveListener(Fulfill);
-                onEnd(success);
-            };
+            var unregister = _constructionWork.OnWorkCompleted.Register(Fulfill);
+            _onEnd = Do(unregister, onEnd);
             Request();
         }
 
@@ -113,9 +107,9 @@ public class StructureConstructor : MonoBehaviour
 
         void Fulfill()
         {
+            _constructor.OnConstructionCompleted.Invoke();
             Destroy(_constructor);
             Destroy(_constructionWork);
-            _constructor.OnConstructionCompleted.Invoke();
             _onEnd(true);
         }
 
@@ -149,18 +143,21 @@ public class StructureConstructor : MonoBehaviour
     public TaskScheduler TaskScheduler;
 
     ItemGridIndex _itemGrid;
+    StructureCanceler _structureCanceler;
 
     StateExecutor _stateExecutor;
 
     void Awake()
     {
         _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
+        _structureCanceler = GetComponent<StructureCanceler>();
     }
 
     public void Construct()
     {
+        var unregister = _structureCanceler.OnCancel.Register(Cancel);
         _stateExecutor = new(StateGraph());
-        _stateExecutor.Start();
+        _stateExecutor.Start(unregister);
     }
 
     public void Cancel()

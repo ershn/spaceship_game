@@ -1,8 +1,11 @@
+using System;
+
 using StateNode = Vertex<SuccessState, IState>;
 
 public class StateExecutor
 {
     StateNode _node;
+    Action _onEnd;
     bool _canceled;
 
     public StateExecutor(StateNode startNode)
@@ -10,15 +13,19 @@ public class StateExecutor
         _node = startNode;
     }
 
-    public void Start()
+    public void Start(Action onEnd = null)
     {
-        _node?.Value.Start(Next);
+        _onEnd = onEnd;
+        _node.State().Start(Next);
     }
 
     void Next(bool succeeded)
     {
         _node = _node[succeeded ? SuccessState.Success : SuccessState.Failure];
-        Start();
+        if (_node != null)
+            _node.State().Start(Next);
+        else
+            _onEnd?.Invoke();
     }
 
     public void Cancel()
@@ -27,6 +34,6 @@ public class StateExecutor
             return;
 
         _canceled = true;
-        _node.Value.Cancel();
+        _node.State().Cancel();
     }
 }

@@ -34,9 +34,6 @@ public class StructureManipulator : MonoBehaviour
         if (!_floorGrid.TryGet(cellPosition, out var structure))
             return;
 
-        if (structure.TryGetComponent<StructureConstructor>(out var constructor))
-            constructor.Cancel();
-        else
-            structure.GetComponent<StructureDeconstructor>().Cancel();
+        structure.GetComponent<StructureCanceler>().Cancel();
     }
 }
