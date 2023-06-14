@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Structure/Floor")]
 public class FloorDef : StructureDef
 {
-    public override GridIndexType GridIndexType => GridIndexType.FloorGrid;
+    public override WorldLayer WorldLayer => WorldLayer.Floor;
 
     public bool Cultivable;
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class ItemDefHolder : MonoBehaviour, IGridElementDef
+public class ItemDefHolder : MonoBehaviour, IWorldLayerDef
 {
     public ItemDef ItemDef;
 
-    public GridIndexType GridIndexType => ItemDef.GridIndexType;
+    public WorldLayer WorldLayer => ItemDef.WorldLayer;
 }

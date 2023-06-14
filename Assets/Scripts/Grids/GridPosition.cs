@@ -10,10 +10,10 @@ public class GridPosition : MonoBehaviour
 
     void Awake()
     {
-        if (TryGetComponent<IGridElementDef>(out var gridElementDef))
+        if (TryGetComponent<IWorldLayerDef>(out var worldLayerDef))
         {
-            var gridIndexType = gridElementDef.GridIndexType;
-            _gridIndex = transform.root.GetComponent<GridIndexes>().GetIndex(gridIndexType);
+            var worldLayer = worldLayerDef.WorldLayer;
+            _gridIndex = transform.root.GetComponent<GridIndexes>().GetLayerIndex(worldLayer);
         }
 
         _grid2D = transform.root.GetComponent<Grid2D>();

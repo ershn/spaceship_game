@@ -42,6 +42,8 @@ public class UIActionReducer : MonoBehaviour
     #endregion
     #region tasks
 
+    WorldLayer _structureLayers = WorldLayer.StructureLayers;
+
     public void SelectCancelTask()
     {
         _onWorldClick = CancelTask;
@@ -50,7 +52,7 @@ public class UIActionReducer : MonoBehaviour
     void CancelTask(Vector2 position)
     {
         var cellPosition = _worldGrid2D.WorldToCell(position);
-        _worldIO.StructureManipulator.Cancel(cellPosition);
+        _worldIO.StructureManipulator.Cancel(cellPosition, _structureLayers);
     }
 
     public void SelectDeconstructTask()
@@ -61,7 +63,7 @@ public class UIActionReducer : MonoBehaviour
     void DeconstructTask(Vector2 position)
     {
         var cellPosition = _worldGrid2D.WorldToCell(position);
-        _worldIO.StructureManipulator.Deconstruct(cellPosition);
+        _worldIO.StructureManipulator.Deconstruct(cellPosition, _structureLayers);
     }
 
     #endregion

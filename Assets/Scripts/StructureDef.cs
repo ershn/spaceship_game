@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class StructureDef : ScriptableObject, IGridElementDef
+public abstract class StructureDef : ScriptableObject, IWorldLayerDef
 {
-    public abstract GridIndexType GridIndexType { get; }
+    public abstract WorldLayer WorldLayer { get; }
 
     [SerializeReference, Polymorphic]
     public StructureGraphicsDef StructureGraphicsDef;

@@ -1,39 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StructureManipulator : MonoBehaviour
 {
-    GOGridIndex _floorGrid;
-
+    GridIndexes _gridIndexes;
     StructureInstantiator _structureInstantiator;
 
     void Awake()
     {
-        _floorGrid = transform.root.GetComponent<GridIndexes>().FloorGrid;
-
+        _gridIndexes = transform.root.GetComponent<GridIndexes>();
         _structureInstantiator = GetComponent<StructureInstantiator>();
     }
 
     public void Construct(Vector2Int cellPosition, StructureDef structureDef)
     {
-        if (_floorGrid.Has(cellPosition))
+        var grid = _gridIndexes.GetStructureLayerIndex(structureDef.WorldLayer);
+        if (grid.Has(cellPosition))
             return;
 
         _structureInstantiator.InstantiateFloor(cellPosition, structureDef);
     }
 
-    public void Deconstruct(Vector2Int cellPosition)
+    public void Deconstruct(Vector2Int cellPosition, WorldLayer structureLayers)
     {
-        if (!_floorGrid.TryGet(cellPosition, out var structure))
-            return;
-
-        structure.GetComponent<StructureDeconstructor>().Deconstruct();
+        foreach (var structure in StructuresAt(cellPosition, structureLayers))
+            structure.GetComponent<StructureDeconstructor>().Deconstruct();
     }
 
-    public void Cancel(Vector2Int cellPosition)
+    public void Cancel(Vector2Int cellPosition, WorldLayer structureLayers)
     {
-        if (!_floorGrid.TryGet(cellPosition, out var structure))
-            return;
+        foreach (var structure in StructuresAt(cellPosition, structureLayers))
+            structure.GetComponent<StructureCanceler>().Cancel();
+    }
 
-        structure.GetComponent<StructureCanceler>().Cancel();
+    IEnumerable<GameObject> StructuresAt(Vector2Int cellPosition, WorldLayer structureLayers)
+    {
+        var grids = _gridIndexes.GetStructureLayerIndexes(structureLayers);
+        foreach (var grid in grids)
+        {
+            if (grid.TryGet(cellPosition, out var structure))
+                yield return structure;
+        }
     }
 }

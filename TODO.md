@@ -27,8 +27,10 @@
 ### Items
 - fix the rendering order of items on the same tile
 
-## UX/UI
+## Building
 - allow to build a rectangular area of floors
+
+## UX/UI
 - add an info window to show being/item/building properties
 
 ## Program architecture

@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class StructureDefHolder : MonoBehaviour, IGridElementDef, IHealthDef
+public class StructureDefHolder : MonoBehaviour, IWorldLayerDef, IHealthDef
 {
     public StructureDef StructureDef;
 
-    public GridIndexType GridIndexType => StructureDef.GridIndexType;
+    public WorldLayer WorldLayer => StructureDef.WorldLayer;
 
     public int MaxHealthPoints => StructureDef.MaxHealthPoints;
 }

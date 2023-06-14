@@ -1,9 +1,9 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Generic")]
-public class ItemDef : ScriptableObject, IGridElementDef
+public class ItemDef : ScriptableObject, IWorldLayerDef
 {
-    public GridIndexType GridIndexType => GridIndexType.ItemGrid;
+    public WorldLayer WorldLayer => WorldLayer.Item;
 
     [SerializeReference, Polymorphic]
     public AmountAddressingMode AmountAddressingMode;
