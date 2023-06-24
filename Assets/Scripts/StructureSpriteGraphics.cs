@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(StructureDefHolder))]
 public class StructureSpriteGraphics : MonoBehaviour, IStructureGraphics
 {
     SpriteRenderer _spriteRenderer;

@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(StructureDefHolder))]
 public class StructureGraphics : MonoBehaviour
 {
     public TilemapUpdater TilemapUpdater;

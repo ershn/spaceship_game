@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5680633180854098372}
   - component: {fileID: 5209878187157717699}
-  - component: {fileID: 5912266160555966976}
-  - component: {fileID: 2360495379068193615}
+  - component: {fileID: -1226715156065800497}
   - component: {fileID: 6743508606429324936}
   - component: {fileID: 5355182027032121478}
   - component: {fileID: -1909066321609176523}
@@ -57,7 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e724852220210e4c8088628193a4147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5912266160555966976
+--- !u!114 &-1226715156065800497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,22 +65,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 72901617766461770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f78d06e833e974c856858145f5b6f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fc5549a161fd0941bccede7b31afa92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2360495379068193615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72901617766461770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8f91f7c16039784e91d83e4c05c884d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StructureDef: {fileID: 0}
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6743508606429324936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +129,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnConstructionCanceled:
+    m_PersistentCalls:
+      m_Calls: []
   TaskScheduler: {fileID: 0}
 --- !u!114 &7354273520412553579
 MonoBehaviour:

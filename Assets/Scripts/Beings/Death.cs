@@ -8,6 +8,5 @@ public class Death : MonoBehaviour
     public void Die()
     {
         OnDeath.Invoke();
-        Debug.Log($"Being died: {name}");
     }
 }

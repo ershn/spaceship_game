@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(GridPosition))]
-[RequireComponent(typeof(StructureDefHolder))]
 public class StructureTileGraphics : MonoBehaviour, IStructureGraphics
 {
     GridPosition _gridPosition;

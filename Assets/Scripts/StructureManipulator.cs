@@ -14,11 +14,8 @@ public class StructureManipulator : MonoBehaviour
 
     public void Construct(Vector2Int cellPosition, StructureDef structureDef)
     {
-        var grid = _gridIndexes.GetStructureLayerIndex(structureDef.WorldLayer);
-        if (grid.Has(cellPosition))
-            return;
-
-        _structureInstantiator.InstantiateFloor(cellPosition, structureDef);
+        if (structureDef.IsConstructibleAt(cellPosition, _gridIndexes))
+            _structureInstantiator.InstantiateStructure(cellPosition, structureDef);
     }
 
     public void Deconstruct(Vector2Int cellPosition, WorldLayer structureLayers)
@@ -30,7 +27,7 @@ public class StructureManipulator : MonoBehaviour
     public void Cancel(Vector2Int cellPosition, WorldLayer structureLayers)
     {
         foreach (var structure in StructuresAt(cellPosition, structureLayers))
-            structure.GetComponent<StructureCanceler>().Cancel();
+            structure.GetComponent<Canceler>().Cancel();
     }
 
     IEnumerable<GameObject> StructuresAt(Vector2Int cellPosition, WorldLayer structureLayers)

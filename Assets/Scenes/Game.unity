@@ -997,9 +997,9 @@ Transform:
   - {fileID: 1042855775}
   - {fileID: 680159963}
   - {fileID: 775251504}
-  - {fileID: 2107491783}
   - {fileID: 1272647144}
   - {fileID: 1396075885}
+  - {fileID: 1579895046}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1241,6 +1241,10 @@ PrefabInstance:
       propertyPath: TaskScheduler
       value: 
       objectReference: {fileID: 2000432410}
+    - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: InitialStoredCalories
+      value: 7500000
+      objectReference: {fileID: 0}
     - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: ItemCreator
       value: 
@@ -2044,6 +2048,10 @@ PrefabInstance:
       propertyPath: TaskScheduler
       value: 
       objectReference: {fileID: 2000432410}
+    - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: InitialStoredCalories
+      value: 7500000
+      objectReference: {fileID: 0}
     - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: ItemCreator
       value: 
@@ -2139,123 +2147,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
   m_PrefabInstance: {fileID: 1272647143}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1360967126
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 873609800}
-    m_Modifications:
-    - target: {fileID: -5918008174406760629, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: TaskScheduler
-      value: 
-      objectReference: {fileID: 2000432410}
-    - target: {fileID: -5918008174406760629, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: WorkRequestManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -3018789841210648802, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: TilemapUpdater
-      value: 
-      objectReference: {fileID: 1123563466}
-    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: ItemGrid
-      value: 
-      objectReference: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
-    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: TaskScheduler
-      value: 
-      objectReference: {fileID: 2000432410}
-    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: ItemRequestManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: WorkRequestManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: ItemOperationFactory
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -1909066321609176523, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: ConstructionRequestManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 72901617766461770, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_Name
-      value: SteelFloor
-      objectReference: {fileID: 0}
-    - target: {fileID: 72901617766461770, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: BuildingDef
-      value: 
-      objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
-    - target: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: StructureDef
-      value: 
-      objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
-    - target: {fileID: 5209878187157717699, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: Grid2D
-      value: 
-      objectReference: {fileID: 873609803}
-    - target: {fileID: 5355182027032121478, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: ItemCreator
-      value: 
-      objectReference: {fileID: 1227286753}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d15732cf45301614f80b94837e55b267, type: 3}
 --- !u!1001 &1396075884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2346,6 +2237,96 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
   m_PrefabInstance: {fileID: 560274381}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1579895045
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 873609800}
+    m_Modifications:
+    - target: {fileID: 578543467403324293, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: FloorDef
+      value: 
+      objectReference: {fileID: 11400000, guid: ec0b7c3960cc3a44da448a26bebae12e, type: 2}
+    - target: {fileID: 1027589147914072723, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
+    - target: {fileID: 2419124622968121376, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: ItemCreator
+      value: 
+      objectReference: {fileID: 1227286753}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4456314077562597304, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: TilemapUpdater
+      value: 
+      objectReference: {fileID: 1123563466}
+    - target: {fileID: 5051941755675787245, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: TaskScheduler
+      value: 
+      objectReference: {fileID: 2000432410}
+    - target: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_Name
+      value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+--- !u!4 &1579895046 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+  m_PrefabInstance: {fileID: 1579895045}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1588359166
 PrefabInstance:
@@ -2488,7 +2469,8 @@ MonoBehaviour:
   TaskScheduler: {fileID: 2000432410}
   TilemapUpdater: {fileID: 1123563466}
   ItemCreator: {fileID: 1227286753}
-  StructurePrefab: {fileID: 2360495379068193615, guid: d15732cf45301614f80b94837e55b267, type: 3}
+  FloorPrefab: {fileID: 578543467403324293, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+  FurniturePrefab: {fileID: -5272955073796778174, guid: 66247a6f41a0fdf40a41ba7d566b9564, type: 3}
 --- !u!1 &1729712202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2635,6 +2617,10 @@ PrefabInstance:
       propertyPath: TaskScheduler
       value: 
       objectReference: {fileID: 2000432410}
+    - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
+      propertyPath: InitialStoredCalories
+      value: 7500000
+      objectReference: {fileID: 0}
     - target: {fileID: 3604563941592413650, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: ItemCreator
       value: 
@@ -2811,8 +2797,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2107491783 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5680633180854098372, guid: d15732cf45301614f80b94837e55b267, type: 3}
-  m_PrefabInstance: {fileID: 1360967126}
-  m_PrefabAsset: {fileID: 0}

@@ -42,7 +42,7 @@ public class UIActionReducer : MonoBehaviour
     #endregion
     #region tasks
 
-    WorldLayer _structureLayers = WorldLayer.StructureLayers;
+    WorldLayer _structureLayers = WorldLayer.Floor;
 
     public void SelectCancelTask()
     {

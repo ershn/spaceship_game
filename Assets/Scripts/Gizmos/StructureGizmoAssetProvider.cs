@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(StructureDefHolder))]
 public class StructureGizmoAssetProvider : MonoBehaviour, IGizmoAssetProvider
 {
     public Object GizmoAsset

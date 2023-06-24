@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class StructureDefHolder : MonoBehaviour, IWorldLayerDef, IHealthDef
+public abstract class StructureDefHolder : MonoBehaviour, IWorldLayerDef, IHealthDef
 {
-    public StructureDef StructureDef;
+    public abstract StructureDef StructureDef { get; }
 
     public WorldLayer WorldLayer => StructureDef.WorldLayer;
 

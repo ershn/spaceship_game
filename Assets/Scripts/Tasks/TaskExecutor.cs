@@ -27,7 +27,6 @@ public class TaskExecutor : MonoBehaviour
     {
         Assert.IsNull(_task);
 
-        Debug.Log($"Execute task: {task}");
         _task = task;
         _task.Attach(gameObject);
         _task.Then(_ => _task = null);

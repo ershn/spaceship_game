@@ -1,6 +1,3 @@
-using UnityEngine;
-
-[RequireComponent(typeof(StructureDefHolder))]
 public class DeconstructionWork : TransactionalWork
 {
     StructureDef _structureDef;

@@ -107,6 +107,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5289475653224769322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e724852220210e4c8088628193a4147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIndexer: {fileID: 0}
 --- !u!50 &1936845640939817393
 Rigidbody2D:
   serializedVersion: 4
@@ -206,6 +206,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -220,6 +226,25 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -332,7 +357,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Die
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &3604563941592413650
@@ -386,7 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37388789feacc07479303b6244c193de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemGrid: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
   TaskScheduler: {fileID: 0}
   MaxStoredCalories: 7500000
   InitialStoredCalories: 4000000

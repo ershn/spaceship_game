@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6020145976240184658}
   - component: {fileID: 4716745872942650353}
   - component: {fileID: 2496044289052535066}
-  - component: {fileID: 7998796026562671924}
+  - component: {fileID: -5659864016644512803}
   - component: {fileID: 1854520340967731047}
   - component: {fileID: 97167780237384032}
   - component: {fileID: 4057525713406779392}
@@ -103,8 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e724852220210e4c8088628193a4147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridIndexer: {fileID: 11400000, guid: 79c9117ae99e38d4b80c3046bc12dca5, type: 2}
---- !u!114 &7998796026562671924
+--- !u!114 &-5659864016644512803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,9 +112,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 943712821329927547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ebe2751f2c60d5489d5b55eada7e412, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fc5549a161fd0941bccede7b31afa92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1854520340967731047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,8 +146,8 @@ MonoBehaviour:
   OnAmountChangedToZero:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7998796026562671924}
-        m_TargetAssemblyTypeName: ItemLifecycle, Assembly-CSharp
+      - m_Target: {fileID: -5659864016644512803}
+        m_TargetAssemblyTypeName: Destructor, Assembly-CSharp
         m_MethodName: Destroy
         m_Mode: 1
         m_Arguments:

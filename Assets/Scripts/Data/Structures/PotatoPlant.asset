@@ -20,6 +20,7 @@ MonoBehaviour:
   MaxHealthPoints: 100
   ConstructionTime: 1
   DeconstructionTimeMultiplier: 0.5
+  PlaceableFloorCategory: 1
   references:
     version: 2
     RefIds:

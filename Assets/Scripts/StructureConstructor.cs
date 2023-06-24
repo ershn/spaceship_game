@@ -8,14 +8,14 @@ using UnityEngine.Events;
 using StateNode = Vertex<SuccessState, IState>;
 
 [RequireComponent(typeof(ConstructionWork))]
-[RequireComponent(typeof(StructureCanceler))]
+[RequireComponent(typeof(Canceler))]
 [RequireComponent(typeof(StructureComponents))]
-[RequireComponent(typeof(StructureLifecycle))]
 public class StructureConstructor : MonoBehaviour
 {
     class RequestComponents : IState
     {
-        readonly StructureConstructor _constructor;
+        readonly ItemGridIndex _itemGrid;
+        readonly TaskScheduler _taskScheduler;
         readonly StructureComponents _structureComponents;
 
         Action<bool> _onEnd;
@@ -23,7 +23,8 @@ public class StructureConstructor : MonoBehaviour
 
         public RequestComponents(StructureConstructor constructor)
         {
-            _constructor = constructor;
+            _itemGrid = constructor.transform.root.GetComponent<GridIndexes>().ItemGrid;
+            _taskScheduler = constructor.TaskScheduler;
             _structureComponents = constructor.GetComponent<StructureComponents>();
         }
 
@@ -40,7 +41,7 @@ public class StructureConstructor : MonoBehaviour
 
             foreach (var (itemDef, missingAmount) in _structureComponents.GetMissingComponents())
             {
-                var taskSet = _constructor._itemGrid
+                var taskSet = _itemGrid
                     .Filter(itemDef)
                     .CumulateAmount(missingAmount)
                     .Select(
@@ -54,7 +55,7 @@ public class StructureConstructor : MonoBehaviour
                     .ToTaskSet();
 
                 _componentTaskSets[itemDef] = taskSet;
-                _constructor.TaskScheduler.QueueTaskSet(taskSet);
+                _taskScheduler.QueueTaskSet(taskSet);
             }
 
             if (!_componentTaskSets.Any())
@@ -81,6 +82,7 @@ public class StructureConstructor : MonoBehaviour
     class RequestConstruction : IState
     {
         readonly StructureConstructor _constructor;
+        readonly TaskScheduler _taskScheduler;
         readonly ConstructionWork _constructionWork;
 
         Action<bool> _onEnd;
@@ -89,6 +91,7 @@ public class StructureConstructor : MonoBehaviour
         public RequestConstruction(StructureConstructor constructor)
         {
             _constructor = constructor;
+            _taskScheduler = constructor.TaskScheduler;
             _constructionWork = constructor.GetComponent<ConstructionWork>();
         }
 
@@ -102,12 +105,11 @@ public class StructureConstructor : MonoBehaviour
         void Request()
         {
             _task = TaskCreator.WorkOn(_constructionWork);
-            _constructor.TaskScheduler.QueueTask(_task);
+            _taskScheduler.QueueTask(_task);
         }
 
         void Fulfill()
         {
-            _constructor.OnConstructionCompleted.Invoke();
             Destroy(_constructor);
             Destroy(_constructionWork);
             _onEnd(true);
@@ -122,16 +124,16 @@ public class StructureConstructor : MonoBehaviour
 
     class CancelConstruction : IState
     {
-        readonly StructureLifecycle _lifecycle;
+        readonly Destructor _destructor;
 
         public CancelConstruction(StructureConstructor constructor)
         {
-            _lifecycle = constructor.GetComponent<StructureLifecycle>();
+            _destructor = constructor.GetComponent<Destructor>();
         }
 
         public void Start(Action<bool> onEnd)
         {
-            _lifecycle.Destroy();
+            _destructor.Destroy();
             onEnd(true);
         }
 
@@ -139,28 +141,34 @@ public class StructureConstructor : MonoBehaviour
     }
 
     public UnityEvent OnConstructionCompleted;
+    public UnityEvent OnConstructionCanceled;
 
     public TaskScheduler TaskScheduler;
 
-    ItemGridIndex _itemGrid;
-    StructureCanceler _structureCanceler;
+    Canceler _canceler;
 
     StateExecutor _stateExecutor;
 
     void Awake()
     {
-        _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
-        _structureCanceler = GetComponent<StructureCanceler>();
+        _canceler = GetComponent<Canceler>();
     }
 
     public void Construct()
     {
-        var unregister = _structureCanceler.OnCancel.Register(Cancel);
+        var unregister = _canceler.OnCancel.Register(Cancel);
         _stateExecutor = new(StateGraph());
-        _stateExecutor.Start(unregister);
+        _stateExecutor.Start(success =>
+        {
+            unregister();
+            if (success)
+                OnConstructionCompleted.Invoke();
+            else
+                OnConstructionCanceled.Invoke();
+        });
     }
 
-    public void Cancel()
+    void Cancel()
     {
         _stateExecutor?.Cancel();
     }

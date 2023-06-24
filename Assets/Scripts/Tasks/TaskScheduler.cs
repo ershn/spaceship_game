@@ -26,7 +26,6 @@ public class TaskScheduler : MonoBehaviour
 
     public void QueueTask(ITask task, TaskExecutor executor = null)
     {
-        Debug.Log($"QueueTask: {task}");
         _queuedTasks.Enqueue(new() { Task = task, Executor = executor });
     }
 

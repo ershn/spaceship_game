@@ -3,8 +3,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(StructureDefHolder))]
-[RequireComponent(typeof(GridPosition))]
 public class StructureComponents : MonoBehaviour, IInventoryAdd
 {
     class Amounts
@@ -20,19 +18,19 @@ public class StructureComponents : MonoBehaviour, IInventoryAdd
     StructureDef _structureDef;
     GridPosition _gridPosition;
 
-    Dictionary<ItemDef, Amounts> _inventory;
+    readonly Dictionary<ItemDef, Amounts> _inventory = new();
 
     void Awake()
     {
         _structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _gridPosition = GetComponent<GridPosition>();
 
-        InitInventory();
+        Init();
+        GetComponent<Destructor>().OnDestruction.AddListener(Dump);
     }
 
-    void InitInventory()
+    void Init()
     {
-        _inventory = new();
         foreach (var componentAmount in _structureDef.ComponentAmounts)
         {
             _inventory[componentAmount.ItemDef] = new Amounts()
@@ -57,7 +55,7 @@ public class StructureComponents : MonoBehaviour, IInventoryAdd
             OnComponentMaxAmount.Invoke(itemDef);
     }
 
-    public void Dump()
+    void Dump()
     {
         var cellPosition = _gridPosition.CellPosition;
 

@@ -2,15 +2,14 @@ using static FunctionalUtils;
 using UnityEngine;
 
 [RequireComponent(typeof(DeconstructionWork))]
-[RequireComponent(typeof(StructureCanceler))]
-[RequireComponent(typeof(StructureLifecycle))]
+[RequireComponent(typeof(Canceler))]
 public class StructureDeconstructor : MonoBehaviour
 {
     public TaskScheduler TaskScheduler;
 
-    StructureLifecycle _lifecycle;
+    Destructor _destructor;
     DeconstructionWork _deconstructionWork;
-    StructureCanceler _structureCanceler;
+    Canceler _canceler;
 
     bool _allowed;
     bool _started;
@@ -18,9 +17,9 @@ public class StructureDeconstructor : MonoBehaviour
 
     void Awake()
     {
-        _lifecycle = GetComponent<StructureLifecycle>();
+        _destructor = GetComponent<Destructor>();
         _deconstructionWork = GetComponent<DeconstructionWork>();
-        _structureCanceler = GetComponent<StructureCanceler>();
+        _canceler = GetComponent<Canceler>();
     }
 
     public void Allow()
@@ -34,7 +33,7 @@ public class StructureDeconstructor : MonoBehaviour
             return;
         _started = true;
 
-        var unregister = _structureCanceler.OnCancel.Register(Cancel);
+        var unregister = _canceler.OnCancel.Register(Cancel);
         _task = TaskCreator.WorkOn(_deconstructionWork);
         _task.Then(Do<bool>(unregister, Complete));
         TaskScheduler.QueueTask(_task);
@@ -43,12 +42,12 @@ public class StructureDeconstructor : MonoBehaviour
     void Complete(bool succeeded)
     {
         if (succeeded)
-            _lifecycle.Destroy();
+            _destructor.Destroy();
         else
             _deconstructionWork.Reset();
     }
 
-    public void Cancel()
+    void Cancel()
     {
         if (!_started)
             return;

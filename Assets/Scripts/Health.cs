@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(IHealthDef))]
 public class Health : MonoBehaviour
 {
     public UnityEvent OnZeroHealth;
