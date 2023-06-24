@@ -20,7 +20,9 @@ MonoBehaviour:
   MaxHealthPoints: 100
   ConstructionTime: 5
   DeconstructionTimeMultiplier: 0.5
-  Cultivable: 0
+  ResourceProducerIndex:
+    _index: []
+  Category: 0
   references:
     version: 2
     RefIds:

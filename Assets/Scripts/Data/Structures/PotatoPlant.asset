@@ -20,6 +20,22 @@ MonoBehaviour:
   MaxHealthPoints: 100
   ConstructionTime: 1
   DeconstructionTimeMultiplier: 0.5
+  ResourceProducerDefIndex:
+    _index:
+    - Key: produce
+      Value:
+        _active: 1
+        _interval: 30
+        _probability: 1
+        _itemDef: {fileID: 11400000, guid: 5aad5464d3de42b40971460048f34432, type: 2}
+        _amount: 1000000
+    - Key: seed
+      Value:
+        _active: 1
+        _interval: 30
+        _probability: 0.1
+        _itemDef: {fileID: 11400000, guid: cdfb30c2dd438b447a15ad8cb9e7ebe9, type: 2}
+        _amount: 1
   PlaceableFloorCategory: 1
   references:
     version: 2

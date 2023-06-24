@@ -56,6 +56,7 @@ public class StructureInstantiator : MonoBehaviour
         structure.GetComponent<StructureComponents>().ItemCreator = ItemCreator;
         structure.GetComponent<StructureConstructor>().TaskScheduler = TaskScheduler;
         structure.GetComponent<StructureDeconstructor>().TaskScheduler = TaskScheduler;
+        structure.GetComponent<ResourceProducer>().ItemCreator = ItemCreator;
         structure.GetComponent<StructureGraphics>().TilemapUpdater = TilemapUpdater;
     }
 }

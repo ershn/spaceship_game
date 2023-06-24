@@ -34,6 +34,9 @@
 - add an info window to show being/item/building properties
 
 ## Program architecture
+- regroup StructureDef subclass specific methods in one place
+  - StructureInstantiator.Instantiate*
+  - *Constructor.IsConstructibleAt
 - update to the new Input System
 - pass a TaskResult object to onEnd callbacks
   - Success property
