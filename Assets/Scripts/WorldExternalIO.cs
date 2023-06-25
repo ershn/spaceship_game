@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WorldIO : MonoBehaviour
+public class WorldExternalIO : MonoBehaviour
 {
     public StructureManipulator StructureManipulator;
 }

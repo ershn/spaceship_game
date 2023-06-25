@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Canceler))]
 public class StructureDeconstructor : MonoBehaviour
 {
-    public TaskScheduler TaskScheduler;
-
+    TaskScheduler _taskScheduler;
     Destructor _destructor;
     DeconstructionWork _deconstructionWork;
     Canceler _canceler;
@@ -17,6 +16,7 @@ public class StructureDeconstructor : MonoBehaviour
 
     void Awake()
     {
+        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
         _destructor = GetComponent<Destructor>();
         _deconstructionWork = GetComponent<DeconstructionWork>();
         _canceler = GetComponent<Canceler>();
@@ -36,7 +36,7 @@ public class StructureDeconstructor : MonoBehaviour
         var unregister = _canceler.OnCancel.Register(Cancel);
         _task = TaskCreator.WorkOn(_deconstructionWork);
         _task.Then(Do<bool>(unregister, Complete));
-        TaskScheduler.QueueTask(_task);
+        _taskScheduler.QueueTask(_task);
     }
 
     void Complete(bool succeeded)

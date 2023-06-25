@@ -15,8 +15,6 @@ public class StructureSpriteGraphics : MonoBehaviour, IStructureGraphics
         _spriteGraphicsDef = (StructureSpriteGraphicsDef)structureDef.StructureGraphicsDef;
     }
 
-    public void Setup(TilemapUpdater tilemapUpdater) { }
-
     void Start()
     {
         InitGraphics();

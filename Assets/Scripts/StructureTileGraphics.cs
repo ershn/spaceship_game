@@ -3,21 +3,17 @@ using UnityEngine;
 [RequireComponent(typeof(GridPosition))]
 public class StructureTileGraphics : MonoBehaviour, IStructureGraphics
 {
+    TilemapUpdater _tilemapUpdater;
     GridPosition _gridPosition;
     StructureTileGraphicsDef _tileGraphicsDef;
-    TilemapUpdater _tilemapUpdater;
 
     void Awake()
     {
+        _tilemapUpdater = transform.root.GetComponent<WorldInternalIO>().TilemapUpdater;
         _gridPosition = GetComponent<GridPosition>();
 
         var structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _tileGraphicsDef = (StructureTileGraphicsDef)structureDef.StructureGraphicsDef;
-    }
-
-    public void Setup(TilemapUpdater tilemapUpdater)
-    {
-        _tilemapUpdater = tilemapUpdater;
     }
 
     void Start()

@@ -23,8 +23,9 @@ public class StructureConstructor : MonoBehaviour
 
         public RequestComponents(StructureConstructor constructor)
         {
-            _itemGrid = constructor.transform.root.GetComponent<GridIndexes>().ItemGrid;
-            _taskScheduler = constructor.TaskScheduler;
+            var root = constructor.transform.root;
+            _itemGrid = root.GetComponent<GridIndexes>().ItemGrid;
+            _taskScheduler = root.GetComponent<WorldInternalIO>().TaskScheduler;
             _structureComponents = constructor.GetComponent<StructureComponents>();
         }
 
@@ -90,8 +91,9 @@ public class StructureConstructor : MonoBehaviour
 
         public RequestConstruction(StructureConstructor constructor)
         {
+            var root = constructor.transform.root;
             _constructor = constructor;
-            _taskScheduler = constructor.TaskScheduler;
+            _taskScheduler = root.GetComponent<WorldInternalIO>().TaskScheduler;
             _constructionWork = constructor.GetComponent<ConstructionWork>();
         }
 
@@ -143,20 +145,12 @@ public class StructureConstructor : MonoBehaviour
     public UnityEvent OnConstructionCompleted;
     public UnityEvent OnConstructionCanceled;
 
-    public TaskScheduler TaskScheduler;
-
-    Canceler _canceler;
-
     StateExecutor _stateExecutor;
-
-    void Awake()
-    {
-        _canceler = GetComponent<Canceler>();
-    }
 
     public void Construct()
     {
-        var unregister = _canceler.OnCancel.Register(Cancel);
+        var unregister = GetComponent<Canceler>().OnCancel.Register(Cancel);
+
         _stateExecutor = new(StateGraph());
         _stateExecutor.Start(success =>
         {

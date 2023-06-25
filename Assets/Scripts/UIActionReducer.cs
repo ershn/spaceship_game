@@ -6,7 +6,7 @@ public class UIActionReducer : MonoBehaviour
     public GameObject World;
 
     Grid2D _worldGrid2D;
-    WorldIO _worldIO;
+    WorldExternalIO _worldExternalIO;
 
     Action<Vector2> _onWorldClick;
 
@@ -18,7 +18,7 @@ public class UIActionReducer : MonoBehaviour
     void ConnectToWorld(GameObject world)
     {
         _worldGrid2D = world.GetComponent<Grid2D>();
-        _worldIO = world.GetComponent<WorldIO>();
+        _worldExternalIO = world.GetComponent<WorldExternalIO>();
     }
 
     public void WorldClick(Vector2 position)
@@ -36,7 +36,7 @@ public class UIActionReducer : MonoBehaviour
     void PlaceBlueprint(Vector2 position, StructureDef structureDef)
     {
         var cellPosition = _worldGrid2D.WorldToCell(position);
-        _worldIO.StructureManipulator.Construct(cellPosition, structureDef);
+        _worldExternalIO.StructureManipulator.Construct(cellPosition, structureDef);
     }
 
     #endregion
@@ -52,7 +52,7 @@ public class UIActionReducer : MonoBehaviour
     void CancelTask(Vector2 position)
     {
         var cellPosition = _worldGrid2D.WorldToCell(position);
-        _worldIO.StructureManipulator.Cancel(cellPosition, _structureLayers);
+        _worldExternalIO.StructureManipulator.Cancel(cellPosition, _structureLayers);
     }
 
     public void SelectDeconstructTask()
@@ -63,7 +63,7 @@ public class UIActionReducer : MonoBehaviour
     void DeconstructTask(Vector2 position)
     {
         var cellPosition = _worldGrid2D.WorldToCell(position);
-        _worldIO.StructureManipulator.Deconstruct(cellPosition, _structureLayers);
+        _worldExternalIO.StructureManipulator.Deconstruct(cellPosition, _structureLayers);
     }
 
     #endregion

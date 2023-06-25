@@ -26,14 +26,14 @@ public class ResourceProducer : MonoBehaviour
         }
     }
 
-    public ItemCreator ItemCreator;
-
+    ItemCreator _itemCreator;
     GridPosition _gridPosition;
 
     Executor[] _executors;
 
     void Awake()
     {
+        _itemCreator = transform.root.GetComponent<WorldInternalIO>().ItemCreator;
         _gridPosition = GetComponent<GridPosition>();
 
         var structureDef = GetComponent<StructureDefHolder>().StructureDef;
@@ -48,5 +48,5 @@ public class ResourceProducer : MonoBehaviour
     }
 
     void CreateItem(ItemDef itemDef, ulong amount) =>
-        ItemCreator.Upsert(_gridPosition.CellPosition, itemDef, amount);
+        _itemCreator.Upsert(_gridPosition.CellPosition, itemDef, amount);
 }

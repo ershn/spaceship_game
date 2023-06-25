@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class StructureInstantiator : MonoBehaviour
 {
-    public TaskScheduler TaskScheduler;
-    public TilemapUpdater TilemapUpdater;
-    public ItemCreator ItemCreator;
-
     public FloorDefHolder FloorPrefab;
     public FurnitureDefHolder FurniturePrefab;
 
@@ -39,7 +35,6 @@ public class StructureInstantiator : MonoBehaviour
     {
         var floor = InstantiateAt(cellPosition, FloorPrefab);
         floor.FloorDef = floorDef;
-        SetupCommonComponents(floor);
         return floor.gameObject;
     }
 
@@ -47,16 +42,6 @@ public class StructureInstantiator : MonoBehaviour
     {
         var furniture = InstantiateAt(cellPosition, FurniturePrefab);
         furniture.FurnitureDef = furnitureDef;
-        SetupCommonComponents(furniture);
         return furniture.gameObject;
-    }
-
-    void SetupCommonComponents(StructureDefHolder structure)
-    {
-        structure.GetComponent<StructureComponents>().ItemCreator = ItemCreator;
-        structure.GetComponent<StructureConstructor>().TaskScheduler = TaskScheduler;
-        structure.GetComponent<StructureDeconstructor>().TaskScheduler = TaskScheduler;
-        structure.GetComponent<ResourceProducer>().ItemCreator = ItemCreator;
-        structure.GetComponent<StructureGraphics>().TilemapUpdater = TilemapUpdater;
     }
 }

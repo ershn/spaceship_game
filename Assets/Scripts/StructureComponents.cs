@@ -13,10 +13,9 @@ public class StructureComponents : MonoBehaviour, IInventoryAdd
 
     public ItemDefEvent OnComponentMaxAmount;
 
-    public ItemCreator ItemCreator;
-
     StructureDef _structureDef;
     GridPosition _gridPosition;
+    ItemCreator _itemCreator;
 
     readonly Dictionary<ItemDef, Amounts> _inventory = new();
 
@@ -24,6 +23,7 @@ public class StructureComponents : MonoBehaviour, IInventoryAdd
     {
         _structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _gridPosition = GetComponent<GridPosition>();
+        _itemCreator = transform.root.GetComponent<WorldInternalIO>().ItemCreator;
 
         Init();
         GetComponent<Destructor>().OnDestruction.AddListener(Dump);
@@ -64,7 +64,7 @@ public class StructureComponents : MonoBehaviour, IInventoryAdd
             if (amounts.CurrentAmount == 0)
                 continue;
 
-            ItemCreator.Upsert(cellPosition, itemDef, amounts.CurrentAmount);
+            _itemCreator.Upsert(cellPosition, itemDef, amounts.CurrentAmount);
             amounts.CurrentAmount = 0;
         }
     }
