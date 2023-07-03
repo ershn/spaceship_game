@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class StructureDef : ScriptableObject, IWorldLayerDef
@@ -14,7 +15,7 @@ public abstract class StructureDef : ScriptableObject, IWorldLayerDef
     public float ConstructionTime = 10f;
     public float DeconstructionTimeMultiplier = .5f;
 
-    public ResourceProducerDefIndex ResourceProducerDefIndex;
+    public StateGraphAsset ResourceProcessor;
 
     public abstract bool IsConstructibleAt(Vector2Int cellPosition, GridIndexes gridIndexes);
 }

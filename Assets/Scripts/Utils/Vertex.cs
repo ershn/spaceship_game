@@ -19,7 +19,7 @@ public class Vertex<TEdgeId, TValue>
 
     uint _leadingEdgeCount;
 
-    Vertex<TEdgeId, TValue>[] _edges;
+    readonly Vertex<TEdgeId, TValue>[] _edges;
 
     public Vertex(TValue value)
     {
