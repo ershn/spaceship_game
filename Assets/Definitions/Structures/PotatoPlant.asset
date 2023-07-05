@@ -17,9 +17,10 @@ MonoBehaviour:
   ComponentAmounts:
   - ItemDef: {fileID: 11400000, guid: cdfb30c2dd438b447a15ad8cb9e7ebe9, type: 2}
     Amount: 1
-  MaxHealthPoints: 100
   ConstructionTime: 1
   DeconstructionTimeMultiplier: 0.5
+  SetupRequired: 1
+  MaxHealthPoints: 100
   ResourceProcessor: {fileID: 11400000, guid: 794692f58f59ebb43ba75ce45c9db78b, type: 2}
   PlaceableFloorCategory: 1
   references:
@@ -28,5 +29,6 @@ MonoBehaviour:
     - rid: 7814593155480158209
       type: {class: StructureSpriteGraphicsDef, ns: , asm: Assembly-CSharp}
       data:
+        Prefab: {fileID: 817026189028453350, guid: 760948daea212e044934f711fd8aae18, type: 3}
         Sprite: {fileID: 296275369, guid: c45991171fa8b174191fbe1a0979134f, type: 3}
-        BlueprintColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+        AnimatorController: {fileID: 9100000, guid: a2983ab2d455fed489927f216266d4c8, type: 2}

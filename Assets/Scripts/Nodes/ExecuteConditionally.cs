@@ -17,25 +17,25 @@ public abstract class ExecuteConditionally<TState> : Unit
     public ValueInput Condition;
 
     [DoNotSerialize]
-    public ValueOutput Executed;
+    public ValueOutput Completed;
 
     protected override void Definition()
     {
         Enter = ControlInput("Enter", Control);
         Exit = ControlOutput("Exit");
         Condition = ValueInput("Condition", true);
-        Executed = ValueOutput<bool>("Executed");
+        Completed = ValueOutput<bool>("Completed");
 
         Succession(Enter, Exit);
         Requirement(Condition, Enter);
-        Assignment(Enter, Executed);
+        Assignment(Enter, Completed);
     }
 
     ControlOutput Control(Flow flow)
     {
         var condition = flow.GetValue<bool>(Condition);
-        var executed = condition ? Execute(flow) : false;
-        flow.SetValue(Executed, executed);
+        var completed = condition && Execute(flow);
+        flow.SetValue(Completed, completed);
         return Exit;
     }
 
@@ -43,9 +43,9 @@ public abstract class ExecuteConditionally<TState> : Unit
     {
         var vars = Variables.Graph(flow.stack);
         var state = GetState(vars, () => Init(flow.stack.gameObject));
-        var executed = Execute(ref state);
+        var completed = Execute(ref state);
         SetState(vars, state);
-        return executed;
+        return completed;
     }
 
     TState GetState(VariableDeclarations variables, Func<TState> initializer)

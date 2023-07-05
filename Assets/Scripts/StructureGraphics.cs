@@ -1,16 +1,18 @@
+using System;
 using UnityEngine;
 
 public class StructureGraphics : MonoBehaviour
 {
-    IStructureGraphics _graphics;
+    public event Action OnConstructionCompleted;
+    public event Action<float> OnSetupProgressed;
 
     void Awake()
     {
-        var graphicsDef = GetComponent<StructureDefHolder>().StructureDef.StructureGraphicsDef;
-        _graphics = (IStructureGraphics)gameObject.AddComponent(graphicsDef.RendererType);
+        var structureDef = GetComponent<StructureDefHolder>().StructureDef;
+        structureDef.StructureGraphicsDef.Setup(gameObject);
     }
 
-    public void ToBlueprintGraphics() => _graphics.ToBlueprintGraphics();
+    public void ConstructionCompleted() => OnConstructionCompleted?.Invoke();
 
-    public void ToNormalGraphics() => _graphics.ToNormalGraphics();
+    public void SetupProgressed(float progress) => OnSetupProgressed?.Invoke(progress);
 }

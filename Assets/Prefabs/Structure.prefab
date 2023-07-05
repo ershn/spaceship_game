@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7354273520412553579}
   - component: {fileID: -5918008174406760629}
   - component: {fileID: 6054319213389089848}
+  - component: {fileID: -2742441297829012696}
   - component: {fileID: 1492980114683187179}
   - component: {fileID: 7192551505184317378}
   - component: {fileID: -3018789841210648802}
@@ -143,7 +144,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: -3018789841210648802}
         m_TargetAssemblyTypeName: StructureGraphics, Assembly-CSharp
-        m_MethodName: ToNormalGraphics
+        m_MethodName: ConstructionCompleted
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -256,6 +257,33 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ProgressBarGraphics, Assembly-CSharp
         m_MethodName: Reset
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-2742441297829012696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72901617766461770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c09ffcd9076f548ab294fba4a9b6b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSetupProgressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3018789841210648802}
+        m_TargetAssemblyTypeName: StructureGraphics, Assembly-CSharp
+        m_MethodName: SetupProgressed
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

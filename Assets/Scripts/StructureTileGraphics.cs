@@ -1,19 +1,28 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GridPosition))]
-public class StructureTileGraphics : MonoBehaviour, IStructureGraphics
+public class StructureTileGraphics : MonoBehaviour
 {
+    StructureTileGraphicsDef _tileGraphicsDef;
+
     TilemapUpdater _tilemapUpdater;
     GridPosition _gridPosition;
-    StructureTileGraphicsDef _tileGraphicsDef;
+    StructureGraphics _structureGraphics;
 
     void Awake()
     {
-        _tilemapUpdater = transform.root.GetComponent<WorldInternalIO>().TilemapUpdater;
-        _gridPosition = GetComponent<GridPosition>();
-
         var structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _tileGraphicsDef = (StructureTileGraphicsDef)structureDef.StructureGraphicsDef;
+
+        _tilemapUpdater = transform.root.GetComponent<WorldInternalIO>().TilemapUpdater;
+        _gridPosition = GetComponent<GridPosition>();
+        _structureGraphics = GetComponent<StructureGraphics>();
+
+        Setup();
+    }
+
+    void Setup()
+    {
+        _structureGraphics.OnConstructionCompleted += OnConstructionCompleted;
     }
 
     void Start()
@@ -26,12 +35,14 @@ public class StructureTileGraphics : MonoBehaviour, IStructureGraphics
         UnsetTile();
     }
 
-    public void ToBlueprintGraphics()
+    void OnConstructionCompleted() => ToNormalGraphics();
+
+    void ToBlueprintGraphics()
     {
         _tilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.BlueprintTile);
     }
 
-    public void ToNormalGraphics()
+    void ToNormalGraphics()
     {
         _tilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.NormalTile);
     }

@@ -2372,7 +2372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
       propertyPath: m_Name
-      value: Floor
+      value: SteelFloor
       objectReference: {fileID: 0}
     - target: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
       propertyPath: m_IsActive

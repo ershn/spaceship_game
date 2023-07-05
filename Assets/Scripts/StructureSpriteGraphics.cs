@@ -1,38 +1,37 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class StructureSpriteGraphics : MonoBehaviour, IStructureGraphics
+public class StructureSpriteGraphics : MonoBehaviour
 {
-    SpriteRenderer _spriteRenderer;
     StructureSpriteGraphicsDef _spriteGraphicsDef;
+
+    StructureGraphics _structureGraphics;
+    SpriteRenderer _spriteRenderer;
+    Animator _animator;
 
     void Awake()
     {
-        if (!TryGetComponent(out _spriteRenderer))
-            _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        var parent = transform.parent;
 
-        var structureDef = GetComponent<StructureDefHolder>().StructureDef;
+        var structureDef = parent.GetComponent<StructureDefHolder>().StructureDef;
         _spriteGraphicsDef = (StructureSpriteGraphicsDef)structureDef.StructureGraphicsDef;
+
+        _structureGraphics = parent.GetComponent<StructureGraphics>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+
+        Setup();
     }
 
-    void Start()
-    {
-        InitGraphics();
-        ToBlueprintGraphics();
-    }
-
-    void InitGraphics()
+    void Setup()
     {
         _spriteRenderer.sprite = _spriteGraphicsDef.Sprite;
+        _animator.runtimeAnimatorController = _spriteGraphicsDef.AnimatorController;
+
+        _structureGraphics.OnConstructionCompleted += OnConstructionCompleted;
+        _structureGraphics.OnSetupProgressed += OnSetupProgressed;
     }
 
-    public void ToBlueprintGraphics()
-    {
-        _spriteRenderer.color = _spriteGraphicsDef.BlueprintColor;
-    }
+    void OnConstructionCompleted() => _animator.SetTrigger("ConstructionCompleted");
 
-    public void ToNormalGraphics()
-    {
-        _spriteRenderer.color = Color.white;
-    }
+    void OnSetupProgressed(float progress) => _animator.SetFloat("SetupProgress", progress);
 }
