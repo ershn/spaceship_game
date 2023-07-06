@@ -1,13 +1,10 @@
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(Death))]
-[RequireComponent(typeof(TaskExecutor))]
 public class Stomach : MonoBehaviour
 {
-    public TaskScheduler TaskScheduler;
-
     ItemGridIndex _itemGrid;
+    TaskScheduler _taskScheduler;
 
     Death _death;
     TaskExecutor _taskExecutor;
@@ -24,6 +21,7 @@ public class Stomach : MonoBehaviour
     void Awake()
     {
         _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
+        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
 
         _death = GetComponent<Death>();
         _death.OnDeath.AddListener(OnDeath);
@@ -120,7 +118,7 @@ public class Stomach : MonoBehaviour
             Debug.Log($"Food consumption {(success ? "completed" : "canceled")}");
             _foodConsumptionTask = null;
         });
-        TaskScheduler.QueueTask(_foodConsumptionTask, _taskExecutor);
+        _taskScheduler.QueueTask(_foodConsumptionTask, _taskExecutor);
 
         return true;
     }

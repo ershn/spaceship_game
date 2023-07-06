@@ -1,21 +1,22 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(Death))]
 public class TaskExecutor : MonoBehaviour
 {
-    public TaskScheduler TaskScheduler;
+    TaskScheduler _taskScheduler;
 
     Task _task;
 
     void Awake()
     {
+        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
+
         GetComponent<Death>().OnDeath.AddListener(OnDeath);
     }
 
-    void OnEnable() => TaskScheduler.AddExecutor(this);
+    void OnEnable() => _taskScheduler.AddExecutor(this);
 
-    void OnDisable() => TaskScheduler.RemoveExecutor(this);
+    void OnDisable() => _taskScheduler.RemoveExecutor(this);
 
     void OnDeath()
     {

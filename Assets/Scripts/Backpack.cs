@@ -5,8 +5,7 @@ using UnityEngine.Assertions;
 
 public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
 {
-    public ItemCreator ItemCreator;
-
+    ItemCreator _itemCreator;
     GridPosition _gridPosition;
 
     public ulong MaxMass = 100.KiloGrams();
@@ -16,6 +15,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
 
     void Awake()
     {
+        _itemCreator = transform.root.GetComponent<WorldInternalIO>().ItemCreator;
         _gridPosition = GetComponent<GridPosition>();
     }
 
@@ -72,7 +72,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
     public void Dump()
     {
         foreach (var item in _inventory)
-            ItemCreator.Upsert(_gridPosition.CellPosition, item.Key, item.Value);
+            _itemCreator.Upsert(_gridPosition.CellPosition, item.Key, item.Value);
 
         CurrentMass = 0;
         _inventory = new();
