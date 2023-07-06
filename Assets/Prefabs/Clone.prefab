@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1936845640216784402}
   - component: {fileID: 5289475653224769322}
   - component: {fileID: 4766987155260039468}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CloneGraphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
