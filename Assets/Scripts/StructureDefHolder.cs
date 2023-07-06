@@ -7,4 +7,9 @@ public abstract class StructureDefHolder : MonoBehaviour, IWorldLayerDef, IHealt
     public WorldLayer WorldLayer => StructureDef.WorldLayer;
 
     public int MaxHealthPoints => StructureDef.MaxHealthPoints;
+
+    void Awake()
+    {
+        name = StructureDef.name;
+    }
 }

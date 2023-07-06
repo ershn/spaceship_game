@@ -441,7 +441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
-      value: PotatoItem
+      value: Potato
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_IsActive
@@ -617,7 +617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
-      value: SteelItem (1)
+      value: Steel
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_IsActive
@@ -1311,7 +1311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1936845640939817397, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_Name
-      value: Clone (2)
+      value: Clone
       objectReference: {fileID: 0}
     - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: TaskScheduler
@@ -2155,7 +2155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
-      value: DirtItem
+      value: Dirt
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_IsActive
@@ -2406,7 +2406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_Name
-      value: SteelItem
+      value: Steel
       objectReference: {fileID: 0}
     - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_IsActive
@@ -2668,7 +2668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1936845640939817397, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: m_Name
-      value: Clone (1)
+      value: Clone
       objectReference: {fileID: 0}
     - target: {fileID: 2614378112282577688, guid: 37501fe7ff9dc13429084899d22d7a0b, type: 3}
       propertyPath: TaskScheduler

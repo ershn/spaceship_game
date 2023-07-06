@@ -11,6 +11,7 @@ public class StructureSpriteGraphics : MonoBehaviour
     void Awake()
     {
         var parent = transform.parent;
+        name = $"{parent.name}Graphics";
 
         var structureDef = parent.GetComponent<StructureDefHolder>().StructureDef;
         _spriteGraphicsDef = (StructureSpriteGraphicsDef)structureDef.StructureGraphicsDef;
