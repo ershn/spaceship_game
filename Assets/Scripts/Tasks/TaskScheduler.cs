@@ -6,7 +6,7 @@ public class TaskScheduler : MonoBehaviour
 {
     struct QueuedTask
     {
-        public ITask Task;
+        public Task Task;
         public TaskExecutor Executor;
     }
 
@@ -24,12 +24,12 @@ public class TaskScheduler : MonoBehaviour
         _idleExecutors.Remove(executor);
     }
 
-    public void QueueTask(ITask task, TaskExecutor executor = null)
+    public void QueueTask(Task task, TaskExecutor executor = null)
     {
         _queuedTasks.Enqueue(new() { Task = task, Executor = executor });
     }
 
-    public void QueueTaskSet(ITaskSet taskSet)
+    public void QueueTaskSet(TaskSet taskSet)
     {
         foreach (var task in taskSet.AsEnumerable())
             QueueTask(task);

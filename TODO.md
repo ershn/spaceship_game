@@ -3,10 +3,13 @@
 ## Game systems
 - add a storage building
 - add a sweep order
-- add a food producing plant
 
 ### Food consumption
 - low priority: equally distribute food between clones when there isn't enough of it
+
+### Path finding
+- upgrade to A* Pathfinding Pro when the yen gets stronger
+- allow to calculate a path that ends within a set distance of a target
 
 ### Item deliveries
 - handle scenarios where there aren't enough items to fulfill a request

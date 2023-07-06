@@ -71,7 +71,7 @@ public class Stomach : MonoBehaviour
         _timeOfLastMeal = Time.time;
     }
 
-    ITask _foodConsumptionTask;
+    Task _foodConsumptionTask;
     ulong? _nextOrderTryCaloriesThreshold;
 
     void TryOrderFoodConsumption()

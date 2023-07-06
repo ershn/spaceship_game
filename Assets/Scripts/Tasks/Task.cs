@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 /// </list>
 /// </summary>
 
-public abstract class Task : ITask
+public abstract class Task
 {
     /// <summary>
     /// Set to true on OnStart start.
@@ -78,7 +78,7 @@ public abstract class Task : ITask
     /// <summary>
     /// Added callbacks are executed in reverse order.
     /// </summary>
-    public ITask Then(Action<bool> callback)
+    public Task Then(Action<bool> callback)
     {
         _callbacks.Push(callback);
         return this;

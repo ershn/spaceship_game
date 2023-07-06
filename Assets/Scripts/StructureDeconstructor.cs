@@ -12,7 +12,7 @@ public class StructureDeconstructor : MonoBehaviour
 
     bool _allowed;
     bool _started;
-    ITask _task;
+    Task _task;
 
     void Awake()
     {

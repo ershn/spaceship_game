@@ -6,7 +6,7 @@ public class TaskExecutor : MonoBehaviour
 {
     public TaskScheduler TaskScheduler;
 
-    ITask _task;
+    Task _task;
 
     void Awake()
     {
@@ -23,7 +23,7 @@ public class TaskExecutor : MonoBehaviour
         enabled = false;
     }
 
-    public void Execute(ITask task)
+    public void Execute(Task task)
     {
         Assert.IsNull(_task);
 

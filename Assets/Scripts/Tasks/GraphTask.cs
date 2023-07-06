@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-using TaskNode = Vertex<SuccessState, ITask>;
+using TaskNode = Vertex<SuccessState, Task>;
 
 public class GraphTask : Task
 {
     readonly TaskNode _startNode;
     readonly HashSet<TaskNode> _allNodes;
     Action<bool> _onEnd;
-    ITask _currentTask;
+    Task _currentTask;
     bool _failed;
 
     public GraphTask(TaskNode startNode)

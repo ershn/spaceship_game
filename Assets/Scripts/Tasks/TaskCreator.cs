@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using TaskNode = Vertex<SuccessState, ITask>;
+using TaskNode = Vertex<SuccessState, Task>;
 
 public static class TaskCreator
 {
-    public static ITask WorkOn(IWork work)
+    public static Task WorkOn(IWork work)
     {
         return new SequenceTask(
-            new ITask[] { new MoveTask(work.transform.position), new WorkTask(work) }
+            new Task[] { new MoveTask(work.transform.position), new WorkTask(work) }
         );
     }
 
-    public static ITask DeliverItem(ItemAmount item, ulong amount, IInventoryAdd inventory)
+    public static Task DeliverItem(ItemAmount item, ulong amount, IInventoryAdd inventory)
     {
         new TaskNode(new MoveTask(item.transform.position), out var startNode)
             .Link(new(new ItemFromWorldToBackpackTask(item, amount)))
@@ -29,7 +29,7 @@ public static class TaskCreator
         return new GraphTask(startNode);
     }
 
-    public static ITask EatFood(
+    public static Task EatFood(
         IEnumerable<(ItemAmount itemAmount, ulong markedAmount)> foodItems,
         IWork foodConsumption
     )

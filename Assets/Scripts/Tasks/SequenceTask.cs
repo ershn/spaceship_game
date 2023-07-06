@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SequenceTask : Task
 {
-    readonly ITask[] _tasks;
+    readonly Task[] _tasks;
     int _nextTaskIndex;
-    ITask _task;
+    Task _task;
     Action<bool> _onEnd;
 
-    public SequenceTask(ITask[] tasks)
+    public SequenceTask(Task[] tasks)
     {
         _tasks = tasks;
         _nextTaskIndex = 0;

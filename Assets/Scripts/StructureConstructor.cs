@@ -19,7 +19,7 @@ public class StructureConstructor : MonoBehaviour
         readonly StructureComponents _structureComponents;
 
         Action<bool> _onEnd;
-        Dictionary<ItemDef, ITaskSet> _componentTaskSets;
+        Dictionary<ItemDef, TaskSet> _componentTaskSets;
 
         public RequestComponents(StructureConstructor constructor)
         {
@@ -87,7 +87,7 @@ public class StructureConstructor : MonoBehaviour
         readonly ConstructionWork _constructionWork;
 
         Action<bool> _onEnd;
-        ITask _task;
+        Task _task;
 
         public RequestConstruction(StructureConstructor constructor)
         {

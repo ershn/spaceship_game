@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class TaskSet : ITaskSet
+public class TaskSet
 {
-    readonly HashSet<ITask> _tasks;
+    readonly HashSet<Task> _tasks;
 
-    public TaskSet(IEnumerable<ITask> tasks)
+    public TaskSet(IEnumerable<Task> tasks)
     {
         _tasks = new();
         foreach (var task in tasks)
@@ -21,5 +21,5 @@ public class TaskSet : ITaskSet
             task.Cancel();
     }
 
-    public IEnumerable<ITask> AsEnumerable() => _tasks;
+    public IEnumerable<Task> AsEnumerable() => _tasks;
 }
