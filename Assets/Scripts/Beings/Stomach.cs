@@ -109,7 +109,7 @@ public class Stomach : MonoBehaviour
         if (!foodItems.Any())
             return false;
 
-        var markedCalories = foodItems.Aggregate(0ul, (acc, item) => acc + item.markedCalories);
+        var markedCalories = foodItems.Sum(item => item.markedCalories);
         Debug.Log($"Consume food: {markedCalories / 1.KiloCalorie()} kcal");
 
         _foodConsumptionTask = TaskCreator.EatFood(foodItems.CaloriesToMass(), _foodConsumption);

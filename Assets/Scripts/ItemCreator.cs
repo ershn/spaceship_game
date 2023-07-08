@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(ItemInstantiator))]
 public class ItemCreator : MonoBehaviour
 {
+    public event Action<ItemAmount> OnItemCreated;
+
     ItemGridIndex _itemGrid;
 
     ItemInstantiator _instantiator;
@@ -14,11 +16,21 @@ public class ItemCreator : MonoBehaviour
         _instantiator = GetComponent<ItemInstantiator>();
     }
 
-    public void Upsert(Vector2Int cellPosition, ItemDef itemDef, ulong amount)
+    public void Create(Vector2Int cellPosition, ItemDef itemDef, ulong amount)
     {
+        ItemAmount itemAmount;
+
         if (_itemGrid.TryGetItem(cellPosition, itemDef, out var item))
-            item.GetComponent<ItemAmount>().Add(amount);
+        {
+            itemAmount = item.GetComponent<ItemAmount>();
+            itemAmount.Add(amount);
+        }
         else
-            _instantiator.Instantiate(cellPosition, itemDef, amount);
+        {
+            item = _instantiator.Instantiate(cellPosition, itemDef, amount);
+            itemAmount = item.GetComponent<ItemAmount>();
+        }
+
+        OnItemCreated?.Invoke(itemAmount);
     }
 }

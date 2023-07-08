@@ -72,7 +72,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
     public void Dump()
     {
         foreach (var item in _inventory)
-            _itemCreator.Upsert(_gridPosition.CellPosition, item.Key, item.Value);
+            _itemCreator.Create(_gridPosition.CellPosition, item.Key, item.Value);
 
         CurrentMass = 0;
         _inventory = new();

@@ -5,6 +5,9 @@ public abstract class StructureDef : ScriptableObject, IWorldLayerDef
 {
     public abstract WorldLayer WorldLayer { get; }
 
+    [Header("Instantiation")]
+    public GameObject Prefab;
+
     [Header("Graphics")]
     [SerializeReference, Polymorphic]
     public StructureGraphicsDef StructureGraphicsDef;

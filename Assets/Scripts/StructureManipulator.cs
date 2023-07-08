@@ -15,7 +15,7 @@ public class StructureManipulator : MonoBehaviour
     public void Construct(Vector2Int cellPosition, StructureDef structureDef)
     {
         if (structureDef.IsConstructibleAt(cellPosition, _gridIndexes))
-            _structureInstantiator.InstantiateStructure(cellPosition, structureDef);
+            _structureInstantiator.Instantiate(cellPosition, structureDef);
     }
 
     public void Deconstruct(Vector2Int cellPosition, WorldLayer structureLayers)

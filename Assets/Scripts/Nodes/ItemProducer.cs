@@ -32,7 +32,7 @@ public class ItemProducer : ExecuteConditionally<ItemProducer.State>
     {
         if (Random.value <= Probability)
         {
-            state.ItemCreator.Upsert(state.GridPosition.CellPosition, ItemDef, Amount);
+            state.ItemCreator.Create(state.GridPosition.CellPosition, ItemDef, Amount);
             return true;
         }
         else

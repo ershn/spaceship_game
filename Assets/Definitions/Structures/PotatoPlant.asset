@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9461b4483e4c25f41881f5c4fcf7a0c3, type: 3}
   m_Name: PotatoPlant
   m_EditorClassIdentifier: 
+  Prefab: {fileID: 7118553046888610361, guid: 66247a6f41a0fdf40a41ba7d566b9564, type: 3}
   StructureGraphicsDef:
     rid: 7814593155480158209
   ComponentAmounts:

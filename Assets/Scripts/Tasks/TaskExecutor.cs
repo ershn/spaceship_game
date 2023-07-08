@@ -20,8 +20,8 @@ public class TaskExecutor : MonoBehaviour
 
     void OnDeath()
     {
-        CancelExecution();
         enabled = false;
+        CancelExecution();
     }
 
     public void Execute(Task task)

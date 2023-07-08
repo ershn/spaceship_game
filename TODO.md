@@ -1,8 +1,9 @@
 # TODO
 
 ## Game systems
-- add a storage building
+- add a storage furniture
 - add a sweep order
+- add a wall furniture
 
 ### Food consumption
 - low priority: equally distribute food between clones when there isn't enough of it
@@ -12,14 +13,12 @@
 - allow to calculate a path that ends within a set distance of a target
 
 ### Item deliveries
-- handle scenarios where there aren't enough items to fulfill a request
 - handle scenarios where an item is unreachable
 - optimization: allow to pick several items during the same task
 - optimization: pick the closest items and executors to fulfill a task
 
 ## Task scheduling
 - add task priorities
-- priorities tasks with a fixed executor
 
 ## Graphics
 
@@ -38,7 +37,6 @@
 
 ## Program architecture
 - regroup StructureDef subclass specific methods in one place
-  - StructureInstantiator.Instantiate*
   - *Constructor.IsConstructibleAt
 - update to the new Input System
 - pass a TaskResult object to onEnd callbacks

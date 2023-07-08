@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[RequireComponent(typeof(ItemDefHolder))]
-[RequireComponent(typeof(ItemAmount))]
 public class FoodItemCalories : MonoBehaviour
 {
     FoodItemDef _foodItemDef;
@@ -10,15 +8,15 @@ public class FoodItemCalories : MonoBehaviour
 
     void Awake()
     {
-        _foodItemDef = (FoodItemDef)GetComponent<ItemDefHolder>().ItemDef;
+        _foodItemDef = GetComponent<FoodItemDefHolder>().FoodItemDef;
         _itemAmount = GetComponent<ItemAmount>();
     }
 
-    public ulong TotalCalories => _foodItemDef.MassToCalories(_itemAmount.Get());
+    public ulong TotalCalories => _foodItemDef.MassToCalories(_itemAmount.Amount);
 
     public ulong GetCalories(ulong mass)
     {
-        Assert.IsTrue(mass <= _itemAmount.Get());
+        Assert.IsTrue(mass <= _itemAmount.Amount);
 
         return _foodItemDef.MassToCalories(mass);
     }

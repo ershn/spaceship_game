@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ff3df7517025349b7a5f0c00b6043c, type: 3}
   m_Name: DirtFloor
   m_EditorClassIdentifier: 
+  Prefab: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
   StructureGraphicsDef:
     rid: 3538439142373326851
   ComponentAmounts:
@@ -19,9 +20,11 @@ MonoBehaviour:
     Amount: 10000000
   - ItemDef: {fileID: 11400000, guid: cc3059b6a5cd32b449b70f45b085d201, type: 2}
     Amount: 10000000
-  MaxHealthPoints: 100
   ConstructionTime: 5
   DeconstructionTimeMultiplier: 0.5
+  SetupRequired: 0
+  MaxHealthPoints: 100
+  ResourceProcessor: {fileID: 0}
   Category: 1
   references:
     version: 2

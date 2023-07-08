@@ -11,10 +11,10 @@ public static class ItemEnumerableExtensions
     ) =>
         items
             .Select(gameObject => gameObject.GetComponent<ItemAmount>())
-            .Where(itemAmount => itemAmount.Get() > 0)
+            .Where(itemAmount => itemAmount.Amount > 0)
             .SelectWhile(itemAmount =>
             {
-                var markedAmount = Math.Min(totalAmount, itemAmount.Get());
+                var markedAmount = Math.Min(totalAmount, itemAmount.Amount);
                 totalAmount -= markedAmount;
                 return (totalAmount > 0, (itemAmount, markedAmount));
             })

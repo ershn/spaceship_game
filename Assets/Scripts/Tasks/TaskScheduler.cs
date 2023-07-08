@@ -4,80 +4,93 @@ using UnityEngine;
 
 public class TaskScheduler : MonoBehaviour
 {
-    struct QueuedTask
-    {
-        public Task Task;
-        public TaskExecutor Executor;
-    }
-
     readonly HashSet<TaskExecutor> _idleExecutors = new();
-    readonly HashSet<TaskExecutor> _workingExecutors = new();
-    readonly Queue<QueuedTask> _queuedTasks = new();
+
+    readonly Queue<Task> _pendingCommonTasks = new();
+    readonly Dictionary<TaskExecutor, Queue<Task>> _executorTasks = new();
 
     public void AddExecutor(TaskExecutor executor)
     {
-        _idleExecutors.Add(executor);
+        _executorTasks[executor] = new();
+        ProcessIdleExecutor(executor);
     }
 
     public void RemoveExecutor(TaskExecutor executor)
     {
-        _idleExecutors.Remove(executor);
+        _executorTasks.Remove(executor);
     }
 
-    public void QueueTask(Task task, TaskExecutor executor = null)
+    public void QueueTask(Task task)
     {
-        _queuedTasks.Enqueue(new() { Task = task, Executor = executor });
+        ProcessPendingTask(task);
     }
 
-    public void QueueTaskSet(TaskSet taskSet)
+    public void QueueTask(Task task, TaskExecutor executor)
     {
-        foreach (var task in taskSet.AsEnumerable())
-            QueueTask(task);
+        ProcessPendingTask(task, executor);
     }
 
-    void Update()
+    void ProcessIdleExecutor(TaskExecutor executor)
     {
-        AssignTasks();
+        if (TryDequeueTaskForExecutor(executor, out var task))
+            StartExecutor(executor, task);
+        else
+            ParkExecutor(executor);
     }
 
-    void AssignTasks()
+    bool TryDequeueTaskForExecutor(TaskExecutor executor, out Task task)
     {
-        while (_queuedTasks.TryPeek(out var queuedTask))
+        var executorTasks = _executorTasks[executor];
+        while (executorTasks.TryDequeue(out var dequeuedTask))
         {
-            if (queuedTask.Task.Canceled || AssignTask(queuedTask))
-                _queuedTasks.Dequeue();
-            else
-                break;
+            if (dequeuedTask.Canceled)
+                continue;
+            task = dequeuedTask;
+            return true;
         }
+        while (_pendingCommonTasks.TryDequeue(out var dequeuedTask))
+        {
+            if (dequeuedTask.Canceled)
+                continue;
+            task = dequeuedTask;
+            return true;
+        }
+        task = null;
+        return false;
     }
 
-    bool AssignTask(QueuedTask queuedTask)
+    void StartExecutor(TaskExecutor executor, Task task)
     {
-        var executor = SelectIdleExecutor(queuedTask.Executor);
-        if (executor == null)
-            return false;
-
-        _idleExecutors.Remove(executor);
-        _workingExecutors.Add(executor);
-
-        var task = queuedTask.Task;
-
         task.Then(_ =>
         {
-            _workingExecutors.Remove(executor);
-            _idleExecutors.Add(executor);
+            if (executor.enabled)
+                ProcessIdleExecutor(executor);
         });
-
         executor.Execute(task);
-
-        return true;
     }
 
-    TaskExecutor SelectIdleExecutor(TaskExecutor targetExecutor = null)
+    void ParkExecutor(TaskExecutor executor)
     {
-        if (targetExecutor != null)
-            return _idleExecutors.Contains(targetExecutor) ? targetExecutor : null;
+        _idleExecutors.Add(executor);
+    }
+
+    void ProcessPendingTask(Task task)
+    {
+        var executor = _idleExecutors.FirstOrDefault();
+        if (executor != null)
+        {
+            _idleExecutors.Remove(executor);
+            StartExecutor(executor, task);
+        }
         else
-            return _idleExecutors.FirstOrDefault();
+            _pendingCommonTasks.Enqueue(task);
+    }
+
+    void ProcessPendingTask(Task task, TaskExecutor executor)
+    {
+        if (_idleExecutors.Remove(executor))
+            StartExecutor(executor, task);
+        else
+            _executorTasks[executor].Enqueue(task);
     }
 }

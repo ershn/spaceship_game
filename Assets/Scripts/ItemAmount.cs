@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(ItemDefHolder))]
 public class ItemAmount : MonoBehaviour
 {
     public UnityEvent OnAmountChangedToZero;
@@ -10,8 +9,11 @@ public class ItemAmount : MonoBehaviour
 
     ItemDef _itemDef;
 
-    public ulong Amount = 1;
+    [SerializeField]
+    ulong _amount = 1;
     ulong _reservedAmount = 0;
+
+    bool _started;
 
     void Awake()
     {
@@ -20,22 +22,30 @@ public class ItemAmount : MonoBehaviour
 
     void Start()
     {
-        SendAmountChangedEvent(Amount);
+        _started = true;
+        SendAmountChangedEvent(_amount);
     }
 
     public ItemDef Def => _itemDef;
 
-    public ulong Get() => Amount - _reservedAmount;
+    public void Initialize(ulong amount)
+    {
+        Assert.IsFalse(_started);
+
+        _amount = amount;
+    }
+
+    public ulong Amount => _amount - _reservedAmount;
 
     public void Add(ulong amount)
     {
-        Amount += amount;
-        SendAmountChangedEvent(Amount);
+        _amount += amount;
+        SendAmountChangedEvent(_amount);
     }
 
     public void Reserve(ulong amount)
     {
-        Assert.IsTrue(amount <= Amount - _reservedAmount);
+        Assert.IsTrue(amount <= _amount - _reservedAmount);
 
         _reservedAmount += amount;
     }
@@ -52,8 +62,8 @@ public class ItemAmount : MonoBehaviour
         Assert.IsTrue(amount <= _reservedAmount);
 
         _reservedAmount -= amount;
-        Amount -= amount;
-        SendAmountChangedEvent(Amount);
+        _amount -= amount;
+        SendAmountChangedEvent(_amount);
     }
 
     void SendAmountChangedEvent(ulong amount)

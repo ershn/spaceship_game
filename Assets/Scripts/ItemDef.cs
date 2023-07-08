@@ -5,6 +5,8 @@ public class ItemDef : ScriptableObject, IWorldLayerDef
 {
     public WorldLayer WorldLayer => WorldLayer.Item;
 
+    public GameObject Prefab;
+
     [SerializeReference, Polymorphic]
     public AmountAddressingMode AmountAddressingMode;
 

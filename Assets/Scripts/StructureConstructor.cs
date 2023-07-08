@@ -1,80 +1,55 @@
 using static FunctionalUtils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 using StateNode = Vertex<SuccessState, IState>;
 
-[RequireComponent(typeof(ConstructionWork))]
-[RequireComponent(typeof(Canceler))]
-[RequireComponent(typeof(StructureComponents))]
 public class StructureConstructor : MonoBehaviour
 {
     class RequestComponents : IState
     {
-        readonly ItemGridIndex _itemGrid;
-        readonly TaskScheduler _taskScheduler;
-        readonly StructureComponents _structureComponents;
+        readonly ItemAllotter _itemAllotter;
+        readonly StructureComponents _components;
 
         Action<bool> _onEnd;
-        Dictionary<ItemDef, TaskSet> _componentTaskSets;
+        List<Action> _cancelers;
 
         public RequestComponents(StructureConstructor constructor)
         {
-            var root = constructor.transform.root;
-            _itemGrid = root.GetComponent<GridIndexes>().ItemGrid;
-            _taskScheduler = root.GetComponent<WorldInternalIO>().TaskScheduler;
-            _structureComponents = constructor.GetComponent<StructureComponents>();
+            _itemAllotter = constructor.transform.root.GetComponent<WorldInternalIO>().ItemAllotter;
+            _components = constructor.GetComponent<StructureComponents>();
         }
 
         public void Start(Action<bool> onEnd)
         {
-            var unregister = _structureComponents.OnComponentMaxAmount.Register(Fulfill);
-            _onEnd = Do(unregister, onEnd);
-            Request();
-        }
-
-        void Request()
-        {
-            _componentTaskSets = new();
-
-            foreach (var (itemDef, missingAmount) in _structureComponents.GetMissingComponents())
+            if (_components.Full)
             {
-                var taskSet = _itemGrid
-                    .Filter(itemDef)
-                    .CumulateAmount(missingAmount)
-                    .Select(
-                        item =>
-                            TaskCreator.DeliverItem(
-                                item.itemAmount,
-                                item.markedAmount,
-                                _structureComponents
-                            )
-                    )
-                    .ToTaskSet();
-
-                _componentTaskSets[itemDef] = taskSet;
-                _taskScheduler.QueueTaskSet(taskSet);
+                onEnd(true);
+                return;
             }
 
-            if (!_componentTaskSets.Any())
-                _onEnd(true);
+            var unregister = _components.OnFull.Register(Complete);
+            _onEnd = Do(unregister, onEnd);
+
+            _cancelers = new();
+            foreach (var (itemDef, missingAmount) in _components.GetMissing())
+            {
+                var canceler = _itemAllotter.Request(itemDef, missingAmount, _components);
+                _cancelers.Add(canceler);
+            }
         }
 
-        void Fulfill(ItemDef itemDef)
+        void Complete()
         {
-            _componentTaskSets.Remove(itemDef);
-
-            if (!_componentTaskSets.Any())
-                _onEnd(true);
+            _onEnd(true);
         }
 
         public void Cancel()
         {
-            foreach (var taskSet in _componentTaskSets.Values)
-                taskSet.Cancel();
+            foreach (var canceler in _cancelers)
+                canceler();
 
             _onEnd(false);
         }
@@ -99,18 +74,14 @@ public class StructureConstructor : MonoBehaviour
 
         public void Start(Action<bool> onEnd)
         {
-            var unregister = _constructionWork.OnWorkCompleted.Register(Fulfill);
+            var unregister = _constructionWork.OnWorkCompleted.Register(Complete);
             _onEnd = Do(unregister, onEnd);
-            Request();
-        }
 
-        void Request()
-        {
             _task = TaskCreator.WorkOn(_constructionWork);
             _taskScheduler.QueueTask(_task);
         }
 
-        void Fulfill()
+        void Complete()
         {
             Destroy(_constructor);
             Destroy(_constructionWork);

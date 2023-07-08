@@ -2,22 +2,24 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class StructureComponents : MonoBehaviour, IInventoryAdd
 {
-    class Amounts
+    class ComponentAmount
     {
-        public ulong MaxAmount;
+        public ulong RequiredAmount;
         public ulong CurrentAmount;
     }
 
-    public ItemDefEvent OnComponentMaxAmount;
+    public UnityEvent OnFull;
 
     StructureDef _structureDef;
     GridPosition _gridPosition;
     ItemCreator _itemCreator;
 
-    readonly Dictionary<ItemDef, Amounts> _inventory = new();
+    readonly Dictionary<ItemDef, ComponentAmount> _components = new();
+    uint _missingComponents = 0;
 
     void Awake()
     {
@@ -25,47 +27,57 @@ public class StructureComponents : MonoBehaviour, IInventoryAdd
         _gridPosition = GetComponent<GridPosition>();
         _itemCreator = transform.root.GetComponent<WorldInternalIO>().ItemCreator;
 
-        Init();
-        GetComponent<Destructor>().OnDestruction.AddListener(Dump);
+        InitInventory();
+        GetComponent<Destructor>().OnDestruction.AddListener(DumpInventory);
     }
 
-    void Init()
+    void InitInventory()
     {
         foreach (var componentAmount in _structureDef.ComponentAmounts)
         {
-            _inventory[componentAmount.ItemDef] = new Amounts()
+            _components[componentAmount.ItemDef] = new()
             {
-                MaxAmount = componentAmount.Amount,
+                RequiredAmount = componentAmount.Amount,
                 CurrentAmount = 0
             };
+            _missingComponents++;
         }
     }
 
-    public IEnumerable<(ItemDef, ulong)> GetMissingComponents() =>
-        _inventory.Select(kv => (kv.Key, kv.Value.MaxAmount - kv.Value.CurrentAmount));
+    public bool Full => _missingComponents == 0;
+
+    public IEnumerable<(ItemDef, ulong)> GetMissing() =>
+        _components
+            .Where(kv => kv.Value.CurrentAmount < kv.Value.RequiredAmount)
+            .Select(kv => (kv.Key, kv.Value.RequiredAmount - kv.Value.CurrentAmount));
 
     public void Add(ItemDef itemDef, ulong amount)
     {
-        var component = _inventory[itemDef];
-        Assert.IsTrue(component.CurrentAmount + amount <= component.MaxAmount);
+        Assert.IsTrue(amount > 0);
+
+        var component = _components[itemDef];
+        Assert.IsTrue(component.CurrentAmount + amount <= component.RequiredAmount);
 
         component.CurrentAmount += amount;
+        if (component.CurrentAmount == component.RequiredAmount)
+            _missingComponents--;
 
-        if (component.CurrentAmount == component.MaxAmount)
-            OnComponentMaxAmount.Invoke(itemDef);
+        if (_missingComponents == 0)
+            OnFull.Invoke();
     }
 
-    void Dump()
+    void DumpInventory()
     {
         var cellPosition = _gridPosition.CellPosition;
 
-        foreach (var (itemDef, amounts) in _inventory)
+        foreach (var (itemDef, amounts) in _components)
         {
             if (amounts.CurrentAmount == 0)
                 continue;
 
-            _itemCreator.Upsert(cellPosition, itemDef, amounts.CurrentAmount);
+            _itemCreator.Create(cellPosition, itemDef, amounts.CurrentAmount);
             amounts.CurrentAmount = 0;
+            _missingComponents++;
         }
     }
 }
