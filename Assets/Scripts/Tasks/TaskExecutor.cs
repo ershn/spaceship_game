@@ -36,9 +36,6 @@ public class TaskExecutor : MonoBehaviour
 
     void CancelExecution()
     {
-        if (_task == null)
-            return;
-
-        _task.Cancel();
+        _task?.Cancel();
     }
 }

@@ -11,33 +11,32 @@ public class StructureConstructor : MonoBehaviour
     class RequestComponents : IState
     {
         readonly ItemAllotter _itemAllotter;
-        readonly StructureComponents _components;
+        readonly StructureComponentInventory _componentInventory;
 
         Action<bool> _onEnd;
-        List<Action> _cancelers;
+        readonly List<ItemAllotter.IRequest> _requests = new();
 
         public RequestComponents(StructureConstructor constructor)
         {
             _itemAllotter = constructor.transform.root.GetComponent<WorldInternalIO>().ItemAllotter;
-            _components = constructor.GetComponent<StructureComponents>();
+            _componentInventory = constructor.GetComponent<StructureComponentInventory>();
         }
 
         public void Start(Action<bool> onEnd)
         {
-            if (_components.Full)
+            if (_componentInventory.Full)
             {
                 onEnd(true);
                 return;
             }
 
-            var unregister = _components.OnFull.Register(Complete);
+            var unregister = _componentInventory.OnFull.Register(_ => Complete());
             _onEnd = Do(unregister, onEnd);
 
-            _cancelers = new();
-            foreach (var (itemDef, missingAmount) in _components.GetMissing())
+            foreach (var (itemDef, missingAmount) in _componentInventory.UnfilledSlots())
             {
-                var canceler = _itemAllotter.Request(itemDef, missingAmount, _components);
-                _cancelers.Add(canceler);
+                var request = _itemAllotter.Request(itemDef, missingAmount, _componentInventory);
+                _requests.Add(request);
             }
         }
 
@@ -48,8 +47,8 @@ public class StructureConstructor : MonoBehaviour
 
         public void Cancel()
         {
-            foreach (var canceler in _cancelers)
-                canceler();
+            foreach (var request in _requests)
+                request.Cancel();
 
             _onEnd(false);
         }

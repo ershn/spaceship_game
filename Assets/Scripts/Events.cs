@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
+public class BoolEvent : UnityEvent<bool> { }
+
+[Serializable]
 public class IntEvent : UnityEvent<int> { }
 
 [Serializable]

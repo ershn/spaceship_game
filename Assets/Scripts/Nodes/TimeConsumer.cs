@@ -2,39 +2,35 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [UnitCategory("Consumers")]
-public class TimeConsumer : ExecuteConditionally<float>
+public class TimeConsumer : ResourceProcessor
 {
-    [Serialize, Inspectable, UnitHeaderInspectable("TotalTime")]
-    public float TotalTime;
+    [Serialize, Inspectable, UnitHeaderInspectable("Time")]
+    public float TimeInterval;
 
-    [DoNotSerialize]
-    public ValueOutput Progress;
-
-    float _progress;
-
-    protected override void Definition()
+    new class Instance : ResourceProcessor.Instance
     {
-        base.Definition();
+        readonly float _timeInterval;
 
-        Progress = ValueOutput("Progress", _ => _progress);
+        float _consumedTime;
 
-        Assignment(Enter, Progress);
-    }
-
-    protected override float Init(GameObject gameObject) => default;
-
-    protected override bool Execute(ref float consumedTime)
-    {
-        if (consumedTime < TotalTime)
+        public Instance(TimeConsumer node)
         {
-            consumedTime += Time.deltaTime;
-            _progress = Mathf.Clamp01(consumedTime / TotalTime);
-            return consumedTime >= TotalTime;
+            _timeInterval = node.TimeInterval;
         }
-        else
+
+        public override float Progress => Mathf.Clamp01(_consumedTime / _timeInterval);
+
+        public override void OnUpdate()
         {
-            _progress = 1f;
-            return true;
+            if (_consumedTime < _timeInterval)
+                _consumedTime += Time.deltaTime;
+        }
+
+        public override void OnReset()
+        {
+            _consumedTime -= _timeInterval;
         }
     }
+
+    protected override ResourceProcessor.Instance Instantiate() => new Instance(this);
 }

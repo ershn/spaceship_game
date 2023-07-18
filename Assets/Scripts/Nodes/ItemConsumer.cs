@@ -1,12 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-[UnitCategory("Producers")]
-public class ItemProducer : ResourceProcessor
+[UnitCategory("Consumers")]
+public class ItemConsumer : ResourceProcessor
 {
-    [Serialize, Inspectable, UnitHeaderInspectable("Probability")]
-    public float Probability;
-
     [Serialize, Inspectable, UnitHeaderInspectable("ItemDef")]
     public ItemDef ItemDef;
 
@@ -15,18 +12,15 @@ public class ItemProducer : ResourceProcessor
 
     new class Instance : ResourceProcessor.Instance
     {
-        readonly float _probability;
         readonly ItemDef _itemDef;
         readonly ulong _amount;
 
-        ItemCreator _itemCreator;
-        GridPosition _gridPosition;
+        StructureResourceInventory _inventory;
 
         bool _completed;
 
-        public Instance(ItemProducer node)
+        public Instance(ItemConsumer node)
         {
-            _probability = node.Probability;
             _itemDef = node.ItemDef;
             _amount = node.Amount;
         }
@@ -35,17 +29,12 @@ public class ItemProducer : ResourceProcessor
 
         public override void OnStart()
         {
-            _itemCreator = GameObject.transform.root.GetComponent<WorldInternalIO>().ItemCreator;
-            _gridPosition = GameObject.GetComponent<GridPosition>();
+            _inventory = GameObject.GetComponent<StructureResourceInventory>();
         }
 
         public override void OnUpdate()
         {
-            if (Random.value <= _probability)
-            {
-                _itemCreator.Create(_gridPosition.CellPosition, _itemDef, _amount);
-                _completed = true;
-            }
+            _completed = _inventory.TryRemove(_itemDef, _amount);
         }
 
         public override void OnReset()

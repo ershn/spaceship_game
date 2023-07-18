@@ -35,6 +35,7 @@ public class ItemFromWorldToBackpackTask : Task
 
     protected override void OnFailure(bool executed)
     {
+        // TODO: check if it is ok to unreserve an object that doesn't exist anymore
         _item.Unreserve(_amount);
     }
 }

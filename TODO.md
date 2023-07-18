@@ -1,6 +1,9 @@
 # TODO
 
 ## Game systems
+- add fertilizer items
+- add multi world
+- add spaceship movement to arbitrary worlds
 - add a storage furniture
 - add a sweep order
 - add a wall furniture
@@ -19,6 +22,7 @@
 
 ## Task scheduling
 - add task priorities
+- retry a task on a different executor when its executor is removed
 
 ## Graphics
 
