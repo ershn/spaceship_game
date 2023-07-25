@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemDefHolder : MonoBehaviour, IWorldLayerDef
+public class ItemDefHolder : MonoBehaviour, IWorldLayerMemberConf, IAmountHolderConf
 {
     public void Initialize(ItemDef itemDef)
     {
@@ -10,6 +10,8 @@ public class ItemDefHolder : MonoBehaviour, IWorldLayerDef
     public ItemDef ItemDef;
 
     public WorldLayer WorldLayer => ItemDef.WorldLayer;
+
+    public AmountAddressingMode AmountAddressingMode => ItemDef.AmountAddressingMode;
 
     void Awake()
     {

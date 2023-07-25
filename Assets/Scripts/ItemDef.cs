@@ -1,14 +1,15 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Generic")]
-public class ItemDef : ScriptableObject, IWorldLayerDef
+public class ItemDef : ScriptableObject, IWorldLayerMemberConf, IAmountHolderConf
 {
     public WorldLayer WorldLayer => WorldLayer.Item;
 
     public GameObject Prefab;
 
-    [SerializeReference, Polymorphic]
-    public AmountAddressingMode AmountAddressingMode;
+    [SerializeField, SerializeReference, Polymorphic]
+    AmountAddressingMode _amountAddressingMode;
+    public virtual AmountAddressingMode AmountAddressingMode => _amountAddressingMode;
 
     public AmountSprite[] AmountSprites;
 }

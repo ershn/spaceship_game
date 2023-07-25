@@ -1,0 +1,46 @@
+.labeled-property {
+    flex-direction: row;
+    margin-left: 3px;
+}
+
+.labeled-property-label {
+    flex: 82 1 120px;
+    -unity-text-align: middle-left;
+}
+
+.labeled-property-content {
+    flex: 100 1 212px;
+}
+
+.indented-content {
+    margin-left: 12px;
+}
+
+.validated-field {
+    flex-direction: row;
+}
+
+.validated-field-value {
+    flex-basis: 90%;
+}
+
+.validated-field-validity {
+    flex-basis: 10%;
+    height: 18px;
+}
+
+.success-image {
+    --unity-image: url("/Assets/Art/EditorImages/unicode_check_mark.png");
+}
+
+.failure-image {
+    --unity-image: url("/Assets/Art/EditorImages/unicode_cross_mark.png");
+}
+
+.error-message {
+    background-color: #800000;
+    border-width: 1px;
+    border-radius: 3px;
+    border-color: #CC0000;
+    margin-left: 5.5px;
+}

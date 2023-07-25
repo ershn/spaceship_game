@@ -6,14 +6,14 @@ public class Health : MonoBehaviour
     public UnityEvent OnZeroHealth;
     public UnityEvent OnMaxHealth;
 
-    IHealthDef _healthDef;
+    IHealthHolderConf _conf;
 
-    public int MaxHealthPoints => _healthDef.MaxHealthPoints;
+    public int MaxHealthPoints => _conf.MaxHealthPoints;
     public int HealthPoints { get; private set; } = 1;
 
     void Awake()
     {
-        _healthDef = GetComponent<IHealthDef>();
+        _conf = GetComponent<IHealthHolderConf>();
     }
 
     public void AddHealth(int points)

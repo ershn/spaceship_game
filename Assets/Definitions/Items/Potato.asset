@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Potato
   m_EditorClassIdentifier: 
   Prefab: {fileID: 8885125314223847158, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
-  AmountAddressingMode:
-    rid: 3538439070970281995
+  _amountAddressingMode:
+    rid: 4818777250287583240
   AmountSprites:
   - MinAmount: 1
     Sprite: {fileID: 1961417398, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
@@ -26,5 +26,5 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3538439070970281995
+    - rid: 4818777250287583240
       type: {class: MassAddressingMode, ns: , asm: Assembly-CSharp}

@@ -4,8 +4,10 @@ using UnityEngine;
 [Serializable]
 public class CountAddressingMode : AmountAddressingMode
 {
-    [SerializeField]
+    [SerializeField, Amount(AmountType.Mass)]
     ulong _unitMass;
+
+    public override AmountType AmountType => AmountType.Count;
 
     public override ulong AmountToMass(ulong count) => _unitMass * count;
 }

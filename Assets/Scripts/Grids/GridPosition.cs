@@ -10,9 +10,9 @@ public class GridPosition : MonoBehaviour
 
     void Awake()
     {
-        if (TryGetComponent<IWorldLayerDef>(out var worldLayerDef))
+        if (TryGetComponent<IWorldLayerMemberConf>(out var worldLayerMemberConf))
         {
-            var worldLayer = worldLayerDef.WorldLayer;
+            var worldLayer = worldLayerMemberConf.WorldLayer;
             _gridIndex = transform.root.GetComponent<GridIndexes>().GetLayerIndex(worldLayer);
         }
 

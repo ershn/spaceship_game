@@ -8,7 +8,9 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
     ItemCreator _itemCreator;
     GridPosition _gridPosition;
 
-    public ulong MaxMass = 100.KiloGrams();
+    [SerializeField, Amount(AmountType.Mass)]
+    ulong _maxMass = 100.KiloGrams();
+
     public ulong CurrentMass { get; private set; }
 
     Dictionary<ItemDef, ulong> _inventory = new();
@@ -44,7 +46,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
     public void Add(ItemDef itemDef, ulong amount)
     {
         var mass = itemDef.AmountAddressingMode.AmountToMass(amount);
-        Assert.IsTrue(CurrentMass + mass <= MaxMass);
+        Assert.IsTrue(CurrentMass + mass <= _maxMass);
 
         if (_inventory.TryGetValue(itemDef, out var currentAmount))
             _inventory[itemDef] = currentAmount + amount;

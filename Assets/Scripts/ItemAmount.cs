@@ -9,7 +9,7 @@ public class ItemAmount : MonoBehaviour
 
     ItemDef _itemDef;
 
-    [SerializeField]
+    [SerializeField, Amount]
     ulong _amount = 1;
     ulong _reservedAmount = 0;
 

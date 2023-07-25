@@ -1,7 +1,6 @@
 # TODO
 
 ## Game systems
-- add fertilizer items
 - add multi world
 - add spaceship movement to arbitrary worlds
 - add a storage furniture
@@ -45,3 +44,11 @@
 - update to the new Input System
 - pass a TaskResult object to onEnd callbacks
   - Success property
+
+## Editor
+- make the amount property drawer work in uvs
+- rework the labeled fields style
+
+## Licenses
+- https://openmoji.org/
+  - CC BY-SA 4.0

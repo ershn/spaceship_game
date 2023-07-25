@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Steel
   m_EditorClassIdentifier: 
   Prefab: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
-  AmountAddressingMode:
-    rid: 3538439070970281993
+  _amountAddressingMode:
+    rid: 4818777250287583251
   AmountSprites:
   - MinAmount: 1
     Sprite: {fileID: 765385655, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
@@ -25,5 +25,5 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3538439070970281993
+    - rid: 4818777250287583251
       type: {class: MassAddressingMode, ns: , asm: Assembly-CSharp}

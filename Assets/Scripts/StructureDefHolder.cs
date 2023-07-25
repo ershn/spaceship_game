@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class StructureDefHolder : MonoBehaviour, IWorldLayerDef, IHealthDef
+public abstract class StructureDefHolder : MonoBehaviour, IWorldLayerMemberConf, IHealthHolderConf
 {
     public abstract void Initialize(StructureDef structureDef);
 

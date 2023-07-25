@@ -1,3 +1,4 @@
+using static PropertyDrawerUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,6 @@ using UnityEngine.UIElements;
 [CustomPropertyDrawer(typeof(PolymorphicAttribute))]
 public class PolymorphicPropertyDrawer : PropertyDrawer
 {
-    const string StyleSheetPath = "Assets/Editor/PolymorphicPropertyDrawer.uss";
     const string NoneString = "None";
 
     bool AllowNull => ((PolymorphicAttribute)attribute).AllowNull;
@@ -35,15 +35,14 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
             );
 
             root = new VisualElement();
-            root.Add(selector);
+            root.Add(LabeledContent(preferredLabel, selector));
             root.Add(content);
         }
         catch (ArgumentException e)
         {
-            root = CreateErrorMessage(e.Message);
+            root = LabeledContent(preferredLabel, ErrorMessage(e.Message));
         }
-        AddStyleSheet(root);
-        return root;
+        return WithStyleSheet(root);
     }
 
     void ValidatePropertyType(SerializedProperty property)
@@ -84,24 +83,6 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
         property.serializedObject.ApplyModifiedProperties();
     }
 
-    VisualElement CreateHeader(VisualElement content)
-    {
-        var header = new VisualElement() { name = "property-header" };
-
-        var label = new Label(preferredLabel);
-        header.Add(label);
-
-        content.name = "property-header-content";
-        header.Add(content);
-
-        return header;
-    }
-
-    VisualElement CreateErrorMessage(string message)
-    {
-        return CreateHeader(new Label($"Error: {message}"));
-    }
-
     VisualElement CreateTypeSelector(
         IEnumerable<Type> types,
         Type selectedType,
@@ -127,12 +108,13 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
             onSelection(type);
         });
 
-        return CreateHeader(dropdown);
+        return dropdown;
     }
 
     VisualElement CreateContent(SerializedProperty property)
     {
-        var content = new VisualElement() { name = "property-content" };
+        var content = new VisualElement();
+        content.AddToClassList("indented-content");
         AddPropertyFields(content, property);
         return content;
     }
@@ -148,11 +130,5 @@ public class PolymorphicPropertyDrawer : PropertyDrawer
     {
         foreach (SerializedProperty prop in property.Copy())
             container.Add(new PropertyField(prop));
-    }
-
-    void AddStyleSheet(VisualElement element)
-    {
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(StyleSheetPath);
-        element.styleSheets.Add(styleSheet);
     }
 }

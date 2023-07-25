@@ -3,10 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Food")]
 public class FoodItemDef : ItemDef
 {
-    public FoodItemDef()
-    {
-        AmountAddressingMode = new MassAddressingMode();
-    }
+    readonly MassAddressingMode _massAddressingMode = new();
+    public override AmountAddressingMode AmountAddressingMode => _massAddressingMode;
 
     public uint GramToCaloriesMultiplier = 1000;
 

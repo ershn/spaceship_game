@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f490a147ffb4dc9458b3a5d7a0a1f1d2, type: 3}
-  m_Name: Dirt
+  m_Name: Nitratine
   m_EditorClassIdentifier: 
   Prefab: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
   _amountAddressingMode:
-    rid: 4818777250287583245
+    rid: 4818777250287583244
   AmountSprites:
   - MinAmount: 1
-    Sprite: {fileID: 1331527989, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+    Sprite: {fileID: -1918776257, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
   - MinAmount: 100000000
-    Sprite: {fileID: 166090357, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+    Sprite: {fileID: 819421240, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
   - MinAmount: 1000000000
-    Sprite: {fileID: 1963099963, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+    Sprite: {fileID: -1844546654, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: 4818777250287583245
+    - rid: 4818777250287583244
       type: {class: MassAddressingMode, ns: , asm: Assembly-CSharp}
