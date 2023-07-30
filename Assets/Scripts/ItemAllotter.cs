@@ -122,18 +122,20 @@ public class ItemAllotter : MonoBehaviour
         }
     }
 
-    ItemGridIndex _itemGrid;
+    [SerializeField]
+    GridIndexes _gridIndexes;
+
+    [SerializeField]
     TaskScheduler _taskScheduler;
 
     readonly Dictionary<ItemDef, LinkedList<ItemRequest>> _itemRequests = new();
 
     void Awake()
     {
-        _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
-        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
-
         GetComponent<ItemCreator>().OnItemCreated += AllotNewItem;
     }
+
+    ItemGridIndex ItemGrid => _gridIndexes.ItemGrid;
 
     public IRequest Request(ItemDef itemDef, ulong amount, IInventoryAdd inventory)
     {
@@ -159,7 +161,7 @@ public class ItemAllotter : MonoBehaviour
 
     void AllotExistingItems(ItemRequest request)
     {
-        var items = _itemGrid.Filter(request.ItemDef).CumulateAmount(request.UnallottedAmount);
+        var items = ItemGrid.Filter(request.ItemDef).CumulateAmount(request.UnallottedAmount);
         foreach (var (item, markedAmount) in items)
             request.Allot(item, markedAmount);
     }

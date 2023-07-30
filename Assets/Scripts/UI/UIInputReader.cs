@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WorldInputReader : MonoBehaviour
+public class UIInputReader : MonoBehaviour
 {
     public Vector2Event OnClick;
 

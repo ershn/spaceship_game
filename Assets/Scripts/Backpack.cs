@@ -17,7 +17,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
 
     void Awake()
     {
-        _itemCreator = transform.root.GetComponent<WorldInternalIO>().ItemCreator;
+        _itemCreator = GetComponentInParent<WorldInternalIO>().ItemCreator;
         _gridPosition = GetComponent<GridPosition>();
     }
 

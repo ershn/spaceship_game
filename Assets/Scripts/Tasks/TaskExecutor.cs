@@ -9,7 +9,7 @@ public class TaskExecutor : MonoBehaviour
 
     void Awake()
     {
-        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
+        _taskScheduler = GetComponentInParent<WorldInternalIO>().TaskScheduler;
 
         GetComponent<Death>().OnDeath.AddListener(OnDeath);
     }

@@ -20,8 +20,8 @@ public class Stomach : MonoBehaviour
 
     void Awake()
     {
-        _itemGrid = transform.root.GetComponent<GridIndexes>().ItemGrid;
-        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
+        _itemGrid = GetComponentInParent<GridIndexes>().ItemGrid;
+        _taskScheduler = GetComponentInParent<WorldInternalIO>().TaskScheduler;
 
         _death = GetComponent<Death>();
         _death.OnDeath.AddListener(OnDeath);

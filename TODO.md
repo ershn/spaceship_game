@@ -2,19 +2,23 @@
 
 ## Game systems
 - add multi world
+  - do path finding on grids individual to each world
+  - adapt the gizmos to only show gizmos for the current world
+  - allow to quickly switch between worlds in the editor
 - add spaceship movement to arbitrary worlds
+- limit the grid size of worlds
 - add a storage furniture
 - add a sweep order
 - add a wall furniture
 
-### Food consumption
+## Food consumption
 - low priority: equally distribute food between clones when there isn't enough of it
 
-### Path finding
+## Path finding
 - upgrade to A* Pathfinding Pro when the yen gets stronger
 - allow to calculate a path that ends within a set distance of a target
 
-### Item deliveries
+## Item deliveries
 - handle scenarios where an item is unreachable
 - optimization: allow to pick several items during the same task
 - optimization: pick the closest items and executors to fulfill a task
@@ -23,9 +27,13 @@
 - add task priorities
 - retry a task on a different executor when its executor is removed
 
+## Camera
+- allow to move the camera within a world
+- allow to zoom in and out
+
 ## Graphics
 
-### Clone
+### Clones
 - add an eating animation
 - add an idle animation
 
@@ -36,6 +44,7 @@
 - allow to build a rectangular area of floors
 
 ## UX/UI
+- allow to select which world layer to affect for cancel/deconstruct
 - add an info window to show being/item/building properties
 
 ## Program architecture
@@ -48,6 +57,9 @@
 ## Editor
 - make the amount property drawer work in uvs
 - rework the labeled fields style
+
+## Release
+- strip text mesh pro unused resources
 
 ## Licenses
 - https://openmoji.org/

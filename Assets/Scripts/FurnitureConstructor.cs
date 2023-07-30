@@ -21,7 +21,7 @@ public class FurnitureConstructor : MonoBehaviour
 
     void Start()
     {
-        var floorGrid = transform.root.GetComponent<GridIndexes>().FloorGrid;
+        var floorGrid = GetComponentInParent<GridIndexes>().FloorGrid;
         var floor = floorGrid.Get(GetComponent<GridPosition>().CellPosition);
 
         floor.GetComponent<Destructor>().OnDestruction.AddListener(Destroy);

@@ -18,7 +18,7 @@ public class StructureConstructor : MonoBehaviour
 
         public RequestComponents(StructureConstructor constructor)
         {
-            _itemAllotter = constructor.transform.root.GetComponent<WorldInternalIO>().ItemAllotter;
+            _itemAllotter = constructor.GetComponentInParent<WorldInternalIO>().ItemAllotter;
             _componentInventory = constructor.GetComponent<StructureComponentInventory>();
         }
 
@@ -65,9 +65,8 @@ public class StructureConstructor : MonoBehaviour
 
         public RequestConstruction(StructureConstructor constructor)
         {
-            var root = constructor.transform.root;
             _constructor = constructor;
-            _taskScheduler = root.GetComponent<WorldInternalIO>().TaskScheduler;
+            _taskScheduler = constructor.GetComponentInParent<WorldInternalIO>().TaskScheduler;
             _constructionWork = constructor.GetComponent<ConstructionWork>();
         }
 

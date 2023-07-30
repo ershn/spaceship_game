@@ -16,7 +16,7 @@ public class StructureDeconstructor : MonoBehaviour
 
     void Awake()
     {
-        _taskScheduler = transform.root.GetComponent<WorldInternalIO>().TaskScheduler;
+        _taskScheduler = GetComponentInParent<WorldInternalIO>().TaskScheduler;
         _destructor = GetComponent<Destructor>();
         _deconstructionWork = GetComponent<DeconstructionWork>();
         _canceler = GetComponent<Canceler>();

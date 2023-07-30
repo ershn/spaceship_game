@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class StructureManipulator : MonoBehaviour
 {
+    [SerializeField]
     GridIndexes _gridIndexes;
+
     StructureInstantiator _structureInstantiator;
 
     void Awake()
     {
-        _gridIndexes = transform.root.GetComponent<GridIndexes>();
         _structureInstantiator = GetComponent<StructureInstantiator>();
     }
 

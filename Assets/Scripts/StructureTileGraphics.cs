@@ -13,7 +13,7 @@ public class StructureTileGraphics : MonoBehaviour
         var structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _tileGraphicsDef = (StructureTileGraphicsDef)structureDef.StructureGraphicsDef;
 
-        _tilemapUpdater = transform.root.GetComponent<WorldInternalIO>().TilemapUpdater;
+        _tilemapUpdater = GetComponentInParent<WorldInternalIO>().TilemapUpdater;
         _gridPosition = GetComponent<GridPosition>();
         _structureGraphics = GetComponent<StructureGraphics>();
 

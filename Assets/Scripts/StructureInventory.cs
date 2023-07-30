@@ -65,7 +65,7 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
 
     protected virtual void Awake()
     {
-        var worldIO = transform.root.GetComponent<WorldInternalIO>();
+        var worldIO = GetComponentInParent<WorldInternalIO>();
         _itemCreator = worldIO.ItemCreator;
         _itemAllotter = worldIO.ItemAllotter;
         _gridPosition = GetComponent<GridPosition>();

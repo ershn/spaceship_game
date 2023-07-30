@@ -3,22 +3,30 @@ using UnityEngine;
 
 public class UIActionReducer : MonoBehaviour
 {
-    public GameObject World;
+    [SerializeField]
+    WorldCamera _worldCamera;
+
+    [SerializeField]
+    World _initialWorld;
 
     Grid2D _worldGrid2D;
     WorldExternalIO _worldExternalIO;
 
     Action<Vector2> _onWorldClick;
 
-    void Awake()
+    void Start()
     {
-        ConnectToWorld(World);
+        SelectWorld(_initialWorld);
     }
 
-    void ConnectToWorld(GameObject world)
+    #region worlds
+
+    public void SelectWorld(World world)
     {
         _worldGrid2D = world.GetComponent<Grid2D>();
         _worldExternalIO = world.GetComponent<WorldExternalIO>();
+
+        _worldCamera.SelectWorld(world);
     }
 
     public void WorldClick(Vector2 position)
@@ -26,6 +34,7 @@ public class UIActionReducer : MonoBehaviour
         _onWorldClick?.Invoke(position);
     }
 
+    #endregion
     #region blueprints
 
     public void SelectBlueprint(StructureDef structureDef)
@@ -35,14 +44,14 @@ public class UIActionReducer : MonoBehaviour
 
     void PlaceBlueprint(Vector2 position, StructureDef structureDef)
     {
-        var cellPosition = _worldGrid2D.WorldToCell(position);
+        var cellPosition = _worldGrid2D.World2DToCell(position);
         _worldExternalIO.StructureManipulator.Construct(cellPosition, structureDef);
     }
 
     #endregion
     #region tasks
 
-    WorldLayer _structureLayers = WorldLayer.Floor;
+    readonly WorldLayer _structureLayers = WorldLayer.Floor;
 
     public void SelectCancelTask()
     {
@@ -51,7 +60,7 @@ public class UIActionReducer : MonoBehaviour
 
     void CancelTask(Vector2 position)
     {
-        var cellPosition = _worldGrid2D.WorldToCell(position);
+        var cellPosition = _worldGrid2D.World2DToCell(position);
         _worldExternalIO.StructureManipulator.Cancel(cellPosition, _structureLayers);
     }
 
@@ -62,7 +71,7 @@ public class UIActionReducer : MonoBehaviour
 
     void DeconstructTask(Vector2 position)
     {
-        var cellPosition = _worldGrid2D.WorldToCell(position);
+        var cellPosition = _worldGrid2D.World2DToCell(position);
         _worldExternalIO.StructureManipulator.Deconstruct(cellPosition, _structureLayers);
     }
 

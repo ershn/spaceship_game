@@ -22,4 +22,9 @@ public static class EnumerableExtensions
                 break;
         }
     }
+
+    public static IEnumerable<(TFirst, TSecond)> ZipTuple<TFirst, TSecond>(
+        this IEnumerable<TFirst> first,
+        IEnumerable<TSecond> second
+    ) => first.Zip(second, (a, b) => (a, b));
 }

@@ -35,7 +35,7 @@ public class ItemProducer : ResourceProcessor
 
         public override void OnStart()
         {
-            _itemCreator = GameObject.transform.root.GetComponent<WorldInternalIO>().ItemCreator;
+            _itemCreator = GameObject.GetComponentInParent<WorldInternalIO>().ItemCreator;
             _gridPosition = GameObject.GetComponent<GridPosition>();
         }
 
