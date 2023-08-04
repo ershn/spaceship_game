@@ -347,9 +347,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3287009600398808300}
+  - {fileID: 6808211983511909472}
   - {fileID: 1422928998344190882}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6328962792383185554
 MonoBehaviour:
@@ -363,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b631a45173652ce468e2f13adc995e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _index: 0
 --- !u!156049354 &1845078540436811270
 Grid:
   m_ObjectHideFlags: 0
@@ -412,6 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TilemapUpdater: {fileID: 5911193833039780481}
+  PathRequestManager: {fileID: 6883001437104405391}
   ItemCreator: {fileID: 5825211978285543904}
   ItemAllotter: {fileID: 5433989288489490786}
   TaskScheduler: {fileID: 8368998416835252334}
@@ -641,3 +644,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridIndexes: {fileID: 648055617590789921}
+--- !u!1 &5365692849972697610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6808211983511909472}
+  - component: {fileID: 5013259069254088052}
+  - component: {fileID: 6883001437104405391}
+  m_Layer: 0
+  m_Name: PathFinding
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6808211983511909472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5365692849972697610}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 95456843268450407}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5013259069254088052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5365692849972697610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ae677e13134f646b99d50426d64ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _worldSize: {x: 25, y: 25}
+  _nodeSize: 0.5
+  _circleColliderDiameter: 0.5
+  _obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  _generateInEditor: 0
+--- !u!114 &6883001437104405391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5365692849972697610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb630b3c2dec6a43b72978678994edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridGraphController: {fileID: 5013259069254088052}

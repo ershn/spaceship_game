@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: -5029522435181719863}
   - component: {fileID: 1936845640939817393}
   - component: {fileID: 1936845640939817401}
-  - component: {fileID: 1936845640939817400}
+  - component: {fileID: 5104061855007185818}
   - component: {fileID: 1936845640939817407}
   - component: {fileID: 7272889626338864215}
   - component: {fileID: 2721532087074220333}
@@ -175,7 +175,7 @@ Transform:
   m_Children:
   - {fileID: 1936845640216784400}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-5029522435181719863
 MonoBehaviour:
@@ -251,7 +251,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &1936845640939817400
+--- !u!114 &5104061855007185818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,25 +260,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936845640939817397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Script: {fileID: 11500000, guid: 901876a439ab1b844a57be67f29a82cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
+  Manager: {fileID: 0}
 --- !u!114 &1936845640939817407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,8 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df845ebf0ae61924d848a9863dda43d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemCreator: {fileID: 0}
-  MaxMass: 100000000
+  _maxMass: 100000000
 --- !u!114 &4700994274530803201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ecfa61ac481ae4b9c9052fab8d6f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TaskScheduler: {fileID: 0}
 --- !u!114 &2614378112282577688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37388789feacc07479303b6244c193de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TaskScheduler: {fileID: 0}
   MaxStoredCalories: 7500000
   InitialStoredCalories: 4000000
   CaloriesConsumedPerCycle: 2500000
