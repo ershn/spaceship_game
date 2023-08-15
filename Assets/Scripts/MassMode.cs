@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class MassAddressingMode : AmountAddressingMode
+public class MassMode : AmountMode
 {
     public override AmountType AmountType => AmountType.Mass;
 

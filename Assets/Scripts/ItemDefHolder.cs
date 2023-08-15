@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemDefHolder : MonoBehaviour, IWorldLayerMemberConf, IAmountHolderConf
+public class ItemDefHolder : MonoBehaviour, IWorldLayerGet, IAmountModeGet
 {
     public void Initialize(ItemDef itemDef)
     {
@@ -11,7 +11,8 @@ public class ItemDefHolder : MonoBehaviour, IWorldLayerMemberConf, IAmountHolder
 
     public WorldLayer WorldLayer => ItemDef.WorldLayer;
 
-    public AmountAddressingMode AmountAddressingMode => ItemDef.AmountAddressingMode;
+    // Used in editor
+    public AmountMode AmountMode => ItemDef != null ? ItemDef.AmountMode : null;
 
     void Awake()
     {

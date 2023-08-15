@@ -1,4 +1,4 @@
-public abstract class AmountAddressingMode
+public abstract class AmountMode
 {
     public abstract AmountType AmountType { get; }
 

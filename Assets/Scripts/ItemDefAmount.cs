@@ -1,12 +1,12 @@
 using System;
 
 [Serializable]
-public struct ItemDefAmount : IAmountHolderConf
+public struct ItemDefAmount : IAmountModeGet
 {
     public ItemDef ItemDef;
 
     [Amount]
     public ulong Amount;
 
-    public readonly AmountAddressingMode AmountAddressingMode => ItemDef.AmountAddressingMode;
+    public readonly AmountMode AmountMode => ItemDef.AmountMode;
 }

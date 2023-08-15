@@ -30,8 +30,11 @@ public static class MassString
     public static string Format(ulong mass)
     {
         ulong divider = 10;
-        while (mass % divider == 0)
-            divider *= 10;
+        if (mass > 0)
+        {
+            while (mass % divider == 0)
+                divider *= 10;
+        }
 
         var massUnit = s_massUnits.First(massUnit => divider > massUnit.Value);
         return $"{mass / massUnit.Value} {massUnit.Symbol}";

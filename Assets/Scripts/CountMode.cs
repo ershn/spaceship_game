@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class CountAddressingMode : AmountAddressingMode
+public class CountMode : AmountMode
 {
     [SerializeField, Amount(AmountType.Mass)]
     ulong _unitMass;

@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class StructureDef : ScriptableObject, IWorldLayerMemberConf
+public abstract class StructureDef : ScriptableObject, IWorldLayerGet
 {
     public abstract WorldLayer WorldLayer { get; }
 

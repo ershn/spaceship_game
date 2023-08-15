@@ -45,7 +45,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
 
     public void Add(ItemDef itemDef, ulong amount)
     {
-        var mass = itemDef.AmountAddressingMode.AmountToMass(amount);
+        var mass = itemDef.AmountMode.AmountToMass(amount);
         Assert.IsTrue(CurrentMass + mass <= _maxMass);
 
         if (_inventory.TryGetValue(itemDef, out var currentAmount))
@@ -67,7 +67,7 @@ public class Backpack : MonoBehaviour, IInventoryAdd, IInventoryRemove
         else
             _inventory.Remove(itemDef);
 
-        var mass = itemDef.AmountAddressingMode.AmountToMass(amount);
+        var mass = itemDef.AmountMode.AmountToMass(amount);
         CurrentMass -= mass;
     }
 

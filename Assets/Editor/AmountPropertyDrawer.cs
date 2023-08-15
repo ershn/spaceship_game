@@ -11,9 +11,9 @@ public class AmountPropertyDrawer : PropertyDrawer
     {
         public event Action<bool> OnValidityChanged;
 
-        AmountType _amountType;
-        SerializedProperty _property;
-        TextField _textField;
+        readonly AmountType _amountType;
+        readonly SerializedProperty _property;
+        readonly TextField _textField;
 
         public AmountField(AmountType amountType, SerializedProperty property)
         {
@@ -72,7 +72,7 @@ public class AmountPropertyDrawer : PropertyDrawer
 
     class ValidityIndicator
     {
-        Image _image = new();
+        readonly Image _image = new();
 
         public ValidityIndicator()
         {
@@ -135,21 +135,29 @@ public class AmountPropertyDrawer : PropertyDrawer
 
     AmountType DetermineAmountType(SerializedProperty property)
     {
-        var nullableType = ((AmountAttribute)attribute).AmountType;
-        if (nullableType is AmountType type)
-            return type;
+        var nullableAmountType = ((AmountAttribute)attribute).AmountType;
+        if (nullableAmountType is AmountType amountType)
+            return amountType;
 
+        var amountMode = FindAmountMode(property);
+        if (amountMode != null)
+            return amountMode.AmountType;
+
+        throw new ArgumentException("Could not determine the amount type");
+    }
+
+    AmountMode FindAmountMode(SerializedProperty property)
+    {
         foreach (var ancestorObject in property.FindAncestorObjects())
         {
             switch (ancestorObject)
             {
-                case IAmountHolderConf objectConf:
-                    return objectConf.AmountAddressingMode.AmountType;
-                case Component comp when comp.TryGetComponent<IAmountHolderConf>(out var compConf):
-                    return compConf.AmountAddressingMode.AmountType;
+                case IAmountModeGet objectConf:
+                    return objectConf.AmountMode;
+                case Component comp when comp.TryGetComponent<IAmountModeGet>(out var compConf):
+                    return compConf.AmountMode;
             }
         }
-
-        throw new ArgumentException("Could not determine the amount type");
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-public interface IWorldLayerMemberConf
+public interface IWorldLayerGet
 {
     WorldLayer WorldLayer { get; }
 }
