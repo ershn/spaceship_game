@@ -16,7 +16,7 @@ MonoBehaviour:
   StructureGraphicsDef:
     rid: 7814593155480158209
   ComponentAmounts:
-  - ItemDef: {fileID: 11400000, guid: cdfb30c2dd438b447a15ad8cb9e7ebe9, type: 2}
+  - ItemDef: {fileID: 11400000, guid: 79aae3951826a0344983dce9dcfa78f9, type: 2}
     Amount: 1
   ConstructionTime: 1
   DeconstructionTimeMultiplier: 0.5

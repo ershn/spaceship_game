@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: PotatoSeed
   m_EditorClassIdentifier: 
   Prefab: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
-  _amountAddressingMode:
-    rid: 4818777250287583247
+  _amountMode:
+    rid: 9189551404939739170
   AmountSprites:
   - MinAmount: 1
     Sprite: {fileID: -1477367128, guid: 722d1064d04743e459ac6a951cc6a513, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: 4818777250287583247
-      type: {class: CountAddressingMode, ns: , asm: Assembly-CSharp}
+    - rid: 9189551404939739170
+      type: {class: CountMode, ns: , asm: Assembly-CSharp}
       data:
         _unitMass: 1000000
