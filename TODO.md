@@ -2,9 +2,6 @@
 
 ## Game systems
 - add multi world
-  - do path finding on grids individual to each world
-  - adapt the gizmos to only show gizmos for the current world
-  - allow to quickly switch between worlds in the editor
 - add spaceship movement to arbitrary worlds
 - limit the grid size of worlds
 - add a storage furniture
