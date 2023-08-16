@@ -30,5 +30,5 @@ MonoBehaviour:
     - rid: 3538439142373326856
       type: {class: StructureTileGraphicsDef, ns: , asm: Assembly-CSharp}
       data:
-        BlueprintTile: {fileID: 11400000, guid: 414639c20446b514f8ca5684bdf42ca1, type: 2}
-        NormalTile: {fileID: 11400000, guid: 4249a9c0bdff9f4438c80de37e0d5474, type: 2}
+        Tile: {fileID: 11400000, guid: 4249a9c0bdff9f4438c80de37e0d5474, type: 2}
+        BlueprintColor: {r: 1, g: 1, b: 1, a: 0.5019608}

@@ -11,9 +11,14 @@ public class StructureInstantiator : MonoBehaviour
     public GameObject Instantiate(Vector2Int cellPosition, StructureDef structureDef)
     {
         var position = (Vector3)_grid2D.CellToWorld2D(cellPosition) + _world.position;
-        var gameObject = Instantiate(structureDef.Prefab, position, Quaternion.identity, _world);
-        gameObject.GetComponent<StructureDefHolder>().Initialize(structureDef);
-        gameObject.SetActive(true);
-        return gameObject;
+        var structure = Instantiate(structureDef.Prefab, position, Quaternion.identity, _world);
+        Setup(structure, structureDef);
+        return structure;
+    }
+
+    public static void Setup(GameObject structure, StructureDef structureDef)
+    {
+        structure.GetComponent<StructureDefHolder>().Initialize(structureDef);
+        structure.SetActive(true);
     }
 }

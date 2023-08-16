@@ -4,7 +4,7 @@ public class StructureTileGraphics : MonoBehaviour
 {
     StructureTileGraphicsDef _tileGraphicsDef;
 
-    TilemapUpdater _tilemapUpdater;
+    TilemapController _tilemapController;
     GridPosition _gridPosition;
     StructureGraphics _structureGraphics;
 
@@ -13,7 +13,7 @@ public class StructureTileGraphics : MonoBehaviour
         var structureDef = GetComponent<StructureDefHolder>().StructureDef;
         _tileGraphicsDef = (StructureTileGraphicsDef)structureDef.StructureGraphicsDef;
 
-        _tilemapUpdater = GetComponentInParent<WorldInternalIO>().TilemapUpdater;
+        _tilemapController = GetComponentInParent<WorldInternalIO>().TilemapController;
         _gridPosition = GetComponent<GridPosition>();
         _structureGraphics = GetComponent<StructureGraphics>();
 
@@ -39,16 +39,20 @@ public class StructureTileGraphics : MonoBehaviour
 
     void ToBlueprintGraphics()
     {
-        _tilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.BlueprintTile);
+        _tilemapController.SetTile(
+            _gridPosition.CellPosition,
+            _tileGraphicsDef.Tile,
+            _tileGraphicsDef.BlueprintColor
+        );
     }
 
     void ToNormalGraphics()
     {
-        _tilemapUpdater.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.NormalTile);
+        _tilemapController.SetTile(_gridPosition.CellPosition, _tileGraphicsDef.Tile, Color.white);
     }
 
     void UnsetTile()
     {
-        _tilemapUpdater.UnsetTile(_gridPosition.CellPosition);
+        _tilemapController.UnsetTile(_gridPosition.CellPosition);
     }
 }
