@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class ItemDefHolder : MonoBehaviour, IWorldLayerGet, IAmountModeGet
+public class ItemDefHolder : MonoBehaviour, ITemplate<ItemDef>, IWorldLayerGet, IAmountModeGet
 {
-    public void Initialize(ItemDef itemDef)
+    public void Template(ItemDef itemDef)
     {
         ItemDef = itemDef;
     }
@@ -13,9 +13,4 @@ public class ItemDefHolder : MonoBehaviour, IWorldLayerGet, IAmountModeGet
 
     // Used in editor
     public AmountMode AmountMode => ItemDef != null ? ItemDef.AmountMode : null;
-
-    void Awake()
-    {
-        name = ItemDef.name;
-    }
 }

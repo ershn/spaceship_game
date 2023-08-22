@@ -1,6 +1,6 @@
-public class FurnitureDefHolder : StructureDefHolder
+public class FurnitureDefHolder : StructureDefHolder, ITemplate<StructureDef>
 {
-    public override void Initialize(StructureDef structureDef)
+    public void Template(StructureDef structureDef)
     {
         FurnitureDef = (FurnitureDef)structureDef;
     }

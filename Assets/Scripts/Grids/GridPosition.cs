@@ -4,9 +4,16 @@ public class GridPosition : MonoBehaviour
 {
     GridIndex _gridIndex;
 
-    Grid2D _grid2D;
-
-    public Vector2Int CellPosition => _grid2D.World2DToCell(transform.position);
+    Grid _grid;
+    Grid Grid
+    {
+        get
+        {
+            if (_grid == null)
+                _grid = GetComponentInParent<Grid>();
+            return _grid;
+        }
+    }
 
     void Awake()
     {
@@ -15,9 +22,9 @@ public class GridPosition : MonoBehaviour
             var worldLayer = worldLayerConf.WorldLayer;
             _gridIndex = GetComponentInParent<GridIndexes>().GetLayerIndex(worldLayer);
         }
-
-        _grid2D = GetComponentInParent<Grid2D>();
     }
+
+    public Vector2Int CellPosition => (Vector2Int)Grid.WorldToCell(transform.position);
 
     void Start()
     {

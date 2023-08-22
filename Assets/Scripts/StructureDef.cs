@@ -1,12 +1,22 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class StructureDef : ScriptableObject, IWorldLayerGet
+public abstract class StructureDef : ScriptableObject, ITemplatedPrefab, IWorldLayerGet
 {
     public abstract WorldLayer WorldLayer { get; }
 
     [Header("Instantiation")]
-    public GameObject Prefab;
+    [SerializeField]
+    GameObject _template;
+    public GameObject Template => _template;
+
+    [SerializeField]
+    GameObject _prefab;
+    public GameObject Prefab
+    {
+        get => _prefab;
+        set => _prefab = value;
+    }
 
     [Header("Graphics")]
     [SerializeReference, Polymorphic]

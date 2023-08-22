@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3087216865164340433}
   - component: {fileID: 5022576228813251468}
   - component: {fileID: 3902463455038365637}
-  - component: {fileID: 5911193833039780481}
   m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
@@ -300,18 +299,6 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 1178504051592442665}
---- !u!114 &5911193833039780481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178504051592442665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0380fa78bb95a49809fc10e462630d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1253779074525759276
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +310,6 @@ GameObject:
   - component: {fileID: 95456843268450407}
   - component: {fileID: 6328962792383185554}
   - component: {fileID: 1845078540436811270}
-  - component: {fileID: 7690273281021785988}
   - component: {fileID: 648055617590789921}
   - component: {fileID: 4381356179074235302}
   - component: {fileID: 8827156155068994052}
@@ -377,18 +363,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &7690273281021785988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253779074525759276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede89c4f19743814781f7f7fd5580cf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &648055617590789921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76fc60b5ee286fa49ad7697af0c41bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TilemapController: {fileID: 5911193833039780481}
+  Tilemap: {fileID: 1719058621723548351}
   PathRequestManager: {fileID: 6883001437104405391}
   ItemCreator: {fileID: 5825211978285543904}
   ItemAllotter: {fileID: 5433989288489490786}
@@ -512,7 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _world: {fileID: 95456843268450407}
-  _grid2D: {fileID: 7690273281021785988}
+  _grid: {fileID: 1845078540436811270}
 --- !u!114 &5825211978285543904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,7 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _world: {fileID: 95456843268450407}
-  _grid2D: {fileID: 7690273281021785988}
+  _grid: {fileID: 1845078540436811270}
 --- !u!114 &8565288285637541506
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3973244471926585468, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1961417398, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+    - target: {fileID: 3973244471926585468, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7802171379468028284, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
       propertyPath: ItemDef
       value: 
@@ -59,10 +67,6 @@ PrefabInstance:
     - target: {fileID: 8885125314223847158, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
       propertyPath: m_Name
       value: Potato
-      objectReference: {fileID: 0}
-    - target: {fileID: 8885125314223847158, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

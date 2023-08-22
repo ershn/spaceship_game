@@ -1,8 +1,6 @@
 using UnityEngine;
 
-public abstract class StructureGraphicsDef : IGizmoAssetProvider
+public abstract class StructureGraphicsDef
 {
-    public abstract void Setup(GameObject gameObject);
-
-    public abstract Object GizmoAsset { get; }
+    public abstract void Template(GameObject gameObject);
 }

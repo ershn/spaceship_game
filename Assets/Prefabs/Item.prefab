@@ -15,15 +15,13 @@ GameObject:
   - component: {fileID: 1854520340967731047}
   - component: {fileID: 97167780237384032}
   - component: {fileID: 4057525713406779392}
-  - component: {fileID: -1145803499884722807}
-  - component: {fileID: -440035150068946931}
   m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6020145976240184658
 Transform:
   m_ObjectHideFlags: 0
@@ -31,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943712821329927547}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4716745872942650353
 SpriteRenderer:
@@ -173,7 +171,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Amount: 1
+  _amount: 1
 --- !u!114 &4057525713406779392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,29 +182,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c56c222c10f7aea4e856e79c6fbbe9fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-1145803499884722807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943712821329927547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ccd0d77ab7c14f4f8593be6eae1e561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-440035150068946931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943712821329927547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03030011ddb0ab347818328d95190662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

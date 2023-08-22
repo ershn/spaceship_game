@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f490a147ffb4dc9458b3a5d7a0a1f1d2, type: 3}
   m_Name: Dirt
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+  _template: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+  _prefab: {fileID: 0}
   _amountMode:
     rid: 9189551404939739177
   AmountSprites:

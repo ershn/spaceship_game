@@ -1,9 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(ItemDefHolder))]
-public class ItemGraphics : MonoBehaviour
+public class ItemGraphics : MonoBehaviour, ITemplate<ItemDef>
 {
+    public void Template(ItemDef itemDef)
+    {
+        GetComponent<SpriteRenderer>().sprite = itemDef.AmountSprites[0].Sprite;
+    }
+
     SpriteRenderer _spriteRenderer;
     ItemDef _itemDef;
 

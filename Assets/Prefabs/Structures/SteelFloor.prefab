@@ -1,5 +1,102 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6037956723257815958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1876029433938537162}
+  - component: {fileID: 1466395291660633505}
+  m_Layer: 0
+  m_Name: EditorRenderer
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1876029433938537162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037956723257815958}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1770617470436307989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1466395291660633505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037956723257815958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd3a6bc0cd7ee546a06cfc8c658571b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tileGraphicsDef:
+    Prefab: {fileID: 5487359436272357209, guid: fed59db68fcbdb64383cc4acae5486bd, type: 3}
+    Tile: {fileID: 11400000, guid: 4249a9c0bdff9f4438c80de37e0d5474, type: 2}
+    BlueprintColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+--- !u!1 &9171861893753772965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1770617470436307989}
+  - component: {fileID: 8537369727849956945}
+  m_Layer: 0
+  m_Name: StructureTileGraphics(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1770617470436307989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9171861893753772965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1876029433938537162}
+  m_Father: {fileID: 958116728854274458}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8537369727849956945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9171861893753772965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375b1ee6b5d0e0a4aa51dd0278460512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tileGraphicsDef:
+    Prefab: {fileID: 5487359436272357209, guid: fed59db68fcbdb64383cc4acae5486bd, type: 3}
+    Tile: {fileID: 11400000, guid: 4249a9c0bdff9f4438c80de37e0d5474, type: 2}
+    BlueprintColor: {r: 1, g: 1, b: 1, a: 0.5019608}
 --- !u!1001 &2908581506497167608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,12 +153,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: SteelFloor
       objectReference: {fileID: 0}
-    - target: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1770617470436307989}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+--- !u!4 &958116728854274458 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2672518518850658658, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+  m_PrefabInstance: {fileID: 2908581506497167608}
+  m_PrefabAsset: {fileID: 0}

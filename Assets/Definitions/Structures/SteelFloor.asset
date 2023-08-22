@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ff3df7517025349b7a5f0c00b6043c, type: 3}
   m_Name: SteelFloor
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+  _template: {fileID: 7692683675659487724, guid: e448a8b19eb4666498ff734b780ff254, type: 3}
+  _prefab: {fileID: 0}
   StructureGraphicsDef:
     rid: 3538439142373326856
   ComponentAmounts:
@@ -30,5 +31,6 @@ MonoBehaviour:
     - rid: 3538439142373326856
       type: {class: StructureTileGraphicsDef, ns: , asm: Assembly-CSharp}
       data:
+        Prefab: {fileID: 5487359436272357209, guid: fed59db68fcbdb64383cc4acae5486bd, type: 3}
         Tile: {fileID: 11400000, guid: 4249a9c0bdff9f4438c80de37e0d5474, type: 2}
         BlueprintColor: {r: 1, g: 1, b: 1, a: 0.5019608}

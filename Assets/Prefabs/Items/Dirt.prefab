@@ -16,14 +16,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt
       objectReference: {fileID: 0}
-    - target: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1854520340967731047, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: ItemDef
       value: 
       objectReference: {fileID: 11400000, guid: c8ae6cffcec488c4da268eac5443901e, type: 2}
+    - target: {fileID: 4716745872942650353, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1331527989, guid: db70231611aa0cb47b74254d1b04374e, type: 3}
+    - target: {fileID: 4716745872942650353, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6020145976240184658, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

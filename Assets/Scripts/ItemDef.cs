@@ -1,11 +1,21 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Generic")]
-public class ItemDef : ScriptableObject, IWorldLayerGet, IAmountModeGet
+public class ItemDef : ScriptableObject, ITemplatedPrefab, IWorldLayerGet, IAmountModeGet
 {
     public WorldLayer WorldLayer => WorldLayer.Item;
 
-    public GameObject Prefab;
+    [SerializeField]
+    GameObject _template;
+    public GameObject Template => _template;
+
+    [SerializeField]
+    GameObject _prefab;
+    public GameObject Prefab
+    {
+        get => _prefab;
+        set => _prefab = value;
+    }
 
     [SerializeField, SerializeReference, Polymorphic]
     AmountMode _amountMode;

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6185378d603acab47b3afc577b240f41, type: 3}
   m_Name: Potato
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 8885125314223847158, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
+  _template: {fileID: 8885125314223847158, guid: 2a84aaef1b84ccc4ea9d353389e8d050, type: 3}
+  _prefab: {fileID: 0}
   _amountMode:
     rid: 9189551404939739172
   AmountSprites:

@@ -1,6 +1,6 @@
-public class FloorDefHolder : StructureDefHolder
+public class FloorDefHolder : StructureDefHolder, ITemplate<StructureDef>
 {
-    public override void Initialize(StructureDef structureDef)
+    public void Template(StructureDef structureDef)
     {
         FloorDef = (FloorDef)structureDef;
     }

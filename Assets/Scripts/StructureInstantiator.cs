@@ -6,19 +6,12 @@ public class StructureInstantiator : MonoBehaviour
     Transform _world;
 
     [SerializeField]
-    Grid2D _grid2D;
+    Grid _grid;
 
     public GameObject Instantiate(Vector2Int cellPosition, StructureDef structureDef)
     {
-        var position = (Vector3)_grid2D.CellToWorld2D(cellPosition) + _world.position;
+        var position = _grid.GetCellCenterWorld((Vector3Int)cellPosition) + _world.position;
         var structure = Instantiate(structureDef.Prefab, position, Quaternion.identity, _world);
-        Setup(structure, structureDef);
         return structure;
-    }
-
-    public static void Setup(GameObject structure, StructureDef structureDef)
-    {
-        structure.GetComponent<StructureDefHolder>().Initialize(structureDef);
-        structure.SetActive(true);
     }
 }

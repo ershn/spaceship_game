@@ -1,9 +1,23 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 
-public class ItemAmount : MonoBehaviour
+public class ItemAmount : MonoBehaviour, ITemplate<ItemDef>
 {
+    static readonly ulong s_defaultMass = 100.KiloGrams();
+    static readonly ulong s_defaultCount = 1;
+
+    public void Template(ItemDef itemDef)
+    {
+        _amount = itemDef.AmountMode switch
+        {
+            MassMode => s_defaultMass,
+            CountMode => s_defaultCount,
+            _ => throw new NotImplementedException(),
+        };
+    }
+
     public UnityEvent OnAmountChangedToZero;
     public UlongEvent OnAmountChanged;
 
