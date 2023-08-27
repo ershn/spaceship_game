@@ -37,14 +37,18 @@ public static class PrefabTemplater
     }
 
     static void TemplatePrefab<T>(T def, string folder)
-        where T : ScriptableObject, ITemplatedPrefab
+        where T : EntityDef
     {
         var prefab = (GameObject)PrefabUtility.InstantiatePrefab(def.Template);
         try
         {
             Templater.Template(prefab, def);
             var prefabPath = $"{folder}/{def.name}.prefab";
-            def.Prefab = CreatePrefabAsset(prefabPath, prefab);
+            var prefabAsset = CreatePrefabAsset(prefabPath, prefab);
+
+            def.Prefab = prefabAsset;
+            EditorUtility.SetDirty(def);
+            AssetDatabase.SaveAssetIfDirty(def);
         }
         finally
         {

@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7379832211302464520}
+  m_Children: []
   m_Father: {fileID: 6565410518989219409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2330750842161725751
@@ -43,54 +42,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 375b1ee6b5d0e0a4aa51dd0278460512, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tileGraphicsDef:
-    Prefab: {fileID: 5487359436272357209, guid: fed59db68fcbdb64383cc4acae5486bd, type: 3}
-    Tile: {fileID: 11400000, guid: 3fff817bd77c26247b37c4d238cff169, type: 2}
-    BlueprintColor: {r: 1, g: 1, b: 1, a: 0.5019608}
---- !u!1 &5060241227404670795
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7379832211302464520}
-  - component: {fileID: 6497724137367256588}
-  m_Layer: 0
-  m_Name: EditorRenderer
-  m_TagString: EditorOnly
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7379832211302464520
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5060241227404670795}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3965129434221158052}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6497724137367256588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5060241227404670795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bd3a6bc0cd7ee546a06cfc8c658571b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _tileGraphicsDef:

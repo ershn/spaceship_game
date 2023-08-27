@@ -3,20 +3,6 @@ using UnityEngine.Tilemaps;
 
 public class StructureTilePlacer
 {
-    public static StructureTilePlacer TryCreate(StructureTileGraphicsDef def, GameObject gameObject)
-    {
-        Tilemap tilemap;
-        var worldIO = gameObject.GetComponentInParent<WorldInternalIO>();
-        if (worldIO != null)
-            tilemap = worldIO.Tilemap;
-        else
-            tilemap = gameObject.GetComponentInParent<Tilemap>();
-        if (tilemap == null)
-            return null;
-
-        return new(def, tilemap, gameObject.transform);
-    }
-
     readonly StructureTileGraphicsDef _def;
     readonly Tilemap _tilemap;
     readonly Vector3Int _position;

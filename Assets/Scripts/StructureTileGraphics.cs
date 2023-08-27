@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
+[ExecuteAlways]
 public class StructureTileGraphics : MonoBehaviour, ITemplate<StructureTileGraphicsDef>
 {
     public void Template(StructureTileGraphicsDef def)
@@ -11,13 +13,27 @@ public class StructureTileGraphics : MonoBehaviour, ITemplate<StructureTileGraph
     StructureTileGraphicsDef _tileGraphicsDef;
 
     StructureTilePlacer _tilePlacer;
+    StructureGraphics _structureGraphics;
 
-    void Awake()
+    void OnEnable()
     {
-        _tilePlacer = StructureTilePlacer.TryCreate(_tileGraphicsDef, gameObject);
+        _tilePlacer = new StructureTilePlacer(_tileGraphicsDef, GetTilemap(), transform);
 
-        var structureGraphics = transform.parent.GetComponent<StructureGraphics>();
-        structureGraphics.OnConstructionCompleted += OnConstructionCompleted;
+        _structureGraphics = transform.parent.GetComponent<StructureGraphics>();
+        _structureGraphics.OnConstructionCompleted += OnConstructionCompleted;
+    }
+
+    void OnDisable()
+    {
+        _structureGraphics.OnConstructionCompleted -= OnConstructionCompleted;
+    }
+
+    Tilemap GetTilemap()
+    {
+        var worldIO = GetComponentInParent<WorldInternalIO>();
+        if (worldIO != null)
+            return worldIO.Tilemap;
+        return GetComponentInParent<Tilemap>();
     }
 
     void Start()

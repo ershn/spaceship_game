@@ -3,11 +3,24 @@ using UnityEngine;
 
 public class GridIndexes : MonoBehaviour
 {
-    public ItemGridIndex ItemGrid { get; } = new();
-    public GOGridIndex FloorGrid { get; } = new();
-    public GOGridIndex FurnitureGrid { get; } = new();
+    [SerializeField]
+    Grid _grid;
+    public Grid Grid => _grid;
 
-    public GridIndex GetLayerIndex(WorldLayer worldLayer) =>
+    public GOListGridIndex GlobalGrid { get; }
+    public ItemGridIndex ItemGrid { get; }
+    public GOGridIndex FloorGrid { get; }
+    public GOGridIndex FurnitureGrid { get; }
+
+    public GridIndexes()
+    {
+        GlobalGrid = new();
+        ItemGrid = new(GlobalGrid);
+        FloorGrid = new(GlobalGrid);
+        FurnitureGrid = new(GlobalGrid);
+    }
+
+    public IGridIndex GetLayerIndex(WorldLayer worldLayer) =>
         worldLayer switch
         {
             WorldLayer.Item => ItemGrid,

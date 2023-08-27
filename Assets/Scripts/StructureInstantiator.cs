@@ -12,6 +12,8 @@ public class StructureInstantiator : MonoBehaviour
     {
         var position = _grid.GetCellCenterWorld((Vector3Int)cellPosition) + _world.position;
         var structure = Instantiate(structureDef.Prefab, position, Quaternion.identity, _world);
+        structure.name = structureDef.name;
+        structure.SetActive(true);
         return structure;
     }
 }

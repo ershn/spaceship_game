@@ -8,6 +8,14 @@ public class FloorDef : StructureDef
     [Header("Construction restrictions")]
     public FloorCategory Category;
 
-    public override bool IsConstructibleAt(Vector2Int cellPosition, GridIndexes gridIndexes) =>
-        FloorConstructor.IsConstructibleAt(cellPosition, gridIndexes);
+    public override bool IsConstructibleAt(
+        GridIndexes gridIndexes,
+        Vector2Int cellPosition,
+        bool ignoreExisting = false
+    )
+    {
+        if (!ignoreExisting && gridIndexes.FloorGrid.Has(cellPosition))
+            return false;
+        return true;
+    }
 }

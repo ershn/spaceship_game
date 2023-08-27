@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class GOGridIndex : GridIndex
+public class GOGridIndex : IGridIndex
 {
     readonly ArrayGrid<GameObject> _grid = new(500);
+    readonly IGridIndex _twinGrid;
+
+    public GOGridIndex(IGridIndex twinGrid = null)
+    {
+        _twinGrid = twinGrid;
+    }
 
     public GameObject Get(Vector2Int position)
     {
@@ -21,25 +27,21 @@ public class GOGridIndex : GridIndex
 
     public bool Has(Vector2Int position) => _grid[position] != null;
 
-    public override void Add(GridPosition obj)
+    public virtual void Add(Vector2Int position, GameObject gameObject)
     {
-        Assert.IsNull(_grid[obj.CellPosition]);
+        Assert.IsNull(_grid[position]);
 
-        _grid[obj.CellPosition] = obj.gameObject;
+        _grid[position] = gameObject;
 
-        OnAdd(obj);
+        _twinGrid?.Add(position, gameObject);
     }
 
-    protected virtual void OnAdd(GridPosition obj) { }
-
-    public override void Remove(GridPosition obj)
+    public virtual void Remove(Vector2Int position, GameObject gameObject)
     {
-        Assert.IsNotNull(_grid[obj.CellPosition]);
+        Assert.IsNotNull(_grid[position]);
 
-        _grid[obj.CellPosition] = null;
+        _grid[position] = null;
 
-        OnRemove(obj);
+        _twinGrid?.Remove(position, gameObject);
     }
-
-    protected virtual void OnRemove(GridPosition obj) { }
 }

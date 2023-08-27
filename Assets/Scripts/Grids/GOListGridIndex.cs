@@ -2,40 +2,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class GOListGridIndex : GridIndex
+public class GOListGridIndex : IGridIndex
 {
     readonly ArrayGrid<List<GameObject>> _grid = new(500);
+    readonly IGridIndex _twinGrid;
+
+    public GOListGridIndex(IGridIndex twinGrid = null)
+    {
+        _twinGrid = twinGrid;
+    }
 
     public IEnumerable<GameObject> Get(Vector2Int position) => _grid[position] ?? new();
 
-    public override void Add(GridPosition obj)
+    public virtual void Add(Vector2Int position, GameObject gameObject)
     {
-        var list = _grid[obj.CellPosition];
+        var list = _grid[position];
         if (list == null)
         {
             list = new();
-            _grid[obj.CellPosition] = list;
+            _grid[position] = list;
         }
-        list.Add(obj.gameObject);
+        list.Add(gameObject);
 
-        OnAdd(obj);
+        _twinGrid?.Add(position, gameObject);
     }
 
-    protected virtual void OnAdd(GridPosition obj) { }
-
-    public override void Remove(GridPosition obj)
+    public virtual void Remove(Vector2Int position, GameObject gameObject)
     {
-        var list = _grid[obj.CellPosition];
+        var list = _grid[position];
         Assert.IsNotNull(list);
 
-        var removed = list.Remove(obj.gameObject);
+        var removed = list.Remove(gameObject);
         Assert.IsTrue(removed);
 
         if (list.Count == 0)
-            _grid[obj.CellPosition] = null;
+            _grid[position] = null;
 
-        OnRemove(obj);
+        _twinGrid?.Remove(position, gameObject);
     }
-
-    protected virtual void OnRemove(GridPosition obj) { }
 }

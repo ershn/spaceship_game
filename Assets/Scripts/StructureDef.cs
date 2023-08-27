@@ -1,22 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class StructureDef : ScriptableObject, ITemplatedPrefab, IWorldLayerGet
+public abstract class StructureDef : EntityDef, IWorldLayerGet
 {
     public abstract WorldLayer WorldLayer { get; }
-
-    [Header("Instantiation")]
-    [SerializeField]
-    GameObject _template;
-    public GameObject Template => _template;
-
-    [SerializeField]
-    GameObject _prefab;
-    public GameObject Prefab
-    {
-        get => _prefab;
-        set => _prefab = value;
-    }
 
     [Header("Graphics")]
     [SerializeReference, Polymorphic]
@@ -36,5 +23,9 @@ public abstract class StructureDef : ScriptableObject, ITemplatedPrefab, IWorldL
     [Header("Resource processing")]
     public StateGraphAsset ResourceProcessor;
 
-    public abstract bool IsConstructibleAt(Vector2Int cellPosition, GridIndexes gridIndexes);
+    public abstract bool IsConstructibleAt(
+        GridIndexes gridIndexes,
+        Vector2Int cellPosition,
+        bool ignoreExisting = false
+    );
 }

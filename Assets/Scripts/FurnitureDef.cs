@@ -8,6 +8,17 @@ public class FurnitureDef : StructureDef
     [Header("Construction restrictions")]
     public FloorCategory PlaceableFloorCategory;
 
-    public override bool IsConstructibleAt(Vector2Int cellPosition, GridIndexes gridIndexes) =>
-        FurnitureConstructor.IsConstructibleAt(this, cellPosition, gridIndexes);
+    public override bool IsConstructibleAt(
+        GridIndexes gridIndexes,
+        Vector2Int cellPosition,
+        bool ignoreExisting = false
+    )
+    {
+        if (!ignoreExisting && gridIndexes.FurnitureGrid.Has(cellPosition))
+            return false;
+        if (!gridIndexes.FloorGrid.TryGet(cellPosition, out var floor))
+            return false;
+        var floorDef = floor.GetComponent<FloorDefHolder>().FloorDef;
+        return floorDef.Category == PlaceableFloorCategory;
+    }
 }

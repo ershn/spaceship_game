@@ -3,20 +3,6 @@ using UnityEngine;
 
 public class FurnitureConstructor : MonoBehaviour
 {
-    public static bool IsConstructibleAt(
-        FurnitureDef furnitureDef,
-        Vector2Int cellPosition,
-        GridIndexes gridIndexes
-    )
-    {
-        if (gridIndexes.FurnitureGrid.Has(cellPosition))
-            return false;
-        if (!gridIndexes.FloorGrid.TryGet(cellPosition, out var floor))
-            return false;
-        var floorDef = (FloorDef)floor.GetComponent<StructureDefHolder>().StructureDef;
-        return floorDef.Category == furnitureDef.PlaceableFloorCategory;
-    }
-
     Action _cleanup;
 
     void Start()

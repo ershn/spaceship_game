@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f490a147ffb4dc9458b3a5d7a0a1f1d2, type: 3}
   m_Name: Nitratine
   m_EditorClassIdentifier: 
-  _template: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
-  _prefab: {fileID: 0}
+  Template: {fileID: 943712821329927547, guid: ff94330f5eb04c747918c409a15905ce, type: 3}
+  Prefab: {fileID: 1366710179621288049, guid: acc6f5ce0573b0b4cb046b2df57f3bc4, type: 3}
   _amountMode:
     rid: 9189551404939739174
   AmountSprites:

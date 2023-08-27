@@ -1,8 +1,9 @@
 using UnityEngine;
 
+[ExecuteAlways]
 public class GridPosition : MonoBehaviour
 {
-    GridIndex _gridIndex;
+    IGridIndex _gridIndex;
 
     Grid _grid;
     Grid Grid
@@ -15,36 +16,24 @@ public class GridPosition : MonoBehaviour
         }
     }
 
-    void Awake()
+    public Vector2Int CellPosition => (Vector2Int)Grid.WorldToCell(transform.position);
+
+    void OnEnable()
     {
         if (TryGetComponent<IWorldLayerGet>(out var worldLayerConf))
         {
             var worldLayer = worldLayerConf.WorldLayer;
             _gridIndex = GetComponentInParent<GridIndexes>().GetLayerIndex(worldLayer);
+            _gridIndex.Add(CellPosition, gameObject);
         }
     }
 
-    public Vector2Int CellPosition => (Vector2Int)Grid.WorldToCell(transform.position);
-
-    void Start()
+    void OnDisable()
     {
         if (_gridIndex != null)
-            AddToGridIndex();
-    }
-
-    void OnDestroy()
-    {
-        if (_gridIndex != null)
-            RemoveFromGridIndex();
-    }
-
-    void AddToGridIndex()
-    {
-        _gridIndex.Add(this);
-    }
-
-    void RemoveFromGridIndex()
-    {
-        _gridIndex.Remove(this);
+        {
+            _gridIndex.Remove(CellPosition, gameObject);
+            _gridIndex = null;
+        }
     }
 }

@@ -12,7 +12,9 @@ public class ItemInstantiator : MonoBehaviour
     {
         var position = _grid.GetCellCenterWorld((Vector3Int)cellPosition) + _world.position;
         var item = Instantiate(itemDef.Prefab, position, Quaternion.identity, _world);
+        item.name = itemDef.name;
         item.GetComponent<ItemAmount>().Initialize(amount);
+        item.SetActive(true);
         return item;
     }
 }
