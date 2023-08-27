@@ -4,7 +4,10 @@ public class StructureSpriteGraphics : MonoBehaviour, ITemplate<StructureSpriteG
 {
     public void Template(StructureSpriteGraphicsDef def)
     {
-        GetComponent<SpriteRenderer>().sprite = def.Sprite;
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = def.Sprite;
+        spriteRenderer.color = def.BlueprintColor;
+
         GetComponent<Animator>().runtimeAnimatorController = def.AnimatorController;
     }
 

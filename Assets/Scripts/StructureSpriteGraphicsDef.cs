@@ -13,5 +13,6 @@ public class StructureSpriteGraphicsDef : StructureGraphicsDef
     public GameObject Prefab;
 
     public Sprite Sprite;
+    public Color BlueprintColor;
     public RuntimeAnimatorController AnimatorController;
 }
