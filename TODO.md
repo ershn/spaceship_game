@@ -12,7 +12,6 @@
 - low priority: equally distribute food between clones when there isn't enough of it
 
 ## Path finding
-- upgrade to A* Pathfinding Pro when the yen gets stronger
 - allow to calculate a path that ends within a set distance of a target
 
 ## Item deliveries
@@ -53,6 +52,7 @@
 
 ## Editor
 - make the amount property drawer work in uvs
+- make the amount property drawer update the value in realtime when in play mode
 - rework the labeled fields style
 
 ## Release

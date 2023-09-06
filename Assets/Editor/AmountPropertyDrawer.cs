@@ -7,27 +7,23 @@ using UnityEngine.UIElements;
 [CustomPropertyDrawer(typeof(AmountAttribute))]
 public class AmountPropertyDrawer : PropertyDrawer
 {
-    class AmountField
+    class AmountField : TextField
     {
         public event Action<bool> OnValidityChanged;
 
         readonly AmountType _amountType;
         readonly SerializedProperty _property;
-        readonly TextField _textField;
 
         public AmountField(AmountType amountType, SerializedProperty property)
         {
             _amountType = amountType;
             _property = property;
 
-            _textField = new();
-            _textField.RegisterValueChangedCallback(OnValueChange);
-            _textField.RegisterCallback<KeyDownEvent>(OnKeyDown, TrickleDown.TrickleDown);
+            this.RegisterValueChangedCallback(OnValueChanged);
+            RegisterCallback<KeyDownEvent>(OnKeyDown, TrickleDown.TrickleDown);
 
             ResetField();
         }
-
-        public VisualElement VisualElement => _textField;
 
         bool _valid;
         public bool Valid
@@ -40,7 +36,7 @@ public class AmountPropertyDrawer : PropertyDrawer
             }
         }
 
-        void OnValueChange(ChangeEvent<string> evt)
+        void OnValueChanged(ChangeEvent<string> evt)
         {
             if (AmountString.TryParse(_amountType, evt.newValue, out var amount))
             {
@@ -66,36 +62,7 @@ public class AmountPropertyDrawer : PropertyDrawer
         void ResetField()
         {
             var amountString = AmountString.Format(_amountType, _property.ulongValue);
-            _textField.SetValueWithoutNotify(amountString);
-        }
-    }
-
-    class ValidityIndicator
-    {
-        readonly Image _image = new();
-
-        public ValidityIndicator()
-        {
-            Valid = true;
-        }
-
-        public VisualElement VisualElement => _image;
-
-        public bool Valid
-        {
-            set
-            {
-                if (value)
-                {
-                    _image.AddToClassList("success-image");
-                    _image.RemoveFromClassList("failure-image");
-                }
-                else
-                {
-                    _image.RemoveFromClassList("success-image");
-                    _image.AddToClassList("failure-image");
-                }
-            }
+            SetValueWithoutNotify(amountString);
         }
     }
 
@@ -114,11 +81,11 @@ public class AmountPropertyDrawer : PropertyDrawer
             content = new();
             content.AddToClassList("validated-field");
 
-            content.Add(amountField.VisualElement);
-            amountField.VisualElement.AddToClassList("validated-field-value");
+            content.Add(amountField);
+            amountField.AddToClassList("validated-field-value");
 
-            content.Add(validityIndicator.VisualElement);
-            validityIndicator.VisualElement.AddToClassList("validated-field-validity");
+            content.Add(validityIndicator);
+            validityIndicator.AddToClassList("validated-field-validity");
         }
         catch (ArgumentException e)
         {

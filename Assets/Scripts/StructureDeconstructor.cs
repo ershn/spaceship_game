@@ -1,8 +1,6 @@
 using static FunctionalUtils;
 using UnityEngine;
 
-[RequireComponent(typeof(DeconstructionWork))]
-[RequireComponent(typeof(Canceler))]
 public class StructureDeconstructor : MonoBehaviour
 {
     TaskScheduler _taskScheduler;
@@ -10,6 +8,7 @@ public class StructureDeconstructor : MonoBehaviour
     DeconstructionWork _deconstructionWork;
     Canceler _canceler;
 
+    [SerializeField]
     bool _allowed;
     bool _started;
     Task _task;

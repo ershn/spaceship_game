@@ -16,6 +16,19 @@
     margin-left: 12px;
 }
 
+.pair {
+    flex-direction: row;
+}
+
+.pair-element {
+    flex: 1 1;
+}
+
+.invalid-text-input {
+    background-color: #800000;
+    border-color: #CC0000;
+}
+
 .validated-field {
     flex-direction: row;
 }
