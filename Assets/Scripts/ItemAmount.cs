@@ -19,7 +19,7 @@ public class ItemAmount : MonoBehaviour, ITemplate<ItemDef>
     }
 
     public UnityEvent OnAmountChangedToZero;
-    public UlongEvent OnAmountChanged;
+    public UnityEvent<ulong> OnAmountChanged;
 
     ItemDef _itemDef;
 

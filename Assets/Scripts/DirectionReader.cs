@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DirectionReader : MonoBehaviour
 {
-    public Vector2Event OnDirectionUpdated;
+    public UnityEvent<Vector2> OnDirectionUpdated;
 
     void Update()
     {

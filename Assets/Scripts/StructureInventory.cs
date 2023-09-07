@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
 {
@@ -54,7 +55,7 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         }
     }
 
-    public BoolEvent OnFull;
+    public UnityEvent<bool> OnFull;
 
     ItemCreator _itemCreator;
     ItemAllotter _itemAllotter;

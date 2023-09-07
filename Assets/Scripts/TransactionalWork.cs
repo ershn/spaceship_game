@@ -12,7 +12,7 @@ public abstract class TransactionalWork : MonoBehaviour, IWork
     }
 
     public UnityEvent OnWorkStarted;
-    public FloatEvent OnWorkProgress;
+    public UnityEvent<float> OnWorkProgress;
     public UnityEvent OnWorkCompleted;
     public UnityEvent OnWorkReset;
 

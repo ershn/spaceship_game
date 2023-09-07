@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StructureStatus : MonoBehaviour
 {
-    public FloatEvent OnSetupProgressed;
+    public UnityEvent<float> OnSetupProgressed;
 
     StructureDef _structureDef;
 

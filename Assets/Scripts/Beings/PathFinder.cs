@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class PathFinder : MonoBehaviour
 {
     public float MinDistanceForNextWaypoint = .5f;
     public float MinDistanceForStop = .2f;
 
-    public Vector2Event OnMoveDirectionUpdated;
+    public UnityEvent<Vector2> OnMoveDirectionUpdated;
 
     PathSeeker _seeker;
 

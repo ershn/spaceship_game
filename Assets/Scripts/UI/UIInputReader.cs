@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class UIInputReader : MonoBehaviour
 {
-    public Vector2Event OnClick;
+    public UnityEvent<Vector2> OnClick;
 
     void Update()
     {
