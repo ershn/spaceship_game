@@ -42,6 +42,10 @@ public class SerializedDictionary<TKey, TValue>
         Clear();
 
         for (int index = _pairs.Count - 1; index >= 0; index--)
-            this[_pairs[index].Key] = _pairs[index].Value;
+        {
+            var pair = _pairs[index];
+            if (pair.Key != null)
+                this[pair.Key] = pair.Value;
+        }
     }
 }

@@ -4,8 +4,11 @@ public class StructureComponentInventory : StructureInventory
     {
         base.Awake();
 
-        var structureDef = GetComponent<StructureDefHolder>().StructureDef;
-        foreach (var component in structureDef.ComponentAmounts)
-            AddSlot(component.ItemDef, component.Amount);
+        if (!Setup)
+        {
+            var structureDef = GetComponent<StructureDefHolder>().StructureDef;
+            foreach (var component in structureDef.ComponentAmounts)
+                AddSlot(component.ItemDef, component.Amount);
+        }
     }
 }

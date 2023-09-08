@@ -51,8 +51,10 @@
   - Success property
 
 ## Editor
-- make the amount property drawer work in uvs
-- make the amount property drawer update the value in realtime when in play mode
+- amount property drawer
+  - implement an IMGUI version for uvs
+  - update the value in realtime when in play mode
+  - add a struct that holds the amount type alongside the value to simplify amount type detection ?
 - rework the labeled fields style
 
 ## Release

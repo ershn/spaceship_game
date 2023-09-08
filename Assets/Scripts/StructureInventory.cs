@@ -7,50 +7,55 @@ using UnityEngine.Events;
 
 public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
 {
+    [Serializable]
     class ItemSlot
     {
         public event Action<bool> OnFull;
 
-        public ItemDef ItemDef { get; }
+        [SerializeField]
+        ulong _maxAmount;
+        public ulong MaxAmount => _maxAmount;
 
-        public ulong MaxAmount { get; }
-        public ulong CurrentAmount { get; private set; }
+        [SerializeField]
+        ulong _currentAmount;
+        public ulong CurrentAmount => _currentAmount;
 
         public ulong? RefillThreshold { get; }
         public ItemAllotter.IRequest RefillRequest { get; set; }
 
-        public ItemSlot(ItemDef itemDef, ulong maxAmount, ulong? refillThreshold = null)
+        public ItemSlot(ulong maxAmount, ulong? refillThreshold = null)
         {
-            ItemDef = itemDef;
-            MaxAmount = maxAmount;
+            _maxAmount = maxAmount;
             RefillThreshold = refillThreshold;
         }
+
+        public bool Full => _currentAmount == _maxAmount;
 
         public void IncreaseAmount(ulong amount)
         {
             Assert.IsTrue(amount > 0);
-            Assert.IsTrue(CurrentAmount + amount <= MaxAmount);
+            Assert.IsTrue(_currentAmount + amount <= _maxAmount);
 
-            CurrentAmount += amount;
-            if (CurrentAmount == MaxAmount)
+            _currentAmount += amount;
+            if (_currentAmount == _maxAmount)
                 OnFull?.Invoke(true);
         }
 
         public void DecreaseAmount(ulong amount)
         {
             Assert.IsTrue(amount > 0);
-            Assert.IsTrue(amount <= CurrentAmount);
+            Assert.IsTrue(amount <= _currentAmount);
 
-            CurrentAmount -= amount;
-            if (CurrentAmount + amount == MaxAmount)
+            _currentAmount -= amount;
+            if (_currentAmount + amount == _maxAmount)
                 OnFull?.Invoke(false);
         }
 
         public void ZeroAmount()
         {
-            var previousAmount = CurrentAmount;
-            CurrentAmount = 0;
-            if (previousAmount == MaxAmount)
+            var previousAmount = _currentAmount;
+            _currentAmount = 0;
+            if (previousAmount == _maxAmount)
                 OnFull?.Invoke(false);
         }
     }
@@ -61,7 +66,8 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
     ItemAllotter _itemAllotter;
     GridPosition _gridPosition;
 
-    readonly Dictionary<ItemDef, ItemSlot> _slots = new();
+    [SerializeField]
+    SerializedDictionary<ItemDef, ItemSlot> _slots = new();
     uint _fullSlotCount = 0;
 
     protected virtual void Awake()
@@ -72,7 +78,14 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         _gridPosition = GetComponent<GridPosition>();
 
         GetComponent<Destructor>().OnDestruction.AddListener(Dump);
+
+        foreach (var (itemDef, slot) in _slots)
+            InitSlot(itemDef, slot);
     }
+
+    public bool Setup => _slots.Count > 0;
+
+    public bool Full => _fullSlotCount == _slots.Count;
 
     public void AddSlot(ItemDef itemDef, ulong maxAmount) => AddSlot(itemDef, maxAmount, null);
 
@@ -84,14 +97,18 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         Assert.IsTrue(maxAmount > 0);
         Assert.IsTrue(refillThreshold == null || refillThreshold < maxAmount);
 
-        var slot = new ItemSlot(itemDef, maxAmount, refillThreshold);
-        slot.OnFull += OnSlotFull;
+        var slot = new ItemSlot(maxAmount, refillThreshold);
         _slots[itemDef] = slot;
-
-        RequestRefill(slot);
+        InitSlot(itemDef, slot);
     }
 
-    public bool Full { get; private set; }
+    void InitSlot(ItemDef itemDef, ItemSlot slot)
+    {
+        slot.OnFull += OnSlotFull;
+        RequestRefill(itemDef, slot);
+        if (slot.Full)
+            _fullSlotCount++;
+    }
 
     void OnSlotFull(bool full)
     {
@@ -102,7 +119,6 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         else
             _fullSlotCount--;
 
-        Full = _fullSlotCount == _slots.Count;
         if (previouslyFull != Full)
             OnFull?.Invoke(Full);
     }
@@ -130,7 +146,7 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         Assert.IsTrue(amount <= slot.CurrentAmount);
 
         slot.DecreaseAmount(amount);
-        RequestRefill(slot);
+        RequestRefill(itemDef, slot);
     }
 
     public bool TryRemove(ItemDef itemDef, ulong amount)
@@ -141,14 +157,14 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         if (amount <= slot.CurrentAmount)
         {
             slot.DecreaseAmount(amount);
-            RequestRefill(slot);
+            RequestRefill(itemDef, slot);
             return true;
         }
         else
             return false;
     }
 
-    void RequestRefill(ItemSlot slot)
+    void RequestRefill(ItemDef itemDef, ItemSlot slot)
     {
         if (slot.RefillThreshold == null)
             return;
@@ -161,7 +177,7 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         var requestAmount = slot.MaxAmount - futureAmount;
         if (slot.RefillRequest == null)
         {
-            slot.RefillRequest = _itemAllotter.Request(slot.ItemDef, requestAmount, this);
+            slot.RefillRequest = _itemAllotter.Request(itemDef, requestAmount, this);
             slot.RefillRequest.OnCompleted += _ => slot.RefillRequest = null;
         }
         else
@@ -172,13 +188,13 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
     {
         var cellPosition = _gridPosition.CellPosition;
 
-        foreach (var slot in _slots.Values)
+        foreach (var (itemDef, slot) in _slots)
         {
             slot.RefillRequest?.Cancel();
 
             if (slot.CurrentAmount > 0)
             {
-                _itemCreator.Create(cellPosition, slot.ItemDef, slot.CurrentAmount);
+                _itemCreator.Create(cellPosition, itemDef, slot.CurrentAmount);
                 slot.ZeroAmount();
             }
         }

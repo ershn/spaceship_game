@@ -20,13 +20,33 @@
     flex-direction: row;
 }
 
-.pair-element {
-    flex: 1 1;
+.pair-key {
+    flex: 3 3;
 }
 
-.invalid-text-input {
-    background-color: #800000;
-    border-color: #CC0000;
+.pair-value {
+    flex: 7 7;
+}
+
+.pair-element .unity-foldout__toggle {
+    margin-left: 4px;
+}
+
+.pair-element .unity-foldout__content {
+    margin-left: 4px;
+}
+
+.pair-element .unity-property-field__label {
+    flex: 3 3;
+}
+
+.pair-element .unity-property-field__input {
+    flex: 7 7;
+}
+
+.invalid-pair {
+    border-left-width: 3px;
+    border-left-color: #CC0000;
 }
 
 .validated-field {

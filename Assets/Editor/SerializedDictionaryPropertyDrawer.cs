@@ -12,6 +12,7 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
     class KeyList
     {
         readonly List<uint?> _keyHashes = new();
+        readonly List<object> _keyValues = new();
         readonly Dictionary<uint, HashSet<int>> _keyHashIndexes = new();
 
         int _uninitializedKeyCount;
@@ -20,14 +21,17 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
         {
             _uninitializedKeyCount = keyCount;
             for (; keyCount > 0; keyCount--)
+            {
                 _keyHashes.Add(null);
+                _keyValues.Add(null);
+            }
         }
 
         public bool Initialized => _uninitializedKeyCount == 0;
 
         public bool IsInitialized(int index) => _keyHashes[index] != null;
 
-        public void Set(int index, uint hash)
+        public void Set(int index, uint hash, object value)
         {
             if (_keyHashes[index] == null)
                 _uninitializedKeyCount--;
@@ -35,12 +39,14 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
             if (_keyHashes[index] is uint oldHash)
                 RemoveKeyHashIndex(oldHash, index);
             _keyHashes[index] = hash;
+            _keyValues[index] = value;
             AddKeyHashIndex(hash, index);
         }
 
         public void Insert(int index)
         {
             _keyHashes.Insert(index, null);
+            _keyValues.Insert(index, null);
             _uninitializedKeyCount++;
         }
 
@@ -49,9 +55,12 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
             var hash = (uint)_keyHashes[index];
             RemoveKeyHashIndex(hash, index);
             _keyHashes.RemoveAt(index);
+            _keyValues.RemoveAt(index);
         }
 
-        public bool HasDuplicate(int index)
+        public bool IsInvalid(int index) => _keyValues[index] == null || IsDuplicated(index);
+
+        bool IsDuplicated(int index)
         {
             var hash = (uint)_keyHashes[index];
             return _keyHashIndexes[hash].Count > 1;
@@ -101,7 +110,11 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
             var pair = _pairsProp.GetArrayElementAtIndex(index);
             var isRebinding = _keys.IsInitialized(index);
 
-            pairElement.BindPair(pair, isRebinding, hash => OnKeyChanged(index, hash));
+            pairElement.BindPair(
+                pair,
+                isRebinding,
+                (hash, value) => OnKeyChanged(index, hash, value)
+            );
         }
 
         public void UnbindPair(int index, PairElement pairElement)
@@ -126,9 +139,9 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
             UpdatePairStyles();
         }
 
-        void OnKeyChanged(int index, uint hash)
+        void OnKeyChanged(int index, uint hash, object value)
         {
-            _keys.Set(index, hash);
+            _keys.Set(index, hash, value);
 
             UpdatePairStyles();
         }
@@ -139,7 +152,7 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
                 return;
 
             for (var index = 0; index < _pairElements.Count; index++)
-                _pairElements[index].StyleAsDuplicate(_keys.HasDuplicate(index));
+                _pairElements[index].StyleAsInvalid(_keys.IsInvalid(index));
         }
     }
 
@@ -148,30 +161,36 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
         readonly PropertyField _keyField;
         readonly PropertyField _valueField;
 
-        Action<uint> _onKeyChanged;
+        Action<uint, object> _onKeyChanged;
 
         public PairElement()
         {
             AddToClassList("pair");
 
             _keyField = new PropertyField() { label = string.Empty, bindingPath = "Key" };
+            _keyField.AddToClassList("pair-key");
             _keyField.AddToClassList("pair-element");
             Add(_keyField);
 
             _valueField = new PropertyField() { label = string.Empty, bindingPath = "Value" };
+            _valueField.AddToClassList("pair-value");
             _valueField.AddToClassList("pair-element");
             Add(_valueField);
         }
 
-        public void StyleAsDuplicate(bool duplicate)
+        public void StyleAsInvalid(bool invalid)
         {
-            if (duplicate)
-                this.Q("unity-text-input")?.AddToClassList("invalid-text-input");
+            if (invalid)
+                AddToClassList("invalid-pair");
             else
-                this.Q("unity-text-input")?.RemoveFromClassList("invalid-text-input");
+                RemoveFromClassList("invalid-pair");
         }
 
-        public void BindPair(SerializedProperty pairProp, bool rebinding, Action<uint> onKeyChanged)
+        public void BindPair(
+            SerializedProperty pairProp,
+            bool rebinding,
+            Action<uint, object> onKeyChanged
+        )
         {
             _onKeyChanged = onKeyChanged;
 
@@ -200,7 +219,7 @@ public class SerializedDictionaryPropertyDrawer : PropertyDrawer
                 return;
 
             var keyProp = evt.changedProperty;
-            _onKeyChanged(keyProp.contentHash);
+            _onKeyChanged(keyProp.contentHash, keyProp.boxedValue);
         }
     }
 
