@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,6 +8,11 @@ public class Worker : MonoBehaviour
 {
     IWork _work;
     Action<bool> _onEnd;
+
+    public Task WorkOn(IWork work, CancellationToken ct)
+    {
+        return AsyncUtils.ToAsync(cb => WorkOn(work, cb), Cancel, ct);
+    }
 
     public void WorkOn(IWork work, Action<bool> onEnd)
     {

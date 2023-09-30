@@ -1,124 +1,90 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class ItemAllotter : MonoBehaviour
 {
-    public interface IRequest
+    class ItemRequest : IDisposable
     {
-        event Action<bool> OnCompleted;
+        public event Action OnCompleted;
+        public event Action OnAllotmentCanceled;
 
-        bool Completed { get; }
-        bool Fulfilled { get; }
-        bool Canceled { get; }
+        readonly ItemDef _itemDef;
 
-        ItemDef ItemDef { get; }
-        ulong RequestedAmount { get; }
-        ulong AllottedAmount { get; }
-        ulong UnallottedAmount { get; }
-        ulong DeliveredAmount { get; }
-        ulong UndeliveredAmount { get; }
+        readonly ulong _requestedAmount;
+        ulong _deliveredAmount;
+        ulong _allottedAmount;
 
-        void IncreaseRequestedAmount(ulong amount);
-        void DecreaseRequestedAmount(ulong amount);
+        readonly IInventoryAdd _inventory;
+        readonly Action<ulong> _onAmountDelivered;
 
-        void Cancel();
-    }
+        readonly JobScheduler _jobScheduler;
+        readonly TaskCompletionSource<object> _taskCompletionSource;
+        readonly CancellationToken _cancellationToken;
 
-    class ItemRequest : IRequest
-    {
-        public event Action<bool> OnCompleted;
-        public event Action OnAllotmentReverted;
-
-        public ItemDef ItemDef { get; }
-
-        public ulong RequestedAmount { get; private set; }
-        public ulong AllottedAmount { get; private set; }
-        public ulong UnallottedAmount => RequestedAmount - AllottedAmount;
-        public ulong DeliveredAmount { get; private set; }
-        public ulong UndeliveredAmount => RequestedAmount - DeliveredAmount;
-
-        public IInventoryAdd Inventory { get; }
-
-        readonly TaskScheduler _taskScheduler;
-
-        readonly HashSet<Task> _tasks = new();
+        readonly CancellationTokenRegistration _cancellationRegistration;
 
         public ItemRequest(
             ItemDef itemDef,
             ulong amount,
             IInventoryAdd inventory,
-            TaskScheduler taskScheduler
+            Action<ulong> onAmountDelivered,
+            JobScheduler jobScheduler,
+            TaskCompletionSource<object> taskCompletionSource,
+            CancellationToken cancellationToken
         )
         {
-            ItemDef = itemDef;
-            RequestedAmount = amount;
-            Inventory = inventory;
-            _taskScheduler = taskScheduler;
+            _itemDef = itemDef;
+            _requestedAmount = amount;
+            _inventory = inventory;
+            _onAmountDelivered = onAmountDelivered;
+
+            _jobScheduler = jobScheduler;
+            _taskCompletionSource = taskCompletionSource;
+            _cancellationToken = cancellationToken;
+
+            _cancellationRegistration = _cancellationToken.Register(() => OnCompleted());
         }
 
-        public bool Completed => Fulfilled || Canceled;
-
-        public void IncreaseRequestedAmount(ulong amount)
+        public void Dispose()
         {
-            Assert.IsFalse(Completed);
-
-            RequestedAmount += amount;
+            _cancellationRegistration.Dispose();
         }
 
-        public void DecreaseRequestedAmount(ulong amount)
+        public ItemDef ItemDef => _itemDef;
+
+        public bool Fulfilled => _deliveredAmount == _requestedAmount;
+
+        public bool Canceled => _cancellationToken.IsCancellationRequested;
+
+        public ulong UnallottedAmount => _requestedAmount - _allottedAmount;
+
+        public async void Allot(ItemAmount item, ulong amount)
         {
-            Assert.IsFalse(Completed);
-            Assert.IsTrue(amount <= UnallottedAmount);
-
-            RequestedAmount -= amount;
-        }
-
-        public bool Fulfilled { get; private set; }
-
-        void Fulfill()
-        {
-            Fulfilled = true;
-            OnCompleted?.Invoke(true);
-        }
-
-        public void Allot(ItemAmount item, ulong amount)
-        {
-            AllottedAmount += amount;
-            var task = TaskCreator.DeliverItem(item, amount, Inventory);
-            _tasks.Add(task);
-            task.Then(success =>
+            _allottedAmount += amount;
+            try
             {
-                _tasks.Remove(task);
-                if (success)
-                {
-                    DeliveredAmount += amount;
-                    if (DeliveredAmount == RequestedAmount)
-                        Fulfill();
-                }
-                else
-                {
-                    AllottedAmount -= amount;
-                    OnAllotmentReverted?.Invoke();
-                }
-            });
-            _taskScheduler.QueueTask(task);
-        }
+                var job = new DeliverItemJob(item, amount, _inventory);
+                await _jobScheduler.Execute(job, _cancellationToken);
 
-        public bool Canceled { get; private set; }
+                _deliveredAmount += amount;
+                _onAmountDelivered?.Invoke(amount);
 
-        public void Cancel()
-        {
-            if (Fulfilled || Canceled)
-                return;
+                if (Fulfilled)
+                    OnCompleted();
 
-            Canceled = true;
-            OnCompleted?.Invoke(false);
+                _taskCompletionSource.SetResult(null);
+            }
+            catch (TaskCanceledException)
+            {
+                _allottedAmount -= amount;
+                OnAllotmentCanceled();
 
-            foreach (var task in _tasks.ToArray())
-                task.Cancel();
+                _taskCompletionSource.SetCanceled();
+            }
         }
     }
 
@@ -126,7 +92,7 @@ public class ItemAllotter : MonoBehaviour
     GridIndexes _gridIndexes;
 
     [SerializeField]
-    TaskScheduler _taskScheduler;
+    JobScheduler _jobScheduler;
 
     readonly Dictionary<ItemDef, LinkedList<ItemRequest>> _itemRequests = new();
 
@@ -137,12 +103,30 @@ public class ItemAllotter : MonoBehaviour
 
     ItemGridIndex ItemGrid => _gridIndexes.ItemGrid;
 
-    public IRequest Request(ItemDef itemDef, ulong amount, IInventoryAdd inventory)
+    public Task Request(
+        ItemDef itemDef,
+        ulong amount,
+        IInventoryAdd inventory,
+        CancellationToken ct,
+        Action<ulong> onAmountDelivered = null
+    )
     {
-        var request = new ItemRequest(itemDef, amount, inventory, _taskScheduler);
+        var tcs = new TaskCompletionSource<object>();
+
+        var request = new ItemRequest(
+            itemDef,
+            amount,
+            inventory,
+            onAmountDelivered,
+            _jobScheduler,
+            tcs,
+            ct
+        );
+
         Register(request);
         AllotExistingItems(request);
-        return request;
+
+        return tcs.Task;
     }
 
     void Register(ItemRequest request)
@@ -154,9 +138,17 @@ public class ItemAllotter : MonoBehaviour
         }
 
         requests.AddLast(request);
-        request.OnCompleted += _ => requests.Remove(request);
 
-        request.OnAllotmentReverted += () => AllotExistingItems(request);
+        request.OnCompleted += () =>
+        {
+            requests.Remove(request);
+            request.Dispose();
+        };
+        request.OnAllotmentCanceled += () =>
+        {
+            if (!request.Canceled)
+                AllotExistingItems(request);
+        };
     }
 
     void AllotExistingItems(ItemRequest request)

@@ -1,149 +1,64 @@
-using static FunctionalUtils;
-using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
-using StateNode = Vertex<SuccessState, IState>;
-
 public class StructureConstructor : MonoBehaviour
 {
-    class RequestComponents : IState
-    {
-        readonly ItemAllotter _itemAllotter;
-        readonly StructureComponentInventory _componentInventory;
-
-        Action<bool> _onEnd;
-        readonly List<ItemAllotter.IRequest> _requests = new();
-
-        public RequestComponents(StructureConstructor constructor)
-        {
-            _itemAllotter = constructor.GetComponentInParent<WorldInternalIO>().ItemAllotter;
-            _componentInventory = constructor.GetComponent<StructureComponentInventory>();
-        }
-
-        public void Start(Action<bool> onEnd)
-        {
-            if (_componentInventory.Full)
-            {
-                onEnd(true);
-                return;
-            }
-
-            var unregister = _componentInventory.OnFull.Register(_ => Complete());
-            _onEnd = Do(unregister, onEnd);
-
-            foreach (var (itemDef, missingAmount) in _componentInventory.UnfilledSlots())
-            {
-                var request = _itemAllotter.Request(itemDef, missingAmount, _componentInventory);
-                _requests.Add(request);
-            }
-        }
-
-        void Complete()
-        {
-            _onEnd(true);
-        }
-
-        public void Cancel()
-        {
-            foreach (var request in _requests)
-                request.Cancel();
-
-            _onEnd(false);
-        }
-    }
-
-    class RequestConstruction : IState
-    {
-        readonly StructureConstructor _constructor;
-        readonly TaskScheduler _taskScheduler;
-        readonly ConstructionWork _constructionWork;
-
-        Action<bool> _onEnd;
-        Task _task;
-
-        public RequestConstruction(StructureConstructor constructor)
-        {
-            _constructor = constructor;
-            _taskScheduler = constructor.GetComponentInParent<WorldInternalIO>().TaskScheduler;
-            _constructionWork = constructor.GetComponent<ConstructionWork>();
-        }
-
-        public void Start(Action<bool> onEnd)
-        {
-            var unregister = _constructionWork.OnWorkCompleted.Register(Complete);
-            _onEnd = Do(unregister, onEnd);
-
-            _task = TaskCreator.WorkOn(_constructionWork);
-            _taskScheduler.QueueTask(_task);
-        }
-
-        void Complete()
-        {
-            Destroy(_constructor);
-            Destroy(_constructionWork);
-            _onEnd(true);
-        }
-
-        public void Cancel()
-        {
-            _task.Cancel();
-            _onEnd(false);
-        }
-    }
-
-    class CancelConstruction : IState
-    {
-        readonly Destructor _destructor;
-
-        public CancelConstruction(StructureConstructor constructor)
-        {
-            _destructor = constructor.GetComponent<Destructor>();
-        }
-
-        public void Start(Action<bool> onEnd)
-        {
-            _destructor.Destroy();
-            onEnd(true);
-        }
-
-        public void Cancel() { }
-    }
-
     public UnityEvent OnConstructionCompleted;
     public UnityEvent OnConstructionCanceled;
 
-    StateExecutor _stateExecutor;
-
-    public void Construct()
+    public async void Construct()
     {
-        var unregister = GetComponent<Canceler>().OnCancel.Register(Cancel);
+        using var cts = new CancellationTokenSource();
+        var ct = cts.Token;
 
-        _stateExecutor = new(StateGraph());
-        _stateExecutor.Start(success =>
+        var unregister = GetComponent<Canceler>().OnCancel.Register(cts.Cancel);
+        try
+        {
+            await RequestComponents(ct);
+            await RequestConstruction(ct);
+            OnConstructionCompleted.Invoke();
+        }
+        catch (TaskCanceledException)
+        {
+            GetComponent<Destructor>().Destroy();
+            OnConstructionCanceled.Invoke();
+            // throw; //? Should the exception be re-thrown ?
+        }
+        finally
         {
             unregister();
-            if (success)
-                OnConstructionCompleted.Invoke();
-            else
-                OnConstructionCanceled.Invoke();
-        });
+        }
     }
 
-    void Cancel()
+    async Task RequestComponents(CancellationToken ct)
     {
-        _stateExecutor?.Cancel();
+        var componentInventory = GetComponent<StructureComponentInventory>();
+        if (componentInventory.Full)
+            return;
+
+        var itemAllotter = GetComponentInParent<WorldInternalIO>().ItemAllotter;
+        var requests = new List<Task>();
+        foreach (var (itemDef, missingAmount) in componentInventory.UnfilledSlots())
+        {
+            var request = itemAllotter.Request(itemDef, missingAmount, componentInventory, ct);
+            requests.Add(request);
+        }
+
+        await Task.WhenAll(requests);
     }
 
-    StateNode StateGraph()
+    async Task RequestConstruction(CancellationToken ct)
     {
-        new StateNode(new RequestComponents(this), out var startNode)
-            .Link(
-                new(new RequestConstruction(this)),
-                new(new CancelConstruction(this), out var failureNode)
-            )
-            .Link(null, failureNode);
-        return startNode;
+        var jobScheduler = GetComponentInParent<WorldInternalIO>().JobScheduler;
+        var constructionWork = GetComponent<ConstructionWork>();
+
+        var job = new WorkOnJob(constructionWork);
+        await jobScheduler.Execute(job, ct);
+
+        Destroy(this);
+        Destroy(constructionWork);
     }
 }

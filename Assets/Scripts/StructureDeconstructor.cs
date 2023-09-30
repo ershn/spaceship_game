@@ -1,9 +1,10 @@
-using static FunctionalUtils;
 using UnityEngine;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class StructureDeconstructor : MonoBehaviour
 {
-    TaskScheduler _taskScheduler;
+    JobScheduler _jobScheduler;
     Destructor _destructor;
     DeconstructionWork _deconstructionWork;
     Canceler _canceler;
@@ -11,11 +12,10 @@ public class StructureDeconstructor : MonoBehaviour
     [SerializeField]
     bool _allowed;
     bool _started;
-    Task _task;
 
     void Awake()
     {
-        _taskScheduler = GetComponentInParent<WorldInternalIO>().TaskScheduler;
+        _jobScheduler = GetComponentInParent<WorldInternalIO>().JobScheduler;
         _destructor = GetComponent<Destructor>();
         _deconstructionWork = GetComponent<DeconstructionWork>();
         _canceler = GetComponent<Canceler>();
@@ -26,33 +26,31 @@ public class StructureDeconstructor : MonoBehaviour
         _allowed = true;
     }
 
-    public void Deconstruct()
+    public async void Deconstruct()
     {
         if (!_allowed || _started)
             return;
-        _started = true;
 
-        var unregister = _canceler.OnCancel.Register(Cancel);
-        _task = TaskCreator.WorkOn(_deconstructionWork);
-        _task.Then(Do<bool>(unregister, Complete));
-        _taskScheduler.QueueTask(_task);
-    }
+        using var cts = new CancellationTokenSource();
+        var ct = cts.Token;
 
-    void Complete(bool succeeded)
-    {
-        if (succeeded)
+        var unregister = _canceler.OnCancel.Register(cts.Cancel);
+        try
+        {
+            _started = true;
+            var job = new WorkOnJob(_deconstructionWork);
+            await _jobScheduler.Execute(job, ct);
             _destructor.Destroy();
-        else
+        }
+        catch (TaskCanceledException)
+        {
+            _started = false;
             _deconstructionWork.Reset();
-    }
-
-    void Cancel()
-    {
-        if (!_started)
-            return;
-        _started = false;
-
-        _task.Cancel();
-        _task = null;
+            // throw; //? Should the exception be re-thrown ?
+        }
+        finally
+        {
+            unregister();
+        }
     }
 }

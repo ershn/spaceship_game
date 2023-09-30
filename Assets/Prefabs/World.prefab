@@ -392,7 +392,7 @@ MonoBehaviour:
   PathRequestManager: {fileID: 6883001437104405391}
   ItemCreator: {fileID: 5825211978285543904}
   ItemAllotter: {fileID: 5433989288489490786}
-  TaskScheduler: {fileID: 8368998416835252334}
+  JobScheduler: {fileID: 8368998416835252334}
 --- !u!114 &8827156155068994052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridIndexes: {fileID: 648055617590789921}
-  _taskScheduler: {fileID: 8368998416835252334}
+  _jobScheduler: {fileID: 8368998416835252334}
 --- !u!1 &3670498586476507265
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 919772825120151983}
   - component: {fileID: 8368998416835252334}
   m_Layer: 0
-  m_Name: TaskManager
+  m_Name: JobManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

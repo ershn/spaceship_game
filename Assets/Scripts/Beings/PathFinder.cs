@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -61,6 +63,11 @@ public class PathFinder : MonoBehaviour
             StopExecuting(success: false);
         else
             StartMoving(path, StopExecuting);
+    }
+
+    public Task MoveTo(Vector2 dest, CancellationToken ct)
+    {
+        return AsyncUtils.ToAsync(cb => MoveTo(dest, cb), Cancel, ct);
     }
 
     public void MoveTo(Vector2 dest, Action<bool> onEnd)

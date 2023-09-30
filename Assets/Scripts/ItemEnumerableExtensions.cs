@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class ItemEnumerableExtensions
 {
-    public static IEnumerable<(ItemAmount itemAmount, ulong markedAmount)> CumulateAmount(
+    public static (ItemAmount itemAmount, ulong markedAmount)[] CumulateAmount(
         this IEnumerable<GameObject> items,
         ulong totalAmount
     ) =>
@@ -20,10 +20,10 @@ public static class ItemEnumerableExtensions
             })
             .ToArray();
 
-    public static IEnumerable<(
-        FoodItemCalories itemCalories,
-        ulong markedCalories
-    )> CumulateCalories(this IEnumerable<GameObject> items, ulong totalCalories) =>
+    public static (FoodItemCalories itemCalories, ulong markedCalories)[] CumulateCalories(
+        this IEnumerable<GameObject> items,
+        ulong totalCalories
+    ) =>
         items
             .Select(gameObject => gameObject.GetComponent<FoodItemCalories>())
             .Where(itemCalories => itemCalories.TotalCalories > 0)

@@ -1,13 +1,15 @@
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Stomach : MonoBehaviour
 {
     ItemGridIndex _itemGrid;
-    TaskScheduler _taskScheduler;
+    JobScheduler _jobScheduler;
 
     Death _death;
-    TaskExecutor _taskExecutor;
+    JobExecutor _jobExecutor;
     FoodConsumption _foodConsumption;
 
     public ulong MaxStoredCalories = 7500.KiloCalories();
@@ -21,11 +23,11 @@ public class Stomach : MonoBehaviour
     void Awake()
     {
         _itemGrid = GetComponentInParent<GridIndexes>().ItemGrid;
-        _taskScheduler = GetComponentInParent<WorldInternalIO>().TaskScheduler;
+        _jobScheduler = GetComponentInParent<WorldInternalIO>().JobScheduler;
 
         _death = GetComponent<Death>();
         _death.OnDeath.AddListener(OnDeath);
-        _taskExecutor = GetComponent<TaskExecutor>();
+        _jobExecutor = GetComponent<JobExecutor>();
         _foodConsumption = GetComponent<FoodConsumption>();
     }
 
@@ -47,7 +49,7 @@ public class Stomach : MonoBehaviour
         if (currentCalories == 0)
             _death.Die();
         else if (currentCalories < FoodConsumptionCaloriesThreshold)
-            TryOrderFoodConsumption();
+            TryConsumeFood();
     }
 
     float CyclesSinceLastMeal() => (Time.time - _timeOfLastMeal) / Clock.CycleLength;
@@ -69,72 +71,59 @@ public class Stomach : MonoBehaviour
         _timeOfLastMeal = Time.time;
     }
 
-    Task _foodConsumptionTask;
-    ulong? _nextOrderTryCaloriesThreshold;
+    bool _isConsumingFood;
+    ulong? _nextCaloriesThreshold;
 
-    void TryOrderFoodConsumption()
+    async void TryConsumeFood()
     {
-        if (_foodConsumptionTask != null)
+        if (_isConsumingFood)
             return;
 
         var currentCalories = CurrentCalories();
-        if (
-            _nextOrderTryCaloriesThreshold != null
-            && currentCalories >= _nextOrderTryCaloriesThreshold
-        )
+        if (_nextCaloriesThreshold != null && currentCalories > _nextCaloriesThreshold)
             return;
 
-        Debug.Log($"Try to consume food (stored: {currentCalories / 1.KiloCalorie()} kcal)");
-        _nextOrderTryCaloriesThreshold = null;
-        if (OrderFoodConsumption(MaxStoredCalories - currentCalories))
-            return;
+        Debug.Log(
+            $"Try to consume food (stored: {currentCalories / 1.KiloCalorie()} kcal)",
+            gameObject
+        );
 
-        _nextOrderTryCaloriesThreshold = NextOrderTryCaloriesThreshold(currentCalories);
+        _isConsumingFood = true;
+        if (await ConsumeFood(MaxStoredCalories - currentCalories))
+            _nextCaloriesThreshold = null;
+        else
+            _nextCaloriesThreshold = NextCaloriesThreshold(currentCalories);
+        _isConsumingFood = false;
     }
 
-    ulong NextOrderTryCaloriesThreshold(ulong currentCalories)
+    ulong NextCaloriesThreshold(ulong currentCalories)
     {
         var multiplier =
             currentCalories < 1000.KiloCalories() ? 100.KiloCalories() : 500.KiloCalories();
-
-        return currentCalories % multiplier == 0
-            ? (currentCalories / multiplier - 1) * multiplier
-            : currentCalories / multiplier * multiplier;
+        return currentCalories / multiplier * multiplier;
     }
 
-    bool OrderFoodConsumption(ulong calories)
+    async Task<bool> ConsumeFood(ulong calories)
     {
         var foodItems = _itemGrid.Filter<FoodItemDef>().CumulateCalories(calories);
-
         if (!foodItems.Any())
             return false;
 
-        var markedCalories = foodItems.Sum(item => item.markedCalories);
-        Debug.Log($"Consume food: {markedCalories / 1.KiloCalorie()} kcal");
-
-        _foodConsumptionTask = TaskCreator.EatFood(foodItems.CaloriesToMass(), _foodConsumption);
-        _foodConsumptionTask.Then(success =>
+        try
         {
-            Debug.Log($"Food consumption {(success ? "completed" : "canceled")}");
-            _foodConsumptionTask = null;
-        });
-        _taskScheduler.QueueTask(_foodConsumptionTask, _taskExecutor);
+            var markedCalories = foodItems.Sum(item => item.markedCalories);
+            Debug.Log($"Consume food: {markedCalories / 1.KiloCalorie()} kcal", gameObject);
 
-        return true;
-    }
+            var job = new EatFoodJob(foodItems.CaloriesToMass(), _foodConsumption);
+            await _jobScheduler.Execute(job, _jobExecutor, CancellationToken.None);
 
-    #region debug log
-
-    float _timeOfLastCaloriesLog;
-
-    void LogCurrentCalories()
-    {
-        if (Time.time - _timeOfLastCaloriesLog >= 1f)
+            Debug.Log($"Food consumption completed", gameObject);
+            return true;
+        }
+        catch (TaskCanceledException)
         {
-            _timeOfLastCaloriesLog = Time.time;
-            Debug.Log($"Current calories: {CurrentCalories() / 1.KiloCalorie()} kcal");
+            Debug.Log($"Food consumption canceled", gameObject);
+            return false;
         }
     }
-
-    #endregion
 }

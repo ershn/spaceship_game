@@ -8,5 +8,5 @@ public class WorldInternalIO : MonoBehaviour
     public PathRequestManager PathRequestManager;
     public ItemCreator ItemCreator;
     public ItemAllotter ItemAllotter;
-    public TaskScheduler TaskScheduler;
+    public JobScheduler JobScheduler;
 }

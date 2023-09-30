@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -21,7 +22,9 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         public ulong CurrentAmount => _currentAmount;
 
         public ulong? RefillThreshold { get; }
-        public ItemAllotter.IRequest RefillRequest { get; set; }
+
+        [NonSerialized]
+        public ulong RequestedAmount;
 
         public ItemSlot(ulong maxAmount, ulong? refillThreshold = null)
         {
@@ -70,6 +73,8 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
     SerializedDictionary<ItemDef, ItemSlot> _slots = new();
     uint _fullSlotCount = 0;
 
+    readonly CancellationTokenSource _itemRequestCanceller = new();
+
     protected virtual void Awake()
     {
         var worldIO = GetComponentInParent<WorldInternalIO>();
@@ -81,6 +86,11 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
 
         foreach (var (itemDef, slot) in _slots)
             InitSlot(itemDef, slot);
+    }
+
+    void OnDestroy()
+    {
+        _itemRequestCanceller.Dispose();
     }
 
     public bool Setup => _slots.Count > 0;
@@ -169,29 +179,29 @@ public class StructureInventory : MonoBehaviour, IInventoryAdd, IInventoryRemove
         if (slot.RefillThreshold == null)
             return;
 
-        var undeliveredAmount = slot.RefillRequest?.UndeliveredAmount ?? 0;
-        var futureAmount = slot.CurrentAmount + undeliveredAmount;
+        var futureAmount = slot.CurrentAmount + slot.RequestedAmount;
         if (futureAmount > slot.RefillThreshold)
             return;
 
         var requestAmount = slot.MaxAmount - futureAmount;
-        if (slot.RefillRequest == null)
-        {
-            slot.RefillRequest = _itemAllotter.Request(itemDef, requestAmount, this);
-            slot.RefillRequest.OnCompleted += _ => slot.RefillRequest = null;
-        }
-        else
-            slot.RefillRequest.IncreaseRequestedAmount(requestAmount);
+        slot.RequestedAmount += requestAmount;
+
+        _itemAllotter.Request(
+            itemDef,
+            requestAmount,
+            this,
+            _itemRequestCanceller.Token,
+            deliveredAmount => slot.RequestedAmount -= deliveredAmount
+        );
     }
 
     public void Dump()
     {
-        var cellPosition = _gridPosition.CellPosition;
+        _itemRequestCanceller.Cancel();
 
+        var cellPosition = _gridPosition.CellPosition;
         foreach (var (itemDef, slot) in _slots)
         {
-            slot.RefillRequest?.Cancel();
-
             if (slot.CurrentAmount > 0)
             {
                 _itemCreator.Create(cellPosition, itemDef, slot.CurrentAmount);
